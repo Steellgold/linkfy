@@ -2,18 +2,13 @@
   import { Button, RedirectButton } from "$lib/components/button";
   import { Input } from "$lib/components/input";
   import { generateShortUrl } from "$lib/utils/Shortener";
+  import { url as StoreURL } from "$lib/utils/Stores";
 
   let error: string = "";
   let success: string = "";
-  let url = "";
-  let shortenedUrl: string = "";
+  let url: string = "";
 
-  function transform() {
-    // check if the url is valid
-    if (url == "") {
-      error = "The url cannot be empty";
-      return;
-    }
+  StoreURL.subscribe(value => { url = value; });
 
     if (!url.startsWith("https://") && !url.startsWith("http://")) {
       error = "The url must start with https:// or http://";
