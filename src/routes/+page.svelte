@@ -32,7 +32,7 @@
        }),
     });
 
-    input.value = shortenedUrl;
+    input.value = "https://links.steellgold.fr/" + shortenedUrl;
     shortUrl = shortenedUrl;
   }
 
@@ -88,7 +88,7 @@
       </div>
       <div class="flex items-center justify-between text-sm font-normal gap-3">
         <Button on:click={transform} size="large">Transform..</Button>
-        <Button on:click={redirectTo}>Redirect</Button>
+        <Button on:click={redirectTo} hidden={shortUrl == "" ? true : false}>Redirect</Button>
       </div>
     </form>
   </div>
