@@ -42,7 +42,7 @@
       return;
     }
     
-    navigator.clipboard.writeText(shortUrl);
+    navigator.clipboard.writeText("https://links.steellgold.fr/" + shortUrl);
     success = "The link has been copied to your clipboard";
   }
 
