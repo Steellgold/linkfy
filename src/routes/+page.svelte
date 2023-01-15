@@ -1,28 +1,64 @@
 <script lang="ts">
+  import { Button, RedirectButton } from "$lib/components/button";
+  import { Input } from "$lib/components/input";
+  import { generateShortUrl } from "$lib/utils/Shortener";
 
+  let error: string = "";
+  let success: string = "";
+  let url = "";
+  let shortenedUrl: string = "";
+
+  function transform() {
+    // check if the url is valid
+    if (url == "") {
+      error = "The url cannot be empty";
+      return;
+    }
+
+    if (!url.startsWith("https://") && !url.startsWith("http://")) {
+      error = "The url must start with https:// or http://";
+      return;
+    }
+
+    error = "";
+    const input = document.getElementById("shortened") as HTMLInputElement;
+    shortenedUrl = generateShortUrl();
+    input.value = shortenedUrl;
+  }
+
+  function copy() {
+    navigator.clipboard.writeText(shortenedUrl);
+    success = "The link has been copied to your clipboard";
+  }
 </script>
 
-<div class="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+<div class="flex items-center justify-center py-8 mx-auto md:h-screen lg:py-0">
   <div class="w-full p-6 rounded-lg shadow border md:mt-0 sm:max-w-md bg-gray-800 border-gray-700 sm:p-8">
     <h1 class="mb-1 text-xl font-bold md:text-2xl text-white">Shorten your links</h1>
-    <form class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
+    <form class="mt-4 space-y-4 lg:mt-5 md:space-y-5">
+      {#if error !== ""}
+        <div class="text-red-500 text-sm font-normal">{error}</div>
+      {/if}
+      {#if success !== ""}
+        <div class="text-green-500 text-sm font-normal">{success}</div>
+      {/if}
       <div>
-        <input type="url" name="shorten" class="border sm:text-sm outline-none rounded-lg block w-full p-2.5 focus:ring-1 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="https://google.com/">
+        <Input size="large" type="text" disabled={false} placeholder="https://google.com/" bind:value={url} />
       </div>
       <div class="flex items-center justify-between text-sm font-normal gap-3">
-        <input type="url" name="shortened" disabled class="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-800 border-gray-700 placeholder-gray-500" placeholder="https://google.com/">
-        <button type="submit" class="text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 transition-all ease-in-out 3s">
+        <Input size="large" type="text" disabled={true} placeholder="The shortcut link will appear here" id="shortened" bind:value={url}/>
+        <Button on:click={copy}>
           <i class="fa-solid fa-copy"></i>
-        </button>
+        </Button>
+        <RedirectButton path="/history">
+          <i class="fa-solid fa-clipboard-list"></i>
+        </RedirectButton>
       </div>
       <div class="flex items-center justify-between text-sm font-normal gap-3">
-      <button type="submit" class="w-full text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 transition-all ease-in-out 3s">
-        Transform..
-      </button>
-      <button class="text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 transition-all ease-in-out 3s">
-        <i class="fa-solid fa-clock-rotate-left"></i>
-      </button>
-    </div>
+        <Button on:click={transform} size="large">
+          Transform..
+        </Button>
+      </div>
     </form>
   </div>
 </div>
