@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
-import { supabaseUrl, supabaseKey } from "$env/static/private";
+import { SECRET_SUPABASE_URL, SECRET_SUPABASE_KEY } from "$env/static/private";
 
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(SECRET_SUPABASE_URL, SECRET_SUPABASE_KEY)
 export const db = supabase;
 
 export function insertLink(link: string, shorted: string) {
