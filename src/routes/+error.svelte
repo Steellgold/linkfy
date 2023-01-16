@@ -11,6 +11,7 @@
   let error = $page.error as Error;
 
   let errors = clsx({
+    "You must be connected to an account to access this page, if you are already connected, please try again later.": error.code === 401,
     "Sorry but this redirection link does not exist. However, you can go back to the home page to create your own redirection link.": error.code === 404,
     "Sorry, an internal error occurred on the server.": error.code === 500
   });
@@ -25,5 +26,10 @@
       <i class="fa-solid fa-arrow-left"></i>&nbsp;&nbsp;Back to home page
     </RedirectButton>
         
+    {#if error.code == 401}
+      <RedirectButton path="/" size="default">
+        <i class="fa-solid fa-user"></i>&nbsp;&nbsp;Login
+      </RedirectButton>
+    {/if}
   </div>   
 </div>
