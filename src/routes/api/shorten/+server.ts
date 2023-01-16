@@ -7,7 +7,7 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
 
   const schema = z.object({
     url: z.string().url(),
-    shortUrl: z.string().max(6),
+    shorted: z.string().max(6),
   }).safeParse(values);
 
   if (!schema.success) {
@@ -16,12 +16,12 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
     });
   }
 
-  const { url, shortUrl } = schema.data;
+  const { url, shorted } = schema.data;
 
   const { data, error } = await db
   .from('links')
   .insert([
-    { url: url, shorted: shortUrl },
+    { url: url, shorted: shorted },
   ])
 
   if (error) {

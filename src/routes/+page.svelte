@@ -3,11 +3,13 @@
   import { Input } from "$lib/components/input";
   import { generateShortUrl } from "$lib/utils/Shortener";
   import { url as StoreURL } from "$lib/utils/Stores";
+  import { PUBLIC_URL } from "$env/static/public";
 
   let error: string = "";
   let success: string = "";
   let url: string = "";
-  let shortUrl: string = "";
+
+  let finalUrl: string = "";
 
   StoreURL.subscribe(value => { url = value; });
 
@@ -21,6 +23,7 @@
 
     error = "";
     let shortenedUrl = generateShortUrl();
+    finalUrl = PUBLIC_URL + shortenedUrl;
     let res = await fetch("/api/shorten", {
       method: "POST",
       headers: {
@@ -28,12 +31,11 @@
       },
       body: JSON.stringify({ 
         url: url,
-        shortUrl: shortenedUrl,
+        shorted: shortenedUrl,
        }),
     });
 
-    input.value = "https://links.steellgold.fr/" + shortenedUrl;
-    shortUrl = shortenedUrl;
+    input.value = finalUrl;
   }
 
   function copy() {
@@ -42,17 +44,8 @@
       return;
     }
     
-    navigator.clipboard.writeText("https://links.steellgold.fr/" + shortUrl);
+    navigator.clipboard.writeText(finalUrl);
     success = "The link has been copied to your clipboard";
-  }
-
-  function redirectTo() {
-    if (url === ""){
-      error = "You must first generate a link";
-      return;
-    }
-
-    window.location.href = shortUrl;
   }
 </script>
 
@@ -88,7 +81,7 @@
       </div>
       <div class="flex items-center justify-between text-sm font-normal gap-3">
         <Button on:click={transform} size="large">Transform..</Button>
-        <Button on:click={redirectTo} hidden={shortUrl == "" ? true : false}>Redirect</Button>
+        <RedirectButton path={finalUrl} newTab={true} hidden={finalUrl == "" ? true : false}>Redirect</RedirectButton>
       </div>
     </form>
   </div>
