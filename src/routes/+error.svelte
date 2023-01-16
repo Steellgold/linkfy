@@ -24,5 +24,6 @@
     <RedirectButton path="/" size="default">
       <i class="fa-solid fa-arrow-left"></i>&nbsp;&nbsp;Back to home page
     </RedirectButton>
+        
   </div>   
 </div>
