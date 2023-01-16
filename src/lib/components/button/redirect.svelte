@@ -3,7 +3,9 @@
 
   export let path: string = "/";
   export let disabled: boolean = false;
+  export let newTab: boolean = false;
   export let size: "large" | "default" = "default";
+  export let hidden: boolean = false;
 
   const sizeClass = clsx({
     "w-full": size === "large",
@@ -16,10 +18,11 @@
   });
 
   function clickButton() {
-    window.location.href = path;
+    if (newTab) window.open(path, "_blank");
+    else window.location.href = path;
   }
 </script>
 
-<button on:click={clickButton} type="button" disabled={disabled} class="{sizeClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center {disabledClass} transition-all ease-in-out 3s">
+<button on:click={clickButton} type="button" disabled={disabled} class="{sizeClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center {disabledClass} transition-all ease-in-out 3s {hidden ? 'hidden' : ''}">
   <slot></slot>
 </button>
