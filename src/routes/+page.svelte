@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, RedirectButton } from "$lib/components/button";
+  import { Button, CopyButton, RedirectButton } from "$lib/components/button";
   import { Input } from "$lib/components/input";
   import { generateShortUrl } from "$lib/utils/Shortener";
   import { connected, url as StoreURL } from "$lib/utils/Stores";
@@ -60,9 +60,7 @@
       <div class="flex items-center justify-between text-sm font-normal gap-3">
         <Input size="large" type="text" disabled={true} placeholder="The shortcut link will appear here" id="shortened" bind:value={url}/>
         
-        <Button on:click={copy(finalUrl)}>
-          <i class="fa-solid fa-clipboard"></i>
-        </Button>
+        <CopyButton toCopy={finalUrl} disabled={finalUrl == "" ? true : false} />
         
         <RedirectButton disabled={true}>
           <i class="fa-solid fa-list"></i>

@@ -18,8 +18,15 @@
     "bg-green-600 hover:bg-green-700 focus:ring-green-800": color === "green",
     "bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-800": color === "yellow",
   });
+
+  let colorClassDisabled = clsx({
+    "bg-blue-700": color === "blue",
+    "bg-red-500": color === "red",
+    "bg-green-400": color === "green",
+    "bg-yellow-400": color === "yellow",
+  });
 </script>
 
-<button on:click type={type} disabled={disabled} class="{sizeClass} {colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all ease-in-out 3s {hidden ? 'hidden' : ''}">
+<button on:click type={type} disabled={disabled} class="{sizeClass} {disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all ease-in-out 3s {hidden ? 'hidden' : ''}">
   <slot></slot>
 </button>
