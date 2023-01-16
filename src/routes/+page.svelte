@@ -4,13 +4,13 @@
   import { generateShortUrl } from "$lib/utils/Shortener";
   import { connected, url as StoreURL } from "$lib/utils/Stores";
   import { PUBLIC_URL } from "$env/static/public";
-    import { Alert } from "$lib/components/layouts/alert";
+  import { pushToast } from "$lib/components/layouts/toast";
 
   let error: string = "";
   let success: string = "";
   let url: string = "";
 
-  if (!connected) error = "Currently your link will not be able to receive statistics because you are not logged in.";
+  if (!connected) pushToast("Currently your link will not be able to receive statistics because you are not logged in.", "danger");
 
   let finalUrl: string = "";
 
@@ -62,8 +62,7 @@
 
 <div class="flex flex-col items-center justify-center py-8 mx-auto md:h-screen lg:py-0">
   <div class="flex items-center justify-center">
-    {#if success}<Alert type="success">{success}</Alert>{/if}
-    {#if error}<Alert type="danger">{error}</Alert>{/if} 
+    <!-- For idk -->
   </div>
 
   <div class="w-full p-6 rounded-lg shadow border md:mt-0 sm:max-w-md bg-gray-800 border-gray-700 sm:p-8">
