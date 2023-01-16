@@ -17,6 +17,7 @@
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
     "postcss-load-config": "^4.0.1",
+    "prisma": "^4.8.1",
     "svelte": "^3.55.1",
     "svelte-check": "^3.0.2",
     "svelte-preprocess": "^4.10.7",
@@ -27,6 +28,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@fingerprintjs/fingerprintjs-pro": "^3.8.1",
     "@supabase/supabase-js": "^2.4.0",
     "clsx": "^1.2.1",
     "zod": "^3.20.2"
