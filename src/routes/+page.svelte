@@ -5,13 +5,12 @@
   import { connected, url as StoreURL } from "$lib/utils/Stores";
   import { PUBLIC_URL } from "$env/static/public";
   import { pushToast } from "$lib/components/layouts/toast";
+    import { copy } from "$lib/utils/Utils";
 
-  let error: string = "";
-  let success: string = "";
-  let url: string = "";
-
+  // Temporary:
   if (!connected) pushToast("Currently your link will not be able to receive statistics because you are not logged in.", "danger");
 
+  let url: string = "";
   let finalUrl: string = "";
 
   StoreURL.subscribe(value => { url = value; });
@@ -20,11 +19,10 @@
     const input = document.getElementById("shortened") as HTMLInputElement;
     
     if (url !== "" && !url.startsWith("https://") && !url.startsWith("http://")) {
-      error = "The url must start with https:// or http:// and not be empty";
+      pushToast("The url must start with https:// or http:// and not be empty", "danger");
       return;
     }
 
-    error = "";
     let shortenedUrl = generateShortUrl();
     finalUrl = PUBLIC_URL + shortenedUrl;
     let res = await fetch("/api/shorten", {
@@ -39,24 +37,12 @@
     });
 
     if (res.status !== 200) {
-      error = "An error has occurred while generating the link";
+      pushToast("An error has occurred while generating the link", "danger");
       return;
     }
     
-    success = "The link has been generated";
-    error = "";
+    pushToast("The link has been generated", "success");
     input.value = finalUrl;
-  }
-
-  function copy() {
-    if (url === ""){
-      error = "You must first generate a link";
-      return;
-    }
-    
-    navigator.clipboard.writeText(finalUrl);
-    success = "The link has been copied to your clipboard";
-    error = "";
   }
 </script>
 
@@ -74,7 +60,7 @@
       <div class="flex items-center justify-between text-sm font-normal gap-3">
         <Input size="large" type="text" disabled={true} placeholder="The shortcut link will appear here" id="shortened" bind:value={url}/>
         
-        <Button on:click={copy}>
+        <Button on:click={copy(finalUrl)}>
           <i class="fa-solid fa-clipboard"></i>
         </Button>
         
