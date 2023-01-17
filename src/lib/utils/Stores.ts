@@ -1,5 +1,10 @@
-import { writable } from 'svelte/store';
-
-export const url = writable(" ");
-
 export let connected: boolean = false;
+let visitorId: string | null = null;
+
+export function getVisitorId() {
+    return visitorId;
+}
+
+export function setVisitorId(id: string) {
+    visitorId = id;
+}
