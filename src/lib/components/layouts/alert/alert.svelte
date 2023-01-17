@@ -1,6 +1,12 @@
 <script lang="ts">
   import clsx from "clsx";
-  export let type: "danger" | "warning" | "success" | "info" = "info";
+  
+  /**
+   * The type of the alert.
+   * @default "info"
+   * @type {"danger" | "warning" | "success" | "info"}
+   */
+  export let type: string = "info";
 
   let icon = clsx({
     "fa-solid fa-exclamation-circle": type === "danger",
