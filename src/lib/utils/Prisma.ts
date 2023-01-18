@@ -38,7 +38,7 @@ export async function getLink(shortUrl: string) : Promise<ILink> {
     where: {
       shortUrl: shortUrl,
     }
-  }));
+  }))[0];
 }
 
 /**
