@@ -10,7 +10,7 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
     shortUrl: z.string().regex(/^[a-zA-Z0-9]+$/),
     clicksCount: z.number().int(),
     fromClicks: z.array(z.object({ key: z.string(), value: z.number() })) ?? [],
-    userId: z.string().optional() ?? null,
+    userId: z.string().optional(),
     visitorId: z.string(),
   }).safeParse(values);
 

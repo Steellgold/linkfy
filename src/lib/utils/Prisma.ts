@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export interface ILink {
+  id: number;
   createdAt: Date;
   baseUrl: string;
   shortUrl: string;
@@ -20,8 +21,8 @@ export function patch(data: any) {
  * @param id 
  * @returns {Promise<ILink[]>}
  */
-export async function getLinks(type: "visitorId" | "userId", id: string) : Promise<ILink[]> {
-  return patch(await prisma.links_dev.findMany({
+export async function getLinks(type: "visitorId" | "userId", id: number) : Promise<ILink[]> {
+  return patch(await prisma.links.findMany({
     where: {
       [type]: id,
     }
@@ -33,7 +34,7 @@ export async function getLinks(type: "visitorId" | "userId", id: string) : Promi
  * @returns {Promise<ILink>}
  */
 export async function getLink(shortUrl: string) : Promise<ILink> {
-  return patch(await prisma.links_dev.findMany({
+  return patch(await prisma.links.findMany({
     where: {
       shortUrl: shortUrl,
     }
@@ -45,7 +46,7 @@ export async function getLink(shortUrl: string) : Promise<ILink> {
  * @returns {Promise<any>}
  */
 export async function createLink(data: any) : Promise<any> {
-  return patch(await prisma.links_dev.create({
+  return patch(await prisma.links.create({
     data: data,
   }));
 }
@@ -55,23 +56,23 @@ export async function createLink(data: any) : Promise<any> {
  * @param data 
  * @returns {Promise<any>}
  */
-export async function updateLink(shortUrl: string, data: any) : Promise<any> {
-  return patch(await prisma.links_dev.update({
+export async function updateLink(linkId: number, data: any) : Promise<any> {
+  return await prisma.links.update({
     where: {
-      shortUrl: shortUrl,
+      id: linkId,
     },
     data: data,
-  }));
+  });
 }
 
 /**
  * @param shortUrl 
  * @returns {Promise<any>}
  */
-export async function deleteLink(shortUrl: string) : Promise<any> {
-  return patch(await prisma.links_dev.delete({
+export async function deleteLink(linkId: number) : Promise<any> {
+  return patch(await prisma.links.delete({
     where: {
-      shortUrl: shortUrl,
+      id: linkId,
     }
   }));
 }

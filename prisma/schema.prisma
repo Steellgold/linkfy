@@ -8,19 +8,12 @@ datasource db {
 }
 
 model links {
-  id        BigInt    @id(map: "urls_pkey") @default(autoincrement())
-  createdAt DateTime? @default(now()) @db.Timestamp(6)
-  url       String?
-  shorted   String?
-}
-
-model links_dev {
   id          BigInt    @id @default(autoincrement())
   createdAt   DateTime? @default(now()) @db.Timestamp(6)
+  userId      String?   @db.VarChar
+  visitorId   String?   @db.VarChar
   baseUrl     String?
   shortUrl    String?
   clicksCount BigInt?   @default(0)
   fromClicks  Json?     @db.Json
-  userId      String?   @db.VarChar
-  visitorId   String?   @db.VarChar
 }
