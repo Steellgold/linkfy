@@ -20,7 +20,7 @@
   });
 
   let colorClassDisabled = clsx({
-    "bg-blue-700": color === "blue",
+    "bg-blue-800": color === "blue",
     "bg-red-500": color === "red",
     "bg-green-400": color === "green",
     "bg-yellow-400": color === "yellow",
