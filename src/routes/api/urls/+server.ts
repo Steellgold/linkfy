@@ -1,6 +1,6 @@
 import type { RequestEvent } from "./$types";
 import z from "zod";
-import prisma from "$lib/utils/Prisma";
+import prisma, { createLink } from "$lib/utils/Prisma";
 
 export async function POST({ request }: RequestEvent): Promise<Response> {
   const values = await request.json();
@@ -16,6 +16,13 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
 
   if (!schema.success) return new Response("Invalid data: " + schema.error.message, { status: 400 });
 
-  let send = await prisma.links_dev.create({ data: schema.data });
+  await createLink({
+    visitorId: schema.data.visitorId,
+    baseUrl: schema.data.baseUrl,
+    shortUrl: schema.data.shortUrl,
+    clicksCount: schema.data.clicksCount,
+    fromClicks: schema.data.fromClicks,
+  });
+
   return new Response("OK", { status: 200 });
 }

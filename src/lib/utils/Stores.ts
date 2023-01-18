@@ -1,10 +1,15 @@
-export let connected: boolean = false;
-let visitorId: string | null = null;
+import { writable } from "svelte/store";
 
-export function getVisitorId() {
-    return visitorId;
+export let visitorId = writable<string | null>(null);
+
+export function getVisitorId() : string | null {
+    let id = null;
+    visitorId.subscribe((value) => {
+        id = value;
+    });
+    return id;
 }
 
 export function setVisitorId(id: string) {
-    visitorId = id;
+    visitorId.set(id);
 }

@@ -2,14 +2,14 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export interface ILink {
-  id: number;
-  createdAt: Date;
+  id?: number;
+  createdAt?: Date;
+  userId?: string;
+  visitorId: string;
   baseUrl: string;
   shortUrl: string;
   clicksCount: number;
   fromClicks: Array<{ key: string, value: number }>;
-  userId: string | null;
-  visitorId: string;
 }
 
 export function patch(data: any) {
@@ -45,7 +45,7 @@ export async function getLink(shortUrl: string) : Promise<ILink> {
  * @param data 
  * @returns {Promise<any>}
  */
-export async function createLink(data: any) : Promise<any> {
+export async function createLink(data: ILink) : Promise<any> {
   return patch(await prisma.links.create({
     data: data,
   }));

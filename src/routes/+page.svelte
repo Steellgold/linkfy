@@ -2,11 +2,9 @@
   import { Button, CopyButton, RedirectButton } from "$lib/components/button";
   import { Input } from "$lib/components/input";
   import { generateShortUrl } from "$lib/utils/Shortener";
-  import { connected, getVisitorId } from "$lib/utils/Stores";
+  import { getVisitorId } from "$lib/utils/Stores";
   import { PUBLIC_URL } from "$env/static/public";
   import { pushToast } from "$lib/components/layouts/toast";
-
-  if (!connected) pushToast("Currently your link will not be able to receive statistics because you are not logged in.", "danger");
 
   let url: string = " ";
   let finalUrl: string = "";
@@ -18,6 +16,7 @@
 
     let shortenedUrl = generateShortUrl();
     finalUrl = PUBLIC_URL + shortenedUrl;
+
     let res = await fetch("/api/urls", {
       method: "POST",
       headers: {
@@ -28,7 +27,6 @@
         shortUrl: shortenedUrl,
         clicksCount: 0,
         fromClicks: [],
-        // userId: null,
         visitorId: getVisitorId(),
        }),
     });
