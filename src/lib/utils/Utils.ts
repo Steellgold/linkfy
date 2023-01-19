@@ -7,16 +7,21 @@ export function copy(toCopy: string) {
   }
 
   if (typeof toCopy !== "string"){
-    pushToast("The link is not a string", "warning");
+    pushToast("The text provided to copy is not a string", "warning");
     return false;
   }
   
   if (toCopy == "" || toCopy == " ") {
-    pushToast("The link provided is empty, please try again", "warning");
+    pushToast("The text provided to copy is empty, please try again", "warning");
     return false;
   }
 
   navigator.clipboard.writeText(toCopy);
-  pushToast("The link has been copied to your clipboard", "success");
+  pushToast("The text provided has been copied to your clipboard", "success");
   return true;
+}
+
+export function minimize(url: string, lengthMax: number = 21, end: string = "[...]") {
+  if (url.length > lengthMax) return url.substring(0, lengthMax) + end;
+  return url;
 }
