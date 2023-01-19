@@ -2,10 +2,12 @@
   import { Button, CopyButton, RedirectButton } from "$lib/components/button";
   import { Input } from "$lib/components/input";
   import { generateShortUrl } from "$lib/utils/Shortener";
-  import { getVisitorId } from "$lib/utils/Stores";
   import { PUBLIC_URL } from "$env/static/public";
   import { pushToast } from "$lib/components/layouts/toast";
   import { Container } from "$lib/components/layouts/container";
+  import Cookies from "js-cookie";
+
+  console.log(Cookies.get("visitorId"));
 
   let url: string = "";
   let finalUrl: string = "";
@@ -28,7 +30,7 @@
         shortUrl: shortenedUrl,
         clicksCount: 0,
         fromClicks: [],
-        visitorId: getVisitorId(),
+        visitorId: Cookies.get("visitorId"),
        }),
     });
 
@@ -50,7 +52,7 @@
       
       <CopyButton toCopy={finalUrl} disabled={finalUrl == "" ? true : false} />
       
-      <RedirectButton disabled={getVisitorId() == "" ? true : false} path="/history">
+      <RedirectButton disabled={Cookies.get("visitorId") == undefined ? true : false} path="/history">
         <i class="fa-solid fa-list"></i>
       </RedirectButton>
     </div>

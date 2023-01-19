@@ -15,6 +15,7 @@
     "@bluzzi/eslint-config": "^0.8.3",
     "@sveltejs/adapter-auto": "^1.0.2",
     "@sveltejs/kit": "^1.1.4",
+    "@types/js-cookie": "^3.0.2",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.32.0",
     "postcss": "^8.4.21",
@@ -32,6 +33,7 @@
     "@fingerprintjs/fingerprintjs-pro": "^3.8.1",
     "@supabase/supabase-js": "^2.4.0",
     "clsx": "^1.2.1",
+    "js-cookie": "^3.0.1",
     "zod": "^3.20.2"
   }
 }

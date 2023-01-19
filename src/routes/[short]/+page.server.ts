@@ -8,8 +8,7 @@ export async function load({ params }: LoadEvent) {
 
   if (!link) {
     throw SvelteKitError(404, {
-      message: "Not found",
-      // @ts-ignore
+      message: "Link not found",
       code: 404
     });
   }
