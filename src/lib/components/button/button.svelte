@@ -5,9 +5,9 @@
   export let ButtonProps: ButtonProps;
 
   const sizeClass = clsx({
-    "w-1/2": ButtonProps.size === "small",
-    "": ButtonProps.size === "default",
-    "w-full": ButtonProps.size === "large"
+    "px-3 py-2 text-xs": ButtonProps.size === "small",
+    "px-5 py-2.5 text-sm": ButtonProps.size === "default",
+    "w-full px-5 py-2.5": ButtonProps.size === "large"
   });
 
   let colorClass = clsx({
@@ -25,6 +25,6 @@
   });
 </script>
 
-<button on:click disabled={ButtonProps.disabled} class="{sizeClass} {ButtonProps.disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all ease-in-out 3s {ButtonProps.hidden ? 'hidden' : ''}">
+<button on:click disabled={ButtonProps.disabled} class="{sizeClass} {ButtonProps.disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-center transition-all ease-in-out 3s {ButtonProps.hidden ? 'hidden' : ''}">
   <slot></slot>
 </button>

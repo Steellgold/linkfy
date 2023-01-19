@@ -6,7 +6,7 @@
   export let path: string = "/";
 
   export let disabled: boolean = false;
-  export let size: "large" | "default" = "default";
+  export let size: "small" | "default" | "large" = "default";
   export let hidden: boolean = false;
   export let color: "blue" | "red" | "green" | "yellow" = "blue";
 

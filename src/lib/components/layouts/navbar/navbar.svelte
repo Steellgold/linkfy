@@ -3,7 +3,7 @@
   import { NavbarGroup, NavbarLink } from ".";
 </script>
 
-<nav class="bg-gray-900 px-2 py-3">
+<nav class="bg-gray-900 px-2 py-3 pt-6 pb-6">
   <div class="container flex flex-wrap items-center justify-between mx-auto">
     <a href="/" class="flex items-center">
       <img src="/favicon.png" class="h-6 mr-3 sm:h-9" alt="??? Logo" />

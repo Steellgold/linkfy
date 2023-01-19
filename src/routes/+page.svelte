@@ -5,7 +5,7 @@
   import { getVisitorId } from "$lib/utils/Stores";
   import { PUBLIC_URL } from "$env/static/public";
   import { pushToast } from "$lib/components/layouts/toast";
-    import { Container } from "$lib/components/layouts/container";
+  import { Container } from "$lib/components/layouts/container";
 
   let url: string = "";
   let finalUrl: string = "";
