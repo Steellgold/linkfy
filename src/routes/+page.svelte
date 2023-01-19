@@ -62,7 +62,6 @@
         variant: "blue",
         disabled: url.length == 0 ? true : false,
       }}>Transform..</Button>
-      <RedirectButton path={finalUrl} newTab={true} hidden={finalUrl == "" ? true : false}>Redirect</RedirectButton>
     </div>
   </div>
 </Container>
