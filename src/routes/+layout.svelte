@@ -6,6 +6,7 @@
   import { onMount } from "svelte";
   import { getVisitorId, setVisitorId } from "$lib/utils/Stores";
   import { PUBLIC_FINGERPRINT_API_KEY } from "$env/static/public";
+  import { Navbar } from "$lib/components/layouts/navbar";
 
   onMount(() => {
     if (getVisitorId() !== null) return;
@@ -16,6 +17,8 @@
      });
   })
 </script>
+
+<Navbar />
 
 <slot />
 
