@@ -51,7 +51,7 @@
         
         <CopyButton toCopy={finalUrl} disabled={finalUrl == "" ? true : false} />
         
-        <RedirectButton disabled={true}>
+        <RedirectButton disabled={getVisitorId() == "" ? true : false} path="/history">
           <i class="fa-solid fa-list"></i>
         </RedirectButton>
       </div>
