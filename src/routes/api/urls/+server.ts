@@ -11,7 +11,7 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
     clicksCount: z.number().int(),
     fromClicks: z.array(z.object({ key: z.string(), value: z.number() })) ?? [],
     userId: z.string().optional(),
-    visitorId: z.string(),
+    visitorId: z.string()
   }).safeParse(values);
 
   if (!schema.success) return new Response("Invalid data: " + schema.error.message, { status: 400 });
@@ -21,7 +21,7 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
     baseUrl: schema.data.baseUrl,
     shortUrl: schema.data.shortUrl,
     clicksCount: schema.data.clicksCount,
-    fromClicks: schema.data.fromClicks,
+    fromClicks: schema.data.fromClicks
   });
 
   return new Response("OK", { status: 200 });

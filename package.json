@@ -12,9 +12,11 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^1.0.1",
-    "@sveltejs/kit": "^1.1.1",
+    "@bluzzi/eslint-config": "^0.8.3",
+    "@sveltejs/adapter-auto": "^1.0.2",
+    "@sveltejs/kit": "^1.1.4",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.32.0",
     "postcss": "^8.4.21",
     "postcss-load-config": "^4.0.1",
     "svelte": "^3.55.1",

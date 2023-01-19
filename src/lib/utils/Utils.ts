@@ -6,11 +6,11 @@ export function copy(toCopy: string) {
     return false;
   }
 
-  if (typeof toCopy !== "string"){
+  if (typeof toCopy !== "string") {
     pushToast("The text provided to copy is not a string", "warning");
     return false;
   }
-  
+
   if (toCopy == "" || toCopy == " ") {
     pushToast("The text provided to copy is empty, please try again", "warning");
     return false;
@@ -21,7 +21,7 @@ export function copy(toCopy: string) {
   return true;
 }
 
-export function minimize(url: string, lengthMax: number = 21, end: string = "[...]") {
+export function minimize(url: string, lengthMax = 21, end = "[...]") {
   if (url.length > lengthMax) return url.substring(0, lengthMax) + end;
   return url;
 }
