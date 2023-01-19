@@ -3,9 +3,23 @@
   import { RedirectButton } from "$lib/components/button";
   import { Container } from "$lib/components/layouts/container";
   import { minimize } from "$lib/utils/Utils";
-  import type { PageData } from "./$types";
+  import { onMount } from "svelte";
 
-  export let data: PageData;
+  let linksData: any = null;
+  let loading: boolean = true;
+
+  onMount(async () => {
+    try {
+      const res = await fetch("/api/urls?visitorId=" + localStorage.getItem("visitorId") + "&limit=10");
+      linksData = await res.json();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      loading = false;
+    }  
+  });
+
+  console.log(linksData);
 </script>
 
 <!-- This page is totally useless, replaced by an better history page with graphs -->
@@ -36,43 +50,50 @@
       </thead>
 
       <tbody>
-        {#each data.links as link }
-          <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-              { minimize(link.baseUrl) }
-            </th>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <a href="{PUBLIC_URL + link.shortUrl}" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
-                {PUBLIC_URL + link.shortUrl}
-              </a>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              { new Date(link.createdAt).toLocaleString() }
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              { link.clicksCount }
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <RedirectButton path="/history/{link.shortUrl}" props={{
-                size: "large"
-              }}>
-                <i class="fa-solid fa-eye"></i>&nbsp;&nbsp;View
-              </RedirectButton>
-            </td>
-          </tr>
-        {/each}
+        {#if loading}
+          {#each Array(10) as _}
+            <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                <div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div>
+              </th>
+              <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
+              <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
+              <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
+              <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
+            </tr>
+          {/each}
+        {:else}
+          {#each linksData as link }
+            <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                { minimize(link.baseUrl) }
+              </th>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <a href="{PUBLIC_URL + link.shortUrl}" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
+                  {PUBLIC_URL + link.shortUrl}
+                </a>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                { new Date(link.createdAt).toLocaleString() }
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                { link.clicksCount }
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <RedirectButton path="/history/{link.shortUrl}" size="small">
+                  <i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;Manage
+                </RedirectButton>
+              </td>
+            </tr>
+          {/each}
+        {/if}
       </tbody>
     </table>
   </div>
 
   <form class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
     <div class="flex items-center justify-between text-sm font-normal gap-3">
-      <RedirectButton path="/" props={{
-        size: "default",
-        disabled: false,
-        hidden: false,
-        variant: "blue"
-      }}>
+      <RedirectButton path="/" size="large">
         <i class="fa-solid fa-arrow-left"></i>&nbsp;&nbsp;Back to shortener
       </RedirectButton>
     </div>
