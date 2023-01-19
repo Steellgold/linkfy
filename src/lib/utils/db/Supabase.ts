@@ -4,7 +4,7 @@ import { SECRET_SUPABASE_URL, SECRET_SUPABASE_KEY } from "$env/static/private";
 const supabase = createClient(SECRET_SUPABASE_URL, SECRET_SUPABASE_KEY)
 export const db = supabase;
 
-export async function getLinks(type: "visitorId" | "userId", id: number) : Promise<any> {
+export async function getLinks(type: "visitorId" | "userId", id: string) : Promise<any> {
   const { data: links, error } = await db
     .from('links')
     .select('*')
