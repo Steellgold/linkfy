@@ -1,6 +1,4 @@
 <script lang="ts">
-  import type { PageData } from './$types';
-  export let data: PageData;
   import { RedirectButton } from "$lib/components/button";
 </script>
 

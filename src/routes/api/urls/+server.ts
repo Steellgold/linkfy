@@ -1,6 +1,6 @@
 import type { RequestEvent } from "./$types";
 import z from "zod";
-import prisma, { createLink } from "$lib/utils/Prisma";
+import { createLink } from "$lib/utils/db/Supabase";
 
 export async function POST({ request }: RequestEvent): Promise<Response> {
   const values = await request.json();
