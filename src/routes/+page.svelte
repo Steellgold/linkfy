@@ -7,8 +7,6 @@
   import { Container } from "$lib/components/layouts/container";
   import Cookies from "js-cookie";
 
-  console.log(Cookies.get("visitorId"));
-
   let url: string = "";
   let finalUrl: string = "";
 
