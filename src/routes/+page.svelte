@@ -56,10 +56,14 @@
         </RedirectButton>
       </div>
 
-      <div class="flex items-center justify-between text-sm font-normal gap-3">
-        <Button on:click={transform} size="large">Transform..</Button>
-        <RedirectButton path={finalUrl} newTab={true} hidden={finalUrl == "" ? true : false}>Redirect</RedirectButton>
-      </div>
-    </form>
+    <div class="flex items-center justify-between text-sm font-normal gap-3">
+      <Button on:click={transform} ButtonProps={{
+        size: "large",
+        hidden: false,
+        variant: "blue",
+        disabled: url.length == 0 ? true : false,
+      }}>Transform..</Button>
+      <RedirectButton path={finalUrl} newTab={true} hidden={finalUrl == "" ? true : false}>Redirect</RedirectButton>
+    </div>
   </div>
 </div>

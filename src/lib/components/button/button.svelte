@@ -1,32 +1,30 @@
 <script lang="ts">
   import clsx from "clsx";
+  import type { ButtonProps } from ".";
 
-  export let type: "button" | "submit" | "reset" = "button";
-  export let disabled: boolean = false;
-  export let size: "large" | "default" = "default";
-  export let hidden: boolean = false;
-  export let color: "blue" | "red" | "green" | "yellow" = "blue";
+  export let ButtonProps: ButtonProps;
 
   const sizeClass = clsx({
-    "w-full": size === "large",
-    "": size === "default",
+    "w-1/2": ButtonProps.size === "small",
+    "": ButtonProps.size === "default",
+    "w-full": ButtonProps.size === "large"
   });
 
   let colorClass = clsx({
-    "bg-blue-600 hover:bg-blue-700 focus:ring-blue-800": color === "blue",
-    "bg-red-700 hover:bg-red-800 focus:ring-red-800": color === "red",
-    "bg-green-600 hover:bg-green-700 focus:ring-green-800": color === "green",
-    "bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-800": color === "yellow",
+    "bg-blue-600 hover:bg-blue-700 focus:ring-blue-800": ButtonProps.variant === "blue",
+    "bg-red-700 hover:bg-red-800 focus:ring-red-800": ButtonProps.variant === "red",
+    "bg-green-600 hover:bg-green-700 focus:ring-green-800": ButtonProps.variant === "green",
+    "bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-800": ButtonProps.variant === "yellow",
   });
 
   let colorClassDisabled = clsx({
-    "bg-blue-800": color === "blue",
-    "bg-red-500": color === "red",
-    "bg-green-400": color === "green",
-    "bg-yellow-400": color === "yellow",
+    "bg-blue-800": ButtonProps.variant === "blue",
+    "bg-red-500": ButtonProps.variant === "red",
+    "bg-green-400": ButtonProps.variant === "green",
+    "bg-yellow-400": ButtonProps.variant === "yellow",
   });
 </script>
 
-<button on:click type={type} disabled={disabled} class="{sizeClass} {disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all ease-in-out 3s {hidden ? 'hidden' : ''}">
+<button on:click disabled={ButtonProps.disabled} class="{sizeClass} {ButtonProps.disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all ease-in-out 3s {ButtonProps.hidden ? 'hidden' : ''}">
   <slot></slot>
 </button>
