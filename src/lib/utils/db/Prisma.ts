@@ -1,16 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
-
-export interface ILink {
-  id?: number;
-  createdAt?: Date;
-  userId?: string;
-  visitorId: string;
-  baseUrl: string;
-  shortUrl: string;
-  clicksCount: number;
-  fromClicks: Array<{ key: string, value: number }>;
-}
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 export function patch(data: any) {
   return JSON.parse(JSON.stringify(data, (_, value) => typeof value === "bigint" ? value.toString() : value));
@@ -19,9 +8,9 @@ export function patch(data: any) {
 /**
  * @param type { "visitorId" | "userId" }
  * @param id 
- * @returns {Promise<ILink[]>}
+ * @returns {Promise<any>}
  */
-export async function getLinks(type: "visitorId" | "userId", id: number) : Promise<ILink[]> {
+export async function getLinks(type: "visitorId" | "userId", id: number) : Promise<any> {
   return patch(await prisma.links.findMany({
     where: {
       [type]: id,
@@ -31,13 +20,11 @@ export async function getLinks(type: "visitorId" | "userId", id: number) : Promi
 
 /**
  * @param shortUrl 
- * @returns {Promise<ILink>}
+ * @returns {Promise<any>}
  */
-export async function getLink(shortUrl: string) : Promise<ILink> {
+export async function getLink(shortUrl: string) : Promise<any> {
   return patch(await prisma.links.findMany({
-    where: {
-      shortUrl: shortUrl,
-    }
+    where: { shortUrl: "5eFCXA" },
   }))[0];
 }
 
@@ -45,7 +32,7 @@ export async function getLink(shortUrl: string) : Promise<ILink> {
  * @param data 
  * @returns {Promise<any>}
  */
-export async function createLink(data: ILink) : Promise<any> {
+export async function createLink(data: any) : Promise<any> {
   return patch(await prisma.links.create({
     data: data,
   }));
