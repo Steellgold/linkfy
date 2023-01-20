@@ -1,5 +1,4 @@
 <script lang="ts">
-  import clsx from "clsx";
   export let value: number = 0; // Page number (starts at 0)
   export let total: number = 0;
 
@@ -34,7 +33,7 @@
   </span>
   <!-- Buttons -->
   <div class="inline-flex mt-2 xs:mt-0">
-      <button class="px-4 py-2 text-sm font-medium rounded-l bg-slate-600 text-white hover:bg-slate-700 transition-all duration-150 ease-in-out" on:click={prevPage}>
+      <button class="px-4 py-2 text-sm font-medium rounded-l bg-slate-600 text-white transition-all duration-150 ease-in-out" on:click={prevPage}>
           Prev
       </button>
       <button class="px-4 py-2 text-sm font-medium rounded-r bg-slate-600 text-white hover:bg-slate-700 transition-all duration-150 ease-in-out" on:click={nextPage}>

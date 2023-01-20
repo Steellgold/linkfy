@@ -6,6 +6,8 @@ export async function load({ params }: LoadEvent) {
   const { short } = params;
   const link = await getLink(short as string);
 
+  console.log(link);
+
   if (!link) {
     throw SvelteKitError(404, {
       message: "Link not found",
@@ -13,9 +15,10 @@ export async function load({ params }: LoadEvent) {
     });
   }
 
-  await updateLink(short as string, {
-    clicksCount: link.clicksCount + 1
-  });
+  // throw redirect(301, String(link.baseUrl));
 
-  throw redirect(301, String(link.baseUrl));
+  return {
+    redirect: link.url,
+    shortUrl: link.shortUrl
+  };
 }
