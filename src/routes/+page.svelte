@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, CopyButton, RedirectButton } from "$lib/components/button";
-  import { Input } from "$lib/components/input";
+  import { Input, Range } from "$lib/components/input";
   import { generateShortUrl } from "$lib/utils/Shortener";
   import { PUBLIC_URL } from "$env/static/public";
   import { pushToast } from "$lib/components/layouts/toast";
@@ -9,13 +9,15 @@
 
   let url: string = "";
   let finalUrl: string = "";
+  let loading: boolean = false;
 
   async function transform() {
     const input = document.getElementById("shortened") as HTMLInputElement;
+    loading = true;
     
     if (url !== "" && !url.startsWith("https://") && !url.startsWith("http://")) return pushToast("The url must start with https:// or http:// and not be empty", "danger");
 
-    let shortenedUrl = generateShortUrl();
+    let shortenedUrl = generateShortUrl(4, 4);
     finalUrl = PUBLIC_URL + shortenedUrl;
 
     let res = await fetch("/api/urls", {
@@ -35,6 +37,7 @@
     if (res.status !== 200) return pushToast("An error has occurred while generating the link", "danger");
     
     pushToast("The link has been generated", "success");
+    loading = false;
     input.value = finalUrl;
   }
 </script>
@@ -46,7 +49,10 @@
   <div class="mt-4 space-y-4 lg:mt-5 md:space-y-5">
     <div><Input size="large" type="text" disabled={false} placeholder="https://google.com/" bind:value={url} /></div>
     <div class="flex items-center justify-between text-sm font-normal gap-3">
-      <Input size="large" type="text" disabled={true} placeholder="The shortcut link will appear here" id="shortened" bind:value={url}/>
+      {#if loading}
+        <div class="animate-pulse h-4 p-5 bg-gray-600 rounded w-full"></div>
+      {/if}
+      <Input size="large" type="text" disabled={true} hidden={loading} placeholder="The shortcut link will appear here" id="shortened" bind:value={url} />
     </div>
 
     <div class="flex items-center justify-between text-sm font-normal gap-3">

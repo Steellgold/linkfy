@@ -2,29 +2,37 @@
   import { PUBLIC_URL } from "$env/static/public";
   import { RedirectButton } from "$lib/components/button";
   import { Container } from "$lib/components/layouts/container";
+  import { Pagination } from "$lib/components/layouts/pagination";
   import { pushToast } from "$lib/components/layouts/toast";
   import { formatNumbers, minimize } from "$lib/utils/Utils";
+  import Cookies from "js-cookie";
   import { onMount } from "svelte";
-  import Cookies from "js-cookie"
 
-  let linksData: any = null;
   let loading: boolean = true;
+  let pages = new Array();
+  const linksPerPage = 10; // Can edit in the future to make it customizable
+  let currentPage = 0;
+  let total = 0;
 
   onMount(async () => {
-    try {
-      const res = await fetch("/api/urls?visitorId=" + Cookies.get("visitorId") + "&limit=10");
-      linksData = await res.json();
-    } catch (err) {
-      pushToast("An error occured while fetching your history", "danger");
-    } finally {
-      loading = false;
+    const res = await fetch("api/urls?visitorId=" + Cookies.get("visitorId"));
+    if (res.status !== 200) return pushToast("An error has occurred while fetching your history", "danger");
+
+    const linksData = await res.json();
+
+    const links = linksData;
+    const pagesCount = Math.ceil(links.length / linksPerPage);
+    
+    for (let i = 0; i < pagesCount; i++) {
+      pages.push(links.slice(i * linksPerPage, (i + 1) * linksPerPage));
+      total += links.slice(i * linksPerPage, (i + 1) * linksPerPage).length;
     }
+    loading = false;
   });
 
   let logged: boolean = false;
 </script>
 
-<!-- This page is totally useless, replaced by an better history page with graphs -->
 <Container maxSize="4xl">
   <h1 class="mb-1 text-xl font-bold md:text-2xl text-white">History</h1>
   {#if !logged}
@@ -64,7 +72,7 @@
             </tr>
           {/each}
         {:else}
-          {#each linksData as link }
+          {#each pages[currentPage] as link }
             <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                 { minimize(link.baseUrl) }
@@ -91,7 +99,7 @@
           {/each}
         {/if}
       </tbody>
-      {#if !loading && linksData.length === 0}
+      {#if !loading && pages.length === 0}
       <tfoot>
         <tr>
           <td colspan="5" class="px-6 py-4 whitespace-nowrap bg-gray-700">
@@ -104,6 +112,10 @@
   </div>
 
   <form class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
+    <Pagination total={total} bind:value={currentPage} />
+
+    <hr class="border-gray-700" />
+
     <div class="flex items-center justify-between text-sm font-normal gap-3">
       <RedirectButton path="/" size="large">
         <i class="fa-solid fa-arrow-left"></i>&nbsp;&nbsp;Back to shortener
