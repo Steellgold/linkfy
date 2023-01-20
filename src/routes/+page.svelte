@@ -57,6 +57,10 @@
         disabled: url.length == 0 ? true : false,
       }}>Transform..</Button>
       
+      <RedirectButton disabled={finalUrl == "" ? true : false} path={finalUrl} newTab={true}>
+        <i class="fa-solid fa-arrow-right"></i>
+      </RedirectButton>
+
       <CopyButton toCopy={finalUrl} disabled={finalUrl == "" ? true : false} />
           
       <RedirectButton disabled={Cookies.get("visitorId") == undefined ? true : false} path="/history">
