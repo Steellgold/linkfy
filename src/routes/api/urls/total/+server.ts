@@ -1,5 +1,6 @@
 import type { RequestEvent } from "./$types";
 import { db } from "$lib/utils/db/Supabase";
+import { PUBLIC_DATABASE_NAME } from "$env/static/public";
 
 export async function GET({ request }: RequestEvent): Promise<any> {
   const { searchParams } = new URL(request.url);
@@ -12,7 +13,7 @@ export async function GET({ request }: RequestEvent): Promise<any> {
   const id = visitorId ?? userId;
 
   const { data: links, error } = await db
-    .from("links")
+    .from(PUBLIC_DATABASE_NAME)
     .select("id")
     .eq(type, id);
 

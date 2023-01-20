@@ -1,6 +1,7 @@
 import type { RequestEvent } from "./$types";
 import z from "zod";
-import { createLink, db, getLinks } from "$lib/utils/db/Supabase";
+import { createLink, db } from "$lib/utils/db/Supabase";
+import { PUBLIC_DATABASE_NAME } from "$env/static/public";
 
 export async function POST({ request }: RequestEvent): Promise<Response> {
   const values = await request.json();
@@ -38,7 +39,7 @@ export async function GET({ request }: RequestEvent): Promise<any> {
   const type = visitorId ? "visitorId" : "userId";
   const id = visitorId ?? userId;
   const { data, error } = await db
-    .from("links")
+    .from(PUBLIC_DATABASE_NAME)
     .select("*")
     .eq(type, id)
     .order("createdAt", { ascending: false });
