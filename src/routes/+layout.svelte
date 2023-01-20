@@ -13,7 +13,7 @@
     const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" })
 
     fpPromise.then(fp => fp.get()).then(result => {
-      Cookies.set("visitorId", result.visitorId)
+      Cookies.set("visitorId", result.visitorId, { expires: 7 });
     }).catch((error) => { 
       pushToast("Disable your adblocker to get a better experience", "danger");
     });
