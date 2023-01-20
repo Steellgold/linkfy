@@ -7,6 +7,7 @@
   export let placeholder: string = "";
   export let id: string = "";
   export let value: string;
+  export let hidden: boolean = false;
 
   if (id === "") id = Math.random().toString(36).substring(7);
 
@@ -23,4 +24,4 @@
   }
 </script>
 
-<input type={type} disabled={disabled} id={id} class="border sm:text-sm rounded-lg block p-2.5 text-white {sizeClass} {byDisabled}" placeholder={placeholder} on:input={changeValue}>
+<input type={type} disabled={disabled} id={id} class="border sm:text-sm rounded-lg block p-2.5 text-white {hidden ? "hidden" : ""} {sizeClass} {byDisabled}" placeholder={placeholder} on:input={changeValue}>
