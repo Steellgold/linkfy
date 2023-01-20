@@ -15,6 +15,7 @@
     "bg-red-700 hover:bg-red-800 focus:ring-red-800": ButtonProps.variant === "red",
     "bg-green-600 hover:bg-green-700 focus:ring-green-800": ButtonProps.variant === "green",
     "bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-800": ButtonProps.variant === "yellow",
+    "bg-pro hover:bg-pro-h focus:ring-pro-f": ButtonProps.variant === "pro"
   });
 
   let colorClassDisabled = clsx({
@@ -22,6 +23,7 @@
     "bg-red-500": ButtonProps.variant === "red",
     "bg-green-400": ButtonProps.variant === "green",
     "bg-yellow-400": ButtonProps.variant === "yellow",
+    "bg-pro-d": ButtonProps.variant === "pro"
   });
 </script>
 

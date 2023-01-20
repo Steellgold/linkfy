@@ -5,6 +5,6 @@ export { default as CopyButton } from "./copy.svelte";
 export interface ButtonProps {
   disabled?: boolean;
   size?: "small" | "default" | "large";
-  variant?: "red" | "blue" | "green" | "yellow" | "gray" | "white";
+  variant?: "red" | "blue" | "green" | "yellow" | "gray" | "white" | "pro"
   hidden?: boolean;
 }

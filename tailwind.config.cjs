@@ -1,11 +1,19 @@
-const config = {
-  content: ["./src/**/*.{html,js,svelte,ts}"],
-
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{html,js,svelte,ts}"
+  ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "pro": {
+          DEFAULT: "#d9b745",
+          "h": "#c9aa3e",
+          "f": "#bda142",
+          "d": "#947d2e"
+        }
+      }
+    }
   },
-
-  plugins: [],
+  plugins: []
 };
-
-module.exports = config;
