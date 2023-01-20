@@ -1,6 +1,6 @@
-import type { RequestEvent } from "./$types";
 import { db } from "$lib/utils/db/Supabase";
 import { PUBLIC_DATABASE_NAME } from "$env/static/public";
+import type { RequestEvent } from "./$types";
 
 export async function GET({ request }: RequestEvent): Promise<any> {
   const { searchParams } = new URL(request.url);

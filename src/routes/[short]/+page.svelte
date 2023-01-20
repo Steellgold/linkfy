@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
     import { updateLink } from "$lib/utils/db/Supabase";
   import { onMount } from "svelte";
   import type { PageServerLoad } from "./$types";
@@ -21,4 +21,6 @@
         countryCode = data.countryCode;
       });
   });
-</script>
+</script> -->
+
+<!-- TODO: Redirect to baseUrl -->
