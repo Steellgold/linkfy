@@ -19,10 +19,6 @@
           Home
         </NavbarLink>
 
-        <NavbarLink href="/login">
-          Login
-        </NavbarLink>
-
         <RedirectButton size="large" path="/app">
           <i class="fa-solid fa-table-columns"></i>&nbsp;&nbsp;Dashboard
         </RedirectButton>

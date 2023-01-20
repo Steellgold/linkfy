@@ -20,11 +20,18 @@
       loading = false;
     }
   });
+
+  let logged: boolean = false;
 </script>
 
 <!-- This page is totally useless, replaced by an better history page with graphs -->
 <Container maxSize="4xl">
-  <h1 class="mb-1 text-xl font-bold md:text-2xl text-white pb-2">History</h1>
+  <h1 class="mb-1 text-xl font-bold md:text-2xl text-white">History</h1>
+  {#if !logged}
+    <div class="pb-2">
+      <p class="text-gray-400">If you want to save your history to an account to retrieve it on another device, <a href="/login" class="text-blue-500">sign in</a> or <a href="/register" class="text-blue-500">register</a>.</p>
+    </div>
+  {/if}
 
   <div class="relative overflow-x-auto shadow-md rounded-lg">
     <table class="w-full text-sm text-left text-gray-400">
@@ -35,7 +42,9 @@
           <th scope="col" class="px-6 py-3">Date</th>
           <th scope="col" class="px-6 py-3">Views</th>
           <!-- TODO: Action dropdown (Edit, Remove, Disable) -->
-          <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+          {#if logged}
+            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+          {/if}
         </tr>
       </thead>
 
@@ -49,7 +58,9 @@
               <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
               <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
               <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
-              <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
+              {#if logged}
+                <td class="px-6 py-4 whitespace-nowrap"><div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div></td>
+              {/if}
             </tr>
           {/each}
         {:else}
@@ -69,11 +80,13 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 { formatNumbers(link.clicksCount) }
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <RedirectButton path="/history/{link.shortUrl}" size="small">
-                  <i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;Manage
-                </RedirectButton>
-              </td>
+              {#if logged}
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <RedirectButton path="/history/{link.shortUrl}" size="small">
+                    <i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;Manage
+                  </RedirectButton>
+                </td>
+              {/if}
             </tr>
           {/each}
         {/if}
