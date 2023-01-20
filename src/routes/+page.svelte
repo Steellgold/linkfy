@@ -47,12 +47,6 @@
     <div><Input size="large" type="text" disabled={false} placeholder="https://google.com/" bind:value={url} /></div>
     <div class="flex items-center justify-between text-sm font-normal gap-3">
       <Input size="large" type="text" disabled={true} placeholder="The shortcut link will appear here" id="shortened" bind:value={url}/>
-      
-      <CopyButton toCopy={finalUrl} disabled={finalUrl == "" ? true : false} />
-      
-      <RedirectButton disabled={Cookies.get("visitorId") == undefined ? true : false} path="/history">
-        <i class="fa-solid fa-list"></i>
-      </RedirectButton>
     </div>
 
     <div class="flex items-center justify-between text-sm font-normal gap-3">
@@ -62,6 +56,12 @@
         variant: "blue",
         disabled: url.length == 0 ? true : false,
       }}>Transform..</Button>
+      
+      <CopyButton toCopy={finalUrl} disabled={finalUrl == "" ? true : false} />
+          
+      <RedirectButton disabled={Cookies.get("visitorId") == undefined ? true : false} path="/history">
+        <i class="fa-solid fa-list"></i>
+      </RedirectButton>
     </div>
   </div>
 </Container>
