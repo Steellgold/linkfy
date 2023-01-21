@@ -10,4 +10,3 @@
 | :-------- | :------- | :------------------------------------ |
 | `type`    | `string` | **Required**. `visitorId` or `userId` |
 | `id`      | `string` | **Required**. ID of user/visitor      |
-| `api_key` | `string` | **Required**. Prod API key            |
