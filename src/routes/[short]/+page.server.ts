@@ -1,12 +1,10 @@
-import { getLink, updateLink } from "$lib/utils/db/Supabase";
-import { error as SvelteKitError, redirect, type LoadEvent } from "@sveltejs/kit";
+import { getLink } from "$lib/utils/db/Supabase";
+import { error as SvelteKitError, type LoadEvent } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }: LoadEvent) {
   const { short } = params;
   const link = await getLink(short as string);
-
-  console.log(link);
 
   if (!link) {
     throw SvelteKitError(404, {

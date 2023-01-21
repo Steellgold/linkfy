@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, CopyButton, RedirectButton } from "$lib/components/button";
-  import { Input, Range } from "$lib/components/input";
+  import { Input } from "$lib/components/input";
   import { generateShortUrl } from "$lib/utils/Shortener";
   import { PUBLIC_URL } from "$env/static/public";
   import { pushToast } from "$lib/components/layouts/toast";

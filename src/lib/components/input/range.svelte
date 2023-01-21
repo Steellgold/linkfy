@@ -14,6 +14,7 @@
 </script>
 
 {#if label}
-<label for="default-range" class="block text-sm font-medium text-white">{label}</label>
+  <label for="default-range" class="block text-sm font-medium text-white">{label}</label>
 {/if}
+
 <input id="default-range" disabled={disabled} type="range" min={min} max={max} value={value} class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-700" on:input={changeValue}>
