@@ -3,7 +3,6 @@ import z from "zod";
 import prisma from "$lib/utils/db/Prisma";
 
 export async function GET({ request }: RequestEvent): Promise<Response> {
-  // url type?= and &id=
   const url = new URL(request.url);
   const type = url.searchParams.get("type");
   const id = url.searchParams.get("id");
@@ -15,12 +14,6 @@ export async function GET({ request }: RequestEvent): Promise<Response> {
   }).safeParse({ type, id });
 
   if (!schema.success) return new Response("Bad Request: " + schema.error.message, { status: 400 });
-
-  const links = await prisma.links.findMany({
-    where: {
-      [schema.data.type === "userId" ? "userId" : "visitorId"]: schema.data.id
-    }
-  });
-
+  const links = await prisma.links.findMany({ where: { [schema.data.type === "userId" ? "userId" : "visitorId"]: schema.data.id } });
   return new Response(JSON.stringify(links), { status: 200 });
 }
