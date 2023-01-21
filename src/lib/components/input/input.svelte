@@ -1,6 +1,4 @@
 <script lang="ts">
-  import clsx from "clsx";
-
   export let type: "url" | "text" = "url";
   export let disabled: boolean = false;
   export let size: "large" | "default" = "default";
@@ -11,12 +9,12 @@
 
   if (id === "") id = Math.random().toString(36).substring(7);
 
-  const sizeClass = clsx({"w-full": size === "large", "": size === "default"});
+  const sizeClass = { large: "w-full", default: "" }[size] as string;
 
-  const byDisabled = clsx({
-    "outline-none focus:ring-1 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500": disabled == false,
-    "bg-gray-800 border-gray-700 placeholder-gray-500": disabled == true,
-  });
+  const byDisabled = {
+    0: "outline-none focus:ring-1 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500",
+    1: "bg-gray-800 border-gray-700 placeholder-gray-500",
+  }[disabled ? 1 : 0] as string;
 
   function changeValue(event: Event) {
     const target = event.target as HTMLInputElement;

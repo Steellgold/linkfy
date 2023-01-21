@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Variant } from ".";
   import Button from "./button.svelte";
 
   export let newTab: boolean = false;
@@ -7,7 +8,7 @@
   export let disabled: boolean = false;
   export let size: "small" | "default" | "large" = "default";
   export let hidden: boolean = false;
-  export let color: "blue" | "red" | "green" | "yellow" | "pro" = "blue";
+  export let color: Variant = "blue";
   
   $: Props = {
     disabled: disabled,
