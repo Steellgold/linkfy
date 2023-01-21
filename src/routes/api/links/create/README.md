@@ -19,4 +19,3 @@
 | `browsers`  | `array`  | **Required**. Array of browsers the link was used  | `[]`       |
 | `platforms` | `array`  | **Required**. Array of platforms the link was used | `[]`       |
 | `status`    | `boolean`| **Required**. Status of the link (active or not)   | `true`     |
-| `api_key`   | `string` | **Required**. Prod API key                         | `null`     |
