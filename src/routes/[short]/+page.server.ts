@@ -1,4 +1,4 @@
-import { getLink } from "$lib/utils/db/Supabase";
+import { getLink } from "$lib/utils/db/Prisma";
 import { error as SvelteKitError, type LoadEvent } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
