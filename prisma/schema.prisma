@@ -13,7 +13,7 @@ model links {
   userId    String?
   visitorId String
   baseUrl   String
-  shortUrl  String
+  shortUrl  String  @unique
   clicks    Int?    @default(0)
   countries Json    @db.Json
   browsers  Json    @db.Json
