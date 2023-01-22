@@ -25,7 +25,7 @@ export async function GET({ request }: RequestEvent): Promise<Response> {
   const total = links.length;
 
   return new Response(JSON.stringify({
-      total,
-      paginatedList
-    }), { status: 200 });
+    total,
+    paginatedList
+  }), { status: 200 });
 }

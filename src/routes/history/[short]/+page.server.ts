@@ -1,12 +1,13 @@
-import { getLink } from "$lib/utils/db/Prisma";
 import { error as SvelteKitError, type LoadEvent } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ params }: LoadEvent) {
+export async function load({ params, fetch }: LoadEvent) {
   const { short } = params;
-  const link = await getLink(short as string);
+  const link = await fetch(`/api/links/single?shortUrl=${short}`);
 
-  if (!link) {
+  const linkData = await link.json();
+
+  if (!linkData) {
     throw SvelteKitError(404, {
       message: "Not found",
       code: 404
@@ -14,6 +15,6 @@ export async function load({ params }: LoadEvent) {
   }
 
   return {
-    link
+    linkData
   };
 }
