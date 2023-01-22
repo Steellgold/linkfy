@@ -6,50 +6,22 @@
   import Cookies from "js-cookie";
   import { onMount } from "svelte";
 
-
-    // /src/routes/test/[param0]/[param1]/+page.server.ts
-  // import { error as SvelteKitError, redirect } from "@sveltejs/kit";
-  // import Cookies from "js-cookie";
-
-  // /** @type {import('./$types').PageServerLoad} */
-  //   const { short } = params;
-  //   const link = await fetch("api/links/single?shortUrl=" + short);
-
-  //   if (link.status !== 200) {
-  //     throw SvelteKitError(link.status, {
-  //       message: "Link not found",
-  //       code: link.status
-  //     });
-  //   }
-
-  //   const cookie: string = Cookies.get("visitorId") ?? "myCookie";
-  //   throw redirect(301, cookie);
-
   onMount(async () => {
-    const url = window.location.href;
-    const short = url.split("/").pop();
-    const link = await fetch("api/links/single?shortUrl=" + short, { 
+    const short = window.location.href.split("/").pop();
+    const link = await fetch("api/links/single?shortUrl=" + short, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     });
-
     const dataNow = await link.json();
-    console.log(dataNow);
 
-    if (link.status != 200) {
-      throw SvelteKitError(404, {
-        message: "Link not found",
-        code: link.status
-      });
-    }
+    if (link.status != 200) throw SvelteKitError(404, { message: "Link not found", code: link.status });
 
-    // get data from dataNow
     let countries: { [key: string]: number } = dataNow.countries ?? {};
     let newClicks = dataNow.clicks + 1;
-
-    const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" })    
+    const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" });
+    
     fpPromise.then(fp => fp.get({
       extendedResult: true
     })).then(async result => {
@@ -69,17 +41,20 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-        shortUrl: short,
-        data: {
-          clicks: newClicks,
-          countries: countries,
-        }
-      })
-    });
-
-    goto(dataNow.baseUrl);
+          shortUrl: short,
+          data: {
+            clicks: newClicks,
+            countries: countries,
+          }
+        })
+      });
     }).catch((error) => { 
       console.log("An error", error);
+    });
+
+    console.log(dataNow.baseUrl);
+    goto(dataNow.baseUrl, {
+      replaceState: true
     });
   });
 </script>
