@@ -3,40 +3,50 @@ import { error as SvelteKitError, redirect } from "@sveltejs/kit";
 import { PUBLIC_FINGERPRINT_API_KEY } from "$env/static/public";
 import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
 import { browser } from "$app/environment";
-import { pushToast } from "$lib/components/layouts/toast";
 
 export const load = (async({ params, fetch }) => {
-  const link = await fetch("api/links/single?shortUrl=" + params.short, { method: "GET", headers: { "Content-Type": "application/json" } });
+  console.log(params.short);
+  const link = await fetch("http://192.168.1.33:4173/api/links/single?shortUrl=" + params.short, {
+    method: "GET", headers: { "Content-Type": "application/json" }
+  });
+
   const dataNow = await link.json();
 
   if (link.status != 200) throw SvelteKitError(404, { message: "Link not found", code: link.status });
   const countries: { [key: string]: number } = dataNow.countries ?? {};
+  const platforms: { [key: string]: number } = dataNow.platforms ?? {};
+  const browsers: { [key: string]: number } = dataNow.browsers ?? {};
   const newClicks = dataNow.clicks + 1;
 
   if (browser) {
+    let country = "";
+    let platform = "";
+    let browser = "";
+
     const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" });
-    fpPromise.then(fp => fp.get({ extendedResult: true })).then(async result => {
-      const visitorId = result.visitorId;
-      const country = result.ipLocation?.country?.code ?? "Unknow";
-
-      if (countries[country] == undefined) countries[country] = 1;
-      else countries[country] += 1;
-
-      const res = await fetch("api/links/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          shortUrl: params.short,
-          data: {
-            clicks: newClicks,
-            countries: countries
-          }
-        })
-      });
-    }).catch((error) => {
-      console.log(error);
+    await fpPromise.then(fp => fp.get({ extendedResult: true })).then(async result => {
+      country = result.ipLocation?.country?.code ?? "Unknow";
+      platform = result.os ?? "Unknow";
+      browser = result.browserName ?? "Unknow";
     });
-    console.log("Browser");
+
+    if (countries[country]) countries[country] += 1; else countries[country] = 1;
+    if (platforms[platform]) platforms[platform] += 1; else platforms[platform] = 1;
+    if (browsers[browser]) browsers[browser] += 1; else browsers[browser] = 1;
+
+    await fetch("http://192.168.1.33:4173/api/links/update", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        shortUrl: params.short,
+        data: {
+          clicks: newClicks,
+          coutries: countries,
+          platforms: platforms,
+          browsers: browsers
+        }
+      })
+    });
   }
 
   throw redirect(301, dataNow.baseUrl);
