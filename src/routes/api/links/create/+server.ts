@@ -23,5 +23,6 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
 
   if (!schema.success) return new Response("Bad Request: " + schema.error.message, { status: 400 });
   const link = await prisma.links.create({ data: schema.data });
+
   return new Response(JSON.stringify(link), { status: 201 });
 }

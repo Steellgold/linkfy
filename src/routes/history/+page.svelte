@@ -3,30 +3,19 @@
   import { RedirectButton } from "$lib/components/button";
   import { Container } from "$lib/components/layouts/container";
   import { Pagination } from "$lib/components/layouts/pagination";
-  import { pushToast } from "$lib/components/layouts/toast";
   import { formatNumbers, minimize } from "$lib/utils/Utils";
   import Cookies from "js-cookie";
   import { onMount } from "svelte";
 
   let loading: boolean = true;
-  let pages = new Array();
-  const linksPerPage = 10; // Can edit in the future to make it customizable
   let currentPage = 0;
   let total = 0;
 
+  let links: any[] = [];
+
   onMount(async () => {
-    const res = await fetch("api/urls?visitorId=" + Cookies.get("visitorId"));
-    if (res.status !== 200) return pushToast("An error has occurred while fetching your history", "danger");
-
-    const linksData = await res.json();
-
-    const links = linksData;
-    const pagesCount = Math.ceil(links.length / linksPerPage);
-    
-    for (let i = 0; i < pagesCount; i++) {
-      pages.push(links.slice(i * linksPerPage, (i + 1) * linksPerPage));
-      total += links.slice(i * linksPerPage, (i + 1) * linksPerPage).length;
-    }
+    const res = await fetch("api/links/all/paginated?type=visitorId&id=" + Cookies.get("visitorId"));
+    links = await res.json();
     loading = false;
   });
 
@@ -72,7 +61,7 @@
             </tr>
           {/each}
         {:else}
-          {#each pages[currentPage] as link }
+          {#each links[currentPage] as link }
             <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                 { minimize(link.baseUrl) }
@@ -86,7 +75,7 @@
                 { new Date(link.createdAt).toLocaleString() }
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                { formatNumbers(link.clicksCount) }
+                { formatNumbers(link.clicks) }
               </td>
               {#if logged}
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -99,7 +88,7 @@
           {/each}
         {/if}
       </tbody>
-      {#if !loading && pages.length === 0}
+      {#if !loading && links.length == 0}
       <tfoot>
         <tr>
           <td colspan="5" class="px-6 py-4 whitespace-nowrap bg-gray-700">
