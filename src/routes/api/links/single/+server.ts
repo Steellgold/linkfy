@@ -13,9 +13,7 @@ export async function GET({ request }: RequestEvent): Promise<Response> {
 
   if (!schema.success) return new Response("Bad Request: " + schema.error.message, { status: 400 });
   const links = await prisma.links.findMany({
-    where: {
-      shortUrl: schema.data.shortUrl
-    }
+    where: { shortUrl: schema.data.shortUrl }
   });
 
   if (!links.length) return new Response("Not Found", { status: 404 });
