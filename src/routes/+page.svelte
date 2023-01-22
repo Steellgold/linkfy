@@ -15,7 +15,9 @@
     const input = document.getElementById("shortened") as HTMLInputElement;
     loading = true;
     
-    if (url !== "" && !url.startsWith("https://") && !url.startsWith("http://")) return pushToast("The url must start with https:// or http:// and not be empty", "danger");
+    if (url !== "" && !url.startsWith("https://") && !url.startsWith("http://")) {
+      return pushToast("The url must start with https:// or http:// and not be empty", "danger");
+    }
 
     let shortenedUrl = generateShortUrl(4, 4);
     finalUrl = PUBLIC_URL + shortenedUrl;
@@ -35,6 +37,26 @@
     
     loading = false;
     input.value = finalUrl;
+  }
+
+  async function detectLinksDouble() {
+    let res = await fetch("/api/links/detect", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        visitorId: Cookies.get("visitorId"),
+        baseUrl: url,
+       }),
+    });
+
+    if (res.status !== 200) return pushToast("An error has occurred while detecting the link", "danger");
+    let data = await res.json();
+    if (data.exists) {
+      pushToast("The link already exists", "warning");
+      finalUrl = data.shortUrl;
+      const input = document.getElementById("shortened") as HTMLInputElement;
+      input.value = finalUrl;
+    }
   }
 </script>
 

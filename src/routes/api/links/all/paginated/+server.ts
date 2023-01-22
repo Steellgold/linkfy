@@ -27,5 +27,5 @@ export async function GET({ request }: RequestEvent): Promise<Response> {
   return new Response(JSON.stringify({
       total,
       paginatedList
-    }  ), { status: 200 });
+    }), { status: 200 });
 }
