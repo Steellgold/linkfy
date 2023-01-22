@@ -20,23 +20,19 @@
     let shortenedUrl = generateShortUrl(4, 4);
     finalUrl = PUBLIC_URL + shortenedUrl;
 
-    let res = await fetch("/api/urls", {
+    let res = await fetch("/api/links/create", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        baseUrl: url,
-        shortUrl: shortenedUrl,
-        clicksCount: 0,
-        fromClicks: [],
         visitorId: Cookies.get("visitorId"),
+        baseUrl: url,
+        shortUrl: shortenedUrl
        }),
     });
 
-    if (res.status !== 200) return pushToast("An error has occurred while generating the link", "danger");
-    
+    if (res.status !== 201) return pushToast("An error has occurred while generating the link", "danger");
     pushToast("The link has been generated", "success");
+    
     loading = false;
     input.value = finalUrl;
   }
