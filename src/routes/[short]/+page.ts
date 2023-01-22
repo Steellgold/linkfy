@@ -1,12 +1,12 @@
 import type { PageLoad } from "./$types";
 import { error as SvelteKitError, redirect } from "@sveltejs/kit";
-import { PUBLIC_FINGERPRINT_API_KEY } from "$env/static/public";
+import { PUBLIC_FINGERPRINT_API_KEY, PUBLIC_URL } from "$env/static/public";
 import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
 import { browser } from "$app/environment";
 
 export const load = (async({ params, fetch }) => {
   console.log(params.short);
-  const link = await fetch("http://192.168.1.33:4173/api/links/single?shortUrl=" + params.short, {
+  const link = await fetch(PUBLIC_URL + "/api/links/single?shortUrl=" + params.short, {
     method: "GET", headers: { "Content-Type": "application/json" }
   });
 
@@ -34,7 +34,7 @@ export const load = (async({ params, fetch }) => {
     if (platforms[platform]) platforms[platform] += 1; else platforms[platform] = 1;
     if (browsers[browser]) browsers[browser] += 1; else browsers[browser] = 1;
 
-    await fetch("http://192.168.1.33:4173/api/links/update", {
+    await fetch(PUBLIC_URL + "/api/links/update", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
