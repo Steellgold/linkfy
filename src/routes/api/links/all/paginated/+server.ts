@@ -22,5 +22,10 @@ export async function GET({ request }: RequestEvent): Promise<Response> {
     paginatedList.push(links.slice(i, i + 10));
   }
 
-  return new Response(JSON.stringify(paginatedList), { status: 200 });
+  const total = links.length;
+
+  return new Response(JSON.stringify({
+      total,
+      paginatedList
+    }  ), { status: 200 });
 }

@@ -10,12 +10,16 @@
   let loading: boolean = true;
   let currentPage = 0;
   let total = 0;
+  let perPage = 10;
 
   let links: any[] = [];
 
   onMount(async () => {
     const res = await fetch("api/links/all/paginated?type=visitorId&id=" + Cookies.get("visitorId"));
-    links = await res.json();
+    const data = await res.json();
+
+    links = data.paginatedList;
+    total = data.total;
     loading = false;
   });
 
@@ -47,7 +51,7 @@
 
       <tbody>
         {#if loading}
-          {#each Array(10) as _}
+          {#each Array(perPage) as _}
             <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                 <div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div>
@@ -88,22 +92,24 @@
           {/each}
         {/if}
       </tbody>
-      {#if !loading && links.length == 0}
-      <tfoot>
-        <tr>
-          <td colspan="5" class="px-6 py-4 whitespace-nowrap bg-gray-700">
-              <p class="text-gray-400">History was empty, try to shorten some links!</p>
-          </td>
-        </tr>
-      </tfoot>
+      {#if !loading && links.length < 0}
+        <tfoot>
+          <tr>
+            <td colspan="5" class="px-6 py-4 whitespace-nowrap bg-gray-700">
+                <p class="text-gray-400">History was empty, try to shorten some links!</p>
+            </td>
+          </tr>
+        </tfoot>
       {/if}
     </table>
   </div>
 
   <form class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
-    <Pagination total={total} bind:value={currentPage} />
+    {#if !loading && links.length > 0}
+      <Pagination total={total} bind:value={currentPage} />
 
-    <hr class="border-gray-700" />
+      <hr class="border-gray-700" />
+    {/if}
 
     <div class="flex items-center justify-between text-sm font-normal gap-3">
       <RedirectButton path="/" size="large">
