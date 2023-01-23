@@ -6,6 +6,7 @@
   import { pushToast } from "$lib/components/layouts/toast";
   import { Container } from "$lib/components/layouts/container";
   import Cookies from "js-cookie";
+    import { title } from "process";
 
   let url: string = "";
   let finalUrl: string = "";

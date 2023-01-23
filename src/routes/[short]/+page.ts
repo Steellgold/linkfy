@@ -3,8 +3,11 @@ import { error as SvelteKitError, redirect } from "@sveltejs/kit";
 import { PUBLIC_FINGERPRINT_API_KEY, PUBLIC_URL } from "$env/static/public";
 import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
 import { browser } from "$app/environment";
+import { pushToast } from "$lib/components/layouts/toast";
 
 export const load = (async({ params, fetch }) => {
+  let inserted = false;
+
   const link = await fetch(PUBLIC_URL + "api/links/single?shortUrl=" + params.short, {
     method: "GET", headers: { "Content-Type": "application/json" }
   });
@@ -33,7 +36,7 @@ export const load = (async({ params, fetch }) => {
     if (platforms[platform]) platforms[platform] += 1; else platforms[platform] = 1;
     if (browsers[browser]) browsers[browser] += 1; else browsers[browser] = 1;
 
-    await fetch(PUBLIC_URL + "api/links/update", {
+    const res = await fetch(PUBLIC_URL + "api/links/update", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -46,7 +49,10 @@ export const load = (async({ params, fetch }) => {
         }
       })
     });
+
+    if (res.status == 200) inserted = true;
   }
 
-  throw redirect(301, dataNow.baseUrl);
+  if (inserted) throw redirect(301, dataNow.baseUrl);
+  else pushToast("An error occurred while redirecting you to the link", "danger");
 }) satisfies PageLoad;
