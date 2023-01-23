@@ -71,7 +71,10 @@
                 { minimize(link.baseUrl) }
               </th>
               <td class="px-6 py-4 whitespace-nowrap">
-                <a data-sveltekit-preload-data="off" href="{PUBLIC_URL + link.shortUrl}" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
+                <a
+                  data-sveltekit-preload-data="off"
+                  href="{PUBLIC_URL + link.shortUrl}"
+                  class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
                   {PUBLIC_URL + link.shortUrl}
                 </a>
               </td>

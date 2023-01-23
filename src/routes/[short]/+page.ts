@@ -2,12 +2,9 @@ import type { PageLoad } from "./$types";
 import { error as SvelteKitError, redirect } from "@sveltejs/kit";
 import { PUBLIC_FINGERPRINT_API_KEY, PUBLIC_URL } from "$env/static/public";
 import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
-import { browser } from "$app/environment";
-import { pushToast } from "$lib/components/layouts/toast";
+import { browser as SvelteBrowser } from "$app/environment";
 
 export const load = (async({ params, fetch }) => {
-  let inserted = false;
-
   const link = await fetch(PUBLIC_URL + "api/links/single?shortUrl=" + params.short, {
     method: "GET", headers: { "Content-Type": "application/json" }
   });
@@ -20,39 +17,39 @@ export const load = (async({ params, fetch }) => {
   const browsers: { [key: string]: number } = dataNow.browsers ?? {};
   const newClicks = dataNow.clicks + 1;
 
-  if (browser) {
-    let country = "";
-    let platform = "";
-    let browser = "";
+  let country = "";
+  let platform = "";
+  let browser = "";
 
-    const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" });
-    await fpPromise.then(fp => fp.get({ extendedResult: true })).then(async result => {
-      country = result.ipLocation?.country?.code ?? "Unknow";
-      platform = result.os ?? "Unknow";
-      browser = result.browserName ?? "Unknow";
-    });
-
-    if (countries[country]) countries[country] += 1; else countries[country] = 1;
-    if (platforms[platform]) platforms[platform] += 1; else platforms[platform] = 1;
-    if (browsers[browser]) browsers[browser] += 1; else browsers[browser] = 1;
-
-    const res = await fetch(PUBLIC_URL + "api/links/update", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        shortUrl: params.short,
-        data: {
-          clicks: newClicks,
-          coutries: countries,
-          platforms: platforms,
-          browsers: browsers
-        }
-      })
-    });
-
-    if (res.status == 200) inserted = true;
+  if (!SvelteBrowser) {
+    console.log("Not a browser, skipping fingerprinting");
+    return;
   }
 
-  if (inserted) throw redirect(301, dataNow.baseUrl);
-  else pushToast("An error occurred while redirecting you to the link", "danger");
+  const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" });
+  await fpPromise.then(fp => fp.get({ extendedResult: true })).then(async result => {
+    country = result.ipLocation?.country?.code ?? "Unknow";
+    platform = result.os ?? "Unknow";
+    browser = result.browserName ?? "Unknow";
+  });
+
+  if (countries[country]) countries[country] += 1; else countries[country] = 1;
+  if (platforms[platform]) platforms[platform] += 1; else platforms[platform] = 1;
+  if (browsers[browser]) browsers[browser] += 1; else browsers[browser] = 1;
+
+  await fetch(PUBLIC_URL + "api/links/update", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      shortUrl: params.short,
+      data: {
+        clicks: newClicks,
+        coutries: countries,
+        platforms: platforms,
+        browsers: browsers
+      }
+    })
+  }).then(async res => {
+    throw redirect(301, dataNow.baseUrl);
+  });
 }) satisfies PageLoad;
