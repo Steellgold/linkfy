@@ -4,6 +4,8 @@ import { PUBLIC_FINGERPRINT_API_KEY, PUBLIC_URL } from "$env/static/public";
 import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
 import { browser as SvelteBrowser } from "$app/environment";
 
+export const ssr = false;
+
 export const load = (async({ params, fetch }) => {
   const link = await fetch(PUBLIC_URL + "api/links/single?shortUrl=" + params.short, {
     method: "GET", headers: { "Content-Type": "application/json" }
@@ -49,7 +51,7 @@ export const load = (async({ params, fetch }) => {
         browsers: browsers
       }
     })
-  }).then(async res => {
+  }).then(res => {
     throw redirect(301, dataNow.baseUrl);
   });
 }) satisfies PageLoad;
