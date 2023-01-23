@@ -39,25 +39,25 @@
     input.value = finalUrl;
   }
 
-  async function detectLinksDouble() {
-    let res = await fetch("/api/links/detect", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        visitorId: Cookies.get("visitorId"),
-        baseUrl: url,
-       }),
-    });
+  // async function detectLinksDouble() {
+  //   let res = await fetch("/api/links/detect", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       visitorId: Cookies.get("visitorId"),
+  //       baseUrl: url,
+  //      }),
+  //   });
 
-    if (res.status !== 200) return pushToast("An error has occurred while detecting the link", "danger");
-    let data = await res.json();
-    if (data.exists) {
-      pushToast("The link already exists", "warning");
-      finalUrl = data.shortUrl;
-      const input = document.getElementById("shortened") as HTMLInputElement;
-      input.value = finalUrl;
-    }
-  }
+  //   if (res.status !== 200) return pushToast("An error has occurred while detecting the link", "danger");
+  //   let data = await res.json();
+  //   if (data.exists) {
+  //     pushToast("The link already exists", "warning");
+  //     finalUrl = data.shortUrl;
+  //     const input = document.getElementById("shortened") as HTMLInputElement;
+  //     input.value = finalUrl;
+  //   }
+  // }
 </script>
 
 <Container maxSize="md">
