@@ -24,8 +24,7 @@ export const load = (async({ params, fetch }) => {
   let browser = "";
 
   if (!SvelteBrowser) {
-    console.log("Not a browser, skipping fingerprinting");
-    return;
+    throw redirect(301, dataNow.baseUrl);
   }
 
   const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" });
