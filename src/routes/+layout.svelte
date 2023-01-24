@@ -12,10 +12,11 @@
     if (Cookies.get("visitorId") !== undefined) return;
     const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" })
 
-    fpPromise.then(fp => fp.get()).then(result => {
+    fpPromise.then(fp => fp.get({ extendedResult: true })).then(result => {
       Cookies.set("visitorId", result.visitorId, { expires: 7 });
     }).catch((error) => { 
-      pushToast("Disable your adblocker to get a better experience", "danger");
+      Cookies.set("visitorId", Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), { expires: 7 });
+      pushToast("For a better experience, please disable your adblocker", "danger");
     });
   })
 </script>
