@@ -19,7 +19,7 @@
       return pushToast("The url must start with https:// or http:// and not be empty", "danger");
     }
 
-    let shortenedUrl = generateShortUrl(4, 4);
+    let shortenedUrl = generateShortUrl(5, 6);
     finalUrl = PUBLIC_URL + shortenedUrl;
 
     let res = await fetch("/api/links/create", {
