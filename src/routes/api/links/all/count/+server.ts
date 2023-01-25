@@ -15,16 +15,9 @@ export async function GET({ request }: RequestEvent): Promise<Response> {
 
   if (!schema.success) return new Response("Bad Request: " + schema.error.message, { status: 400 });
   const links = await prisma.links.findMany({ where: { [schema.data.type === "userId" ? "userId" : "visitorId"]: schema.data.id } });
-
-  const paginatedList = [];
-  for (let i = 0; i < links.length; i += 10) {
-    paginatedList.push(links.slice(i, i + 10));
-  }
-
   const total = links.length;
 
   return new Response(JSON.stringify({
-    total,
-    paginatedList
+    total
   }), { status: 200 });
 }

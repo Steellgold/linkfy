@@ -1,43 +1,34 @@
 import type { PageLoad } from "./$types";
 import { error as SvelteKitError, redirect } from "@sveltejs/kit";
-import { PUBLIC_FINGERPRINT_API_KEY } from "$env/static/public";
-import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
-import { browser } from "$app/environment";
-import { pushToast } from "$lib/components/layouts/toast";
+import { PUBLIC_URL } from "$env/static/public";
 
 export const load = (async({ params, fetch }) => {
-  const link = await fetch("api/links/single?shortUrl=" + params.short, { method: "GET", headers: { "Content-Type": "application/json" } });
+  const link = await fetch(PUBLIC_URL + "api/links/single?shortUrl=" + params.short, {
+    method: "GET", headers: { "Content-Type": "application/json" }
+  });
+
   const dataNow = await link.json();
-
   if (link.status != 200) throw SvelteKitError(404, { message: "Link not found", code: link.status });
-  const countries: { [key: string]: number } = dataNow.countries ?? {};
-  const newClicks = dataNow.clicks + 1;
 
-  if (browser) {
-    const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" });
-    fpPromise.then(fp => fp.get({ extendedResult: true })).then(async result => {
-      const visitorId = result.visitorId;
-      const country = result.ipLocation?.country?.code ?? "Unknow";
+  const res = await fetch("http://ip-api.com/json/");
+  const data = await res.json();
 
-      if (countries[country] == undefined) countries[country] = 1;
-      else countries[country] += 1;
+  const country = data.countryCode ?? "Unknown";
+  const countries = dataNow.countries ?? {};
 
-      const res = await fetch("api/links/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          shortUrl: params.short,
-          data: {
-            clicks: newClicks,
-            countries: countries
-          }
-        })
-      });
-    }).catch((error) => {
-      console.log(error);
-    });
-    console.log("Browser");
-  }
+  if (countries[country]) countries[country] += 1; else countries[country] = 1;
 
-  throw redirect(301, dataNow.baseUrl);
+  await fetch(PUBLIC_URL + "api/links/update", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      shortUrl: params.short,
+      data: {
+        clicks: dataNow.clicks + 1,
+        countries: countries
+      }
+    })
+  });
+
+  throw redirect(303, dataNow.baseUrl);
 }) satisfies PageLoad;

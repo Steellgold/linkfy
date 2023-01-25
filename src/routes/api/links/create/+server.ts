@@ -2,9 +2,6 @@ import type { RequestEvent } from "./$types";
 import z from "zod";
 import prisma from "$lib/utils/db/Prisma";
 
-const browsers = { chrome: 0, firefox: 0, safari: 0, opera: 0, edge: 0, other: 0 };
-const platforms = { windows: 0, android: 0, linux: 0, ios: 0, macos: 0, other: 0 };
-
 export async function POST({ request }: RequestEvent): Promise<Response> {
   if (!request.body) return new Response("Bad Request: Your request body is empty", { status: 400 });
 
@@ -15,9 +12,9 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
     baseUrl: z.string().regex(/^https?:\/\//),
     shortUrl: z.string(),
     clicks: z.number().default(0),
-    countries: z.record(z.number()).default({/** bruh */}),
-    browsers: z.record(z.number()).default(browsers),
-    platforms: z.record(z.number()).default(platforms),
+    countries: z.record(z.number()).default({}),
+    browsers: z.record(z.number()).default({}),
+    platforms: z.record(z.number()).default({}),
     status: z.boolean().default(true)
   }).safeParse(body);
 

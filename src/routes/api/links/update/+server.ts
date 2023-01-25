@@ -22,7 +22,6 @@ export async function PUT({ request }: RequestEvent): Promise<Response> {
   }).safeParse(body);
 
   if (!schema.success) return new Response("Bad Request: " + schema.error.message, { status: 400 });
-  console.log(schema.data);
 
   const link = await prisma.links.update({
     where: {
@@ -30,6 +29,8 @@ export async function PUT({ request }: RequestEvent): Promise<Response> {
     },
     data: schema.data.data
   });
+
+  console.log(schema.data);
 
   return new Response(JSON.stringify(link), { status: 200 });
 }

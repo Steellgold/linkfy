@@ -10,3 +10,14 @@
 | :-------- | :------- | :------------------------------------ |
 | `type`    | `string` | **Required**. `visitorId` or `userId` |
 | `id`      | `string` | **Required**. ID of user/visitor      |
+
+#### Count all links for a user/visitor
+
+```http
+  GET /api/links/all/count
+```
+
+| Parameter | Type     | Description                           |
+| :-------- | :------- | :------------------------------------ |
+| `type`    | `string` | **Required**. `visitorId` or `userId` |
+| `id`      | `string` | **Required**. ID of user/visitor      |
