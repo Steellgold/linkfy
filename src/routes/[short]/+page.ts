@@ -1,6 +1,7 @@
 import type { PageLoad } from "./$types";
-import { error as SvelteKitError, redirect } from "@sveltejs/kit";
+import { error as SvelteKitError } from "@sveltejs/kit";
 import { PUBLIC_URL } from "$env/static/public";
+import { browser } from "$app/environment";
 
 export const load = (async({ params, fetch }) => {
   const link = await fetch(PUBLIC_URL + "api/links/single?shortUrl=" + params.short, {
@@ -30,5 +31,6 @@ export const load = (async({ params, fetch }) => {
     })
   });
 
-  throw redirect(303, dataNow.baseUrl);
+  return {};
+  // throw redirect(303, dataNow.baseUrl);
 }) satisfies PageLoad;

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import "../app.postcss";
 
   import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
@@ -9,16 +9,21 @@
   import Cookies from "js-cookie"
 
   onMount(() => {
-    if (Cookies.get("visitorId") !== undefined) return;
-    const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" })
+    const fpPromise = FingerprintJS.load({ apiKey: PUBLIC_FINGERPRINT_API_KEY, region: "eu" });
 
     fpPromise.then(fp => fp.get({ extendedResult: true })).then(result => {
-      Cookies.set("visitorId", result.visitorId, { expires: 7 });
+      update(result.visitorId, result.browser, resultData.os);
     }).catch((error) => { 
-      Cookies.set("visitorId", Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), { expires: 7 });
       pushToast("For a better experience, please disable your adblocker", "danger");
+      update(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), "Unknown", "Unknown");
     });
   })
+
+  function update(visitorId: string, browser: string, system: string) {
+    Cookies.set("visitorId", visitorId, { expires: 1 });
+    Cookies.set("browser", browser, { expires: 1 });
+    Cookies.set("system", system, { expires: 1 });
+  }
 </script>
 
 <Navbar />
