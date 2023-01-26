@@ -7,7 +7,7 @@
 </script>
 
 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-  <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">Créer votre compte</h1>
+  <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">Create your account</h1>
   <form class="space-y-4 md:space-y-6" action="#">
       <div><Input type="email" bind:value={email} placeholder="johndoe@example.com" label="Email address" size="large" /></div>
       <div><Input type="password" bind:value={password} placeholder="••••••••" label="Choose a password" size="large" /></div>
