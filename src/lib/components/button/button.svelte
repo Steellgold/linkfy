@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Variant } from ".";
   import type { ButtonProps } from ".";
 
   export let ButtonProps: ButtonProps;
@@ -30,7 +29,6 @@
 <button
   on:click
   disabled={ButtonProps.disabled}
-  class="{sizeClass} {ButtonProps.disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-center transition-all ease-in-out 3s {ButtonProps.hidden ? 'hidden' : ''}"
-  >
+  class="{sizeClass} {ButtonProps.disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-center transition-all ease-in-out 3s {ButtonProps.hidden ? 'hidden' : ''}">
   <slot></slot>
 </button>
