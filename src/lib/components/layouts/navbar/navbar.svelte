@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { RedirectButton } from "$lib/components/button";
   import { NavbarGroup, NavbarLink } from ".";
 </script>
@@ -19,9 +20,15 @@
           Home
         </NavbarLink>
 
-        <RedirectButton size="large" path="/app">
-          <i class="fa-solid fa-table-columns"></i>&nbsp;&nbsp;Dashboard
-        </RedirectButton>
+        {#if $page.data.session}
+          <RedirectButton size="large" path="/app">
+            <i class="fa-solid fa-table-columns"></i>&nbsp;&nbsp;Dashboard
+          </RedirectButton>
+        {:else}
+          <RedirectButton size="large" path="/sign-in">
+            <i class="fa-solid fa-sign-in"></i>&nbsp;&nbsp;Sign in
+          </RedirectButton>
+        {/if}
       </NavbarGroup>
     </div>
   </div>

@@ -15,7 +15,7 @@
   }[maxSize] as string;
 </script>
 
-<div class="flex flex-col items-center justify-center py-4 mx-auto lg:py-0">
+<div class="flex flex-col items-center justify-center py-4 px-4 mx-auto lg:py-0">
   <!-- <div class="flex items-center justify-center"></div> -->
   <div class="w-full p-4 rounded-lg shadow border md:mt-0 {size} bg-gray-800 border-gray-700 sm:p-5">
     <slot></slot>

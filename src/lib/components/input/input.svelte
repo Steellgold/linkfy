@@ -6,6 +6,7 @@
   export let id: string = "";
   export let value: string;
   export let hidden: boolean = false;
+  export let name: string = "";
   export let label: string = "";
 
   if (id === "") id = Math.random().toString(36).substring(7);
@@ -26,4 +27,4 @@
 {#if label} 
   <label for={id} class="block mb-2 text-sm font-medium text-white">{label}</label>
 {/if}
-<input type={type} disabled={disabled} id={id} class="border sm:text-sm rounded-lg block p-2.5 text-white {hidden ? "hidden" : ""} {sizeClass} {byDisabled}" placeholder={placeholder} on:input={changeValue}>
+<input type={type} disabled={disabled} id={id} class="border sm:text-sm rounded-lg block p-2.5 text-white {hidden ? "hidden" : ""} {sizeClass} {byDisabled}" placeholder={placeholder} on:input={changeValue} name={name} />

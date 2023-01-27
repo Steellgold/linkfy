@@ -40,6 +40,7 @@
   "dependencies": {
     "@fingerprintjs/fingerprintjs-pro": "^3.8.1",
     "@prisma/client": "^4.9.0",
+    "@supabase/auth-helpers-sveltekit": "^0.8.7",
     "@supabase/supabase-js": "^2.4.0",
     "js-cookie": "^3.0.1",
     "zod": "^3.20.2"
