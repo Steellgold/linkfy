@@ -1,6 +1,11 @@
 import { AuthApiError } from "@supabase/supabase-js";
-import { fail, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
+
+export const load = async(locals: any) => {
+  const { session } = await locals;
+  if (session) throw redirect(303, "/app");
+};
 
 export const actions: Actions = {
   login: async({ request, locals }) => {
@@ -25,6 +30,6 @@ export const actions: Actions = {
       };
     }
 
-    throw redirect(303, "/");
+    throw redirect(303, "/app");
   }
 };
