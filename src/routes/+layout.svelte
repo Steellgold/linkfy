@@ -15,7 +15,6 @@
       Cookies.set("visitorId", result.visitorId, { expires: 7 });
     }).catch((error) => { 
       Cookies.set("visitorId", Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), { expires: 7 });
-      pushToast("For a better experience, please disable your adblocker", "danger");
     });
   })
 </script>
