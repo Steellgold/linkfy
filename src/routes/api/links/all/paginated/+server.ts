@@ -14,7 +14,16 @@ export async function GET({ request }: RequestEvent): Promise<Response> {
   }).safeParse({ type, id });
 
   if (!schema.success) return new Response("Bad Request: " + schema.error.message, { status: 400 });
-  const links = await prisma.links.findMany({ where: { [schema.data.type === "userId" ? "userId" : "visitorId"]: schema.data.id } });
+
+  // order by createdAt
+  const links = await prisma.links.findMany({
+    where: {
+      [schema.data.type === "userId" ? "userId" : "visitorId"]: schema.data.id
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
 
   const paginatedList = [];
   for (let i = 0; i < links.length; i += 10) {

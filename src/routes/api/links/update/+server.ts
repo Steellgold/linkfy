@@ -30,7 +30,5 @@ export async function PUT({ request }: RequestEvent): Promise<Response> {
     data: schema.data.data
   });
 
-  console.log(schema.data);
-
   return new Response(JSON.stringify(link), { status: 200 });
 }
