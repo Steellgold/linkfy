@@ -29,7 +29,7 @@
     </RedirectButton>
         
     {#if error.code == 401}
-      <RedirectButton path="/" size="default">
+      <RedirectButton path="/sign-in" size="default">
         <i class="fa-solid fa-user"></i>&nbsp;&nbsp;Login
       </RedirectButton>
     {/if}
