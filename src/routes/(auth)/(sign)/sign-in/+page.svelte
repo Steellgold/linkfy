@@ -1,12 +1,22 @@
 <script lang="ts">
   import { Input } from "$lib/components/input";
 
+  export let data: any;
+  export let form: any;
+
   let email: string;
   let password: string;
 </script>
 
 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
   <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">Access to your account</h1>
+
+  {#if form?.error}
+    <div class="p-3 text-sm font-medium text-center text-red-700 bg-red-200 rounded-lg">
+      {form.error}
+    </div>
+  {/if}
+
   <form class="space-y-4 md:space-y-6" method="POST" action="?/login">
     <div>
       <Input type="email" bind:value={email} placeholder="johndoe@example.com" label="Email address or username" size="large" name="email" />

@@ -1,5 +1,5 @@
 import { AuthApiError } from "@supabase/supabase-js";
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 export const load = async(locals: any) => {
@@ -18,16 +18,15 @@ export const actions: Actions = {
 
     if (err) {
       if (err instanceof AuthApiError && err.status === 400) {
-        return {
-          status: 400,
-          message: "Invalid email or password."
-        };
+        return fail(400, {
+          error: "Invalid email or password"
+        });
       }
 
-      return {
-        status: 500,
-        message: "Server error. Try again later."
-      };
+      console.log(err);
+      return fail(500, {
+        error: "Server error. Try again later."
+      });
     }
 
     throw redirect(303, "/app");
