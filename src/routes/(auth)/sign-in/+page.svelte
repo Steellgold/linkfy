@@ -4,6 +4,8 @@
   export let data: any;
   export let form: any;
 
+  console.log(data);
+
   let email: string;
   let password: string;
 </script>

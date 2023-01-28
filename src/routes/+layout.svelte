@@ -22,11 +22,12 @@
     }
 
     const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(() => {
-			invalidateAll();
-		});
-		return () => {
-			subscription.unsubscribe();
-		};
+      invalidateAll();
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   })
 </script>
 
