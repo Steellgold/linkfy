@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { Link } from "$lib/components/button";
+    import { IconLayoutCollage, IconUserCircle } from "$lib/icons";
   import { fly } from "svelte/transition";
 
   let mobileMenuOpen = false;
@@ -35,9 +37,15 @@
         </div>
       </div>
 
-      <Link props={{ href: "/", variant: "blue", size: "medium" }}>
-        Get started
-      </Link>
+      {#if !$page.data.session}
+        <Link props={{ href: "/sign-in", size: "medium", withIcon: true, variant: "blue" }}>
+          <IconUserCircle /> Sign in
+        </Link>
+      {:else}
+        <Link props={{ href: "/app", size: "medium", withIcon: true, variant: "blue" }}>
+          <IconLayoutCollage /> Dashboard
+        </Link>
+      {/if}
     </div>
   </div>
 </nav>
