@@ -1,6 +1,6 @@
-import { AuthApiError } from "@supabase/supabase-js";
-import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
+import { fail, redirect } from "@sveltejs/kit";
+import { AuthApiError } from "@supabase/supabase-js";
 
 export const actions: Actions = {
   login: async({ request, locals }) => {
@@ -12,6 +12,7 @@ export const actions: Actions = {
     });
 
     if (err) {
+      console.log(err);
       if (err instanceof AuthApiError && err.status === 400) {
         return fail(400, {
           error: "Invalid credentials"
