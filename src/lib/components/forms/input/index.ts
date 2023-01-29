@@ -2,7 +2,7 @@ export { default as Input } from "./input.svelte";
 export { default as InputGroup } from "./group.svelte";
 
 export interface InputProps {
-  type?: string;
+  type?: "text" | "email" | "password" | "url";
   placeholder?: string;
   value?: string;
   label?: string;
@@ -10,6 +10,7 @@ export interface InputProps {
   readonly?: boolean;
   required?: boolean;
   autofocus?: boolean;
+  tip?: string;
 
   id?: string;
   name?: string;
