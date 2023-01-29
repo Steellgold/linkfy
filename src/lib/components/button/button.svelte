@@ -15,7 +15,7 @@
 
 <button
   type={props.type}
-  class="{iconClass} text-white focus:ring-2 focus:outline-none font-medium rounded-lg px-4 py-2 text-center {sizeClass[props.size]} {colorClass[props.variant]}"
+  class="{iconClass} text-white focus:ring-0 focus:outline-none font-medium rounded-lg px-4 py-2 text-center {sizeClass[props.size]} {colorClass[props.variant]}"
   disabled={props.disabled}
   on:click>
   <slot></slot>

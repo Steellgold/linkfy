@@ -2,9 +2,9 @@
   import { Container } from "$lib/components/layout/container";
   import { Input } from "$lib/components/forms/input";
   import { Button, Link } from "$lib/components/button";
-  import { IconAdjustmentsAlt, IconHistory, IconUnlink } from "$lib/icons";
+  import { IconAdjustmentsAlt, IconCopy, IconExternalLink, IconHistory, IconUnlink } from "$lib/icons";
+  import { page } from "$app/stores";
   import type { PageData } from './$types';
-    import { page } from "$app/stores";
 
   export let data: PageData;
 
@@ -14,13 +14,6 @@
   export let adjust: boolean = false; // TODO: Pro feature
   export let adjustedFinalUrl: string = "";
 </script>
-
-{#if $page.data.session}
-  <h1 class="text-white">Welcome {$page.data.session.user.email}</h1>
-  <p class="text-white">I am logged in!</p>
-{:else}
-  <h1 class="text-white">I am not logged in</h1>
-{/if}
 
 <Container maxSize="md">
   <div class="mb-2 p-0">
@@ -48,12 +41,17 @@
       </div>
     {/if}
 
-    <div class="flex items-center justify-between text-sm font-normal gap-3">
+    <div class="flex items-center justify-between text-sm font-normal gap-2">
       <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }}>
         <IconUnlink /> Reduce URL
       </Button>
-      <Button props={{ type: "button", size: "medium", variant: "blue", withIcon: true }} on:click={() => adjust = !adjust}>
-        <IconAdjustmentsAlt />
+      {#if $page.data.session} <!-- TODO: Check if is a Pro user-->
+        <Button props={{ type: "button", size: "medium", variant: "pro" }} on:click={() => adjust = !adjust}>
+          <IconAdjustmentsAlt />
+        </Button>
+      {/if}
+      <Button props={{ type: "button", size: "medium", variant: "blue" }}>
+        <IconCopy />
       </Button>
       <Link props={{ href: "/history", size: "medium", variant: "blue" }}>
         <IconHistory />
