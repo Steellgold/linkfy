@@ -13,9 +13,13 @@
     "6xl": "sm:max-w-6xl",
     "7xl": "sm:max-w-7xl"
   }[maxSize] as string;
+
+  export let centered: boolean = true;
+
+  let centeredClass = centered ? "items-center mx-auto" : "";
 </script>
 
-<div class="flex flex-col items-center justify-center py-4 px-4 mx-auto lg:py-0">
+<div class="flex flex-col {centeredClass} px-4 py-4 lg:py-0">
   <!-- <div class="flex items-center justify-center"></div> -->
   <div class="w-full p-4 rounded-lg shadow border md:mt-0 {size} bg-gray-800 border-gray-700 sm:p-5">
     <slot></slot>

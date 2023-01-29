@@ -45,15 +45,10 @@
       <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }}>
         <IconUnlink /> Reduce URL
       </Button>
-      {#if $page.data.session} <!-- TODO: Check if is a Pro user-->
-        <Button props={{ type: "button", size: "medium", variant: "pro" }} on:click={() => adjust = !adjust}>
-          <IconAdjustmentsAlt />
-        </Button>
-      {/if}
       <Button props={{ type: "button", size: "medium", variant: "blue" }}>
         <IconCopy />
       </Button>
-      <Link props={{ href: "/history", size: "medium", variant: "blue" }}>
+      <Link props={{ href: "/app/history", size: "medium", variant: "blue" }}>
         <IconHistory />
       </Link>
     </div>
