@@ -4,7 +4,8 @@ export interface ButtonProps {
   type?: "button" | "submit",
   disabled?: boolean,
   size: "small" | "medium" | "large",
-  variant: "blue" | "red" | "pro"
+  variant: "blue" | "red" | "pro",
+  withIcon?: boolean
 }
 
 export const colorClass = {

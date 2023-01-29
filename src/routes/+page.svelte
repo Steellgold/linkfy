@@ -92,4 +92,8 @@
       </RedirectButton>
     </div>
   </div>
+
+    <Button props={{ type: "button", size: "medium", variant: "blue", withIcon: true }}>
+      <IconUnlink /> Reduce URL
+    </Button>
 </Container>

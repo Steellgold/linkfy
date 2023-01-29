@@ -5,13 +5,19 @@
     type: "button",
     disabled: false,
     size: "medium",
-    variant: "blue"
+    variant: "blue",
+    withIcon: false,
   };
+
+  let iconClass = "";
+  if (props.withIcon) {
+    iconClass = "flex items-center gap-2";
+  }
 </script>
 
 <button
   type={props.type}
-  class="text-white focus:ring-2 focus:outline-none font-medium rounded-lg px-4 py-2 text-center {sizeClass[props.size]} {colorClass[props.variant]}"
+  class="{iconClass} text-white focus:ring-2 focus:outline-none font-medium rounded-lg px-4 py-2 text-center {sizeClass[props.size]} {colorClass[props.variant]}"
   disabled={props.disabled}>
   <slot></slot>
 </button>
