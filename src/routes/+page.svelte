@@ -43,7 +43,7 @@
 
     <div class="flex items-center justify-between text-sm font-normal gap-2">
       <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }}>
-        <IconUnlink /> Reduce URL
+        <IconUnlink /> Transform
       </Button>
       <Button props={{ type: "button", size: "medium", variant: "blue" }}>
         <IconCopy />
