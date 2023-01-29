@@ -47,14 +47,14 @@
   <div class="px-2 pb-1 space-y-1 bg-gray-800" in:fly="{{ x: 20, duration: 350 }}">
     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
     {#if mobileMenuOpen}
-      <a href="/" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 40, duration: 350 }}">Shortener</a>
-      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 60, duration: 350 }}">Pricing</a>
-      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 70, duration: 450 }}">FAQ</a>
-      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 80, duration: 550 }}">About</a>
+      <a href="/" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 5, duration: 200 }}">Shortener</a>
+      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 6, duration: 400 }}">Pricing</a>
+      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 7, duration: 600 }}">FAQ</a>
+      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 8, duration: 800 }}">About</a>
 
       <hr class="border-gray-700" />
 
-      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 90, duration: 650 }}">Support</a>
+      <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 5, duration: 1000 }}">Support</a>
     {/if}
   </div>
 </div>
