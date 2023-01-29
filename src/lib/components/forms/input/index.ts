@@ -1,4 +1,5 @@
 export { default as Input } from "./input.svelte";
+export { default as InputGroup } from "./group.svelte";
 
 export interface InputProps {
   type?: string;
@@ -26,4 +27,9 @@ export const sizeClass = {
 export const widthClass = {
   "full": "w-full",
   "auto": "w-auto"
+};
+
+export const disabledClass = {
+  "true": "text-gray-300 placeholder-gray-500",
+  "false": "text-white placeholder-gray-400"
 };

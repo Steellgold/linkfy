@@ -1,12 +1,20 @@
 export { default as Button } from "./button.svelte";
-export { default as RedirectButton } from "./redirect.svelte";
-export { default as CopyButton } from "./copy.svelte";
-
-export type Variant = "red" | "blue" | "green" | "yellow" | "pro";
 
 export interface ButtonProps {
-  disabled?: boolean;
-  size?: "small" | "default" | "large";
-  variant?: Variant;
-  hidden?: boolean;
+  type?: "button" | "submit",
+  disabled?: boolean,
+  size: "small" | "medium" | "large",
+  variant: "blue" | "red" | "pro"
 }
+
+export const colorClass = {
+  "blue": "bg-blue-600 hover:bg-blue-700 focus:ring-blue-800",
+  "red": "bg-red-600 hover:bg-red-700 focus:ring-red-800",
+  "pro": "bg-pro-600 hover:bg-pro-700 focus:ring-pro-800"
+};
+
+export const sizeClass = {
+  "small": "px-3 py-2 text-xs",
+  "medium": "px-5 py-2.5 text-sm",
+  "large": "w-full px-5 py-2.5"
+};

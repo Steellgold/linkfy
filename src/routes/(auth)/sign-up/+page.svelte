@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Input } from "$lib/components/input";
+  import { Input, InputGroup } from "$lib/components/forms/input";
   import { PasswordForce } from "$lib/components/layout/password-force";
 
   export let data: any;
@@ -12,6 +12,10 @@
 
 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
   <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">Create your account</h1>
+    <InputGroup label="Password">
+      <Input bind:value={password} props={{ placeholder: "••••••••", width: "auto", size: "small" }} />
+      <Input bind:value={passwordConfirm} props={{ placeholder: "••••••••", width: "auto", size: "small" }} />
+    </InputGroup>
 
   {#if form?.error}
     <div class="p-3 text-sm font-medium text-center text-red-700 bg-red-200 rounded-lg">
