@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Input } from "$lib/components/input";
+  import { PasswordForce } from "$lib/components/layout/password-force";
 
   export let data: any;
   export let form: any;
@@ -15,6 +16,7 @@
   {#if form?.error}
     <div class="p-3 text-sm font-medium text-center text-red-700 bg-red-200 rounded-lg">
       {form.error}
+    <PasswordForce bind:password={password} />
     </div>
   {/if}
 
