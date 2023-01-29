@@ -1,5 +1,4 @@
 export { default as Input } from "./input.svelte";
-export { default as InputGroup } from "./group.svelte";
 
 export interface InputProps {
   type?: "text" | "email" | "password" | "url";

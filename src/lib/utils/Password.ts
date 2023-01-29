@@ -21,8 +21,8 @@ export function getPercentagePasswordStrength(password = ""): number {
 }
 
 export function getPasswordStrengthMessage(force: number): { message: string, color: string } {
-  if (force === 100) return { message: "Your password is very good", color: "green" };
-  else if (force >= 60) return { message: "Your password is good", color: "yellow" };
-  else if (force >= 20) return { message: "You can do better", color: "red" };
-  else return { message: "Make an effort, it's really an easy password", color: "red" };
+  if (force === 100) return { message: "Very good password", color: "green" };
+  else if (force >= 60) return { message: "Good password", color: "yellow" };
+  else if (force >= 20) return { message: "Easy password", color: "red" };
+  else return { message: "The password... bad?", color: "red" };
 }

@@ -15,10 +15,13 @@
       <Input bind:value={email} props={{ type: "email", label: "Email address", placeholder: "johndoe@example.com", width: "full", size: "small", name: "email" }} />
     </div>
 
-    <InputGroup label="Password">
-      <Input bind:value={password} props={{ type: "password", placeholder: "••••••••", width: "auto", size: "small", name: "password" }} />
-      <Input bind:value={passwordConfirm} props={{ type: "password", placeholder: "••••••••", width: "auto", size: "small" }} />
-    </InputGroup>
+    <div class="mb-2">
+      <Input bind:value={password} props={{ label: "Password", type: "password", placeholder: "••••••••", width: "full", size: "small", name: "password" }} />
+    </div>
+
+    <div class="mb-3">
+      <Input bind:value={passwordConfirm} props={{ label: "Confirm your password", type: "password", placeholder: "••••••••", width: "full", size: "small" }} />
+    </div>
 
     <PasswordForce bind:password={password} />
 

@@ -20,7 +20,6 @@
 </script>
 
 <div class="flex flex-col {centeredClass} px-4 py-4 lg:py-0">
-  <!-- <div class="flex items-center justify-center"></div> -->
   <div class="w-full p-4 rounded-lg shadow border md:mt-0 {size} bg-gray-800 border-gray-700 sm:p-5">
     <slot></slot>
   </div>
