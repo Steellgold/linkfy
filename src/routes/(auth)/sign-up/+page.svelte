@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from "$lib/components/button";
-  import { Input, InputGroup } from "$lib/components/forms/input";
+  import { Input } from "$lib/components/forms/input";
   import { Container } from "$lib/components/layout/container";
   import { PasswordForce } from "$lib/components/layout/password-force";
 
