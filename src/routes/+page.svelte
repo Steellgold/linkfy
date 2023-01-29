@@ -2,8 +2,7 @@
   import { Container } from "$lib/components/layout/container";
   import { Input } from "$lib/components/forms/input";
   import { Button, Link } from "$lib/components/button";
-  import { IconAdjustmentsAlt, IconCopy, IconExternalLink, IconHistory, IconUnlink } from "$lib/icons";
-  import { page } from "$app/stores";
+  import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -12,7 +11,18 @@
   export let finalUrl: string = "";
 
   export let adjust: boolean = false; // TODO: Pro feature
-  export let adjustedFinalUrl: string = "";
+  export let adjustedFinalUrl: string = ""; // TODO: Pro feature
+
+  function transformUrl() {
+    // STEPS:
+    // Get URL (baseUrl)
+    // Check if URL is valid
+    // Generate a random string (generatedUrl)
+    // Check if generatedUrl exists in the database, if yes, generate a new one, if not, continue
+    // Else, add the URL to the database
+    // Show the final URL (finalUrl)
+    let generatedUrl = Math.random().toString(36).substring(2, 6);
+  }
 </script>
 
 <Container maxSize="md">
@@ -42,7 +52,7 @@
     {/if}
 
     <div class="flex items-center justify-between text-sm font-normal gap-2">
-      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }}>
+      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }} on:click={transformUrl}>
         <IconUnlink /> Transform
       </Button>
       <Button props={{ type: "button", size: "medium", variant: "blue" }}>
