@@ -1,1 +1,0 @@
-<p class="text-white">TODO: Check if user connected, if not redirect to sign-in page</p>
