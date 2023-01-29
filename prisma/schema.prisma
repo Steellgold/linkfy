@@ -7,16 +7,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model links {
-  id    String    @id @default(cuid())
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  isPremium Boolean  @default(false) // Secure the field with payments check.
+  ipAddr    String   @unique
+  name      String
+  role      String   @default("user")
   createdAt DateTime @default(now())
+  links     Link[]
+}
+
+// The isPremium field is a Boolean that is set to false by default. This means that the field is not secure by default. We will secure it with a payments check.
+
+model Link {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  slug      String   @unique
+  clicks    Int      @default(0)
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
   userId    String?
-  visitorId String
-  baseUrl   String
-  shortUrl  String  @unique
-  clicks    Int?    @default(0)
-  countries Json    @db.Json
-  browsers  Json    @db.Json
-  platforms Json    @db.Json
-  status    Boolean @default(true)
 }
