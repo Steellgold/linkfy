@@ -7,9 +7,20 @@ export async function POST({ request }: RequestEvent): Promise<Response> {
 
   const body = await request.json();
   const schema = z.object({
-    // TODO: Add validation for the URL
+    url: z.string().url(),
+    slug: z.string(),
+    userId: z.string().optional(),
+    visitorId: z.string()
   }).safeParse(body);
 
-  if (!schema.success) return new Response("Bad Request: " + schema.error.message, { status: 400 });
-  return new Response("URL was shortened", { status: 201 });
+  if (!schema.success) return new Response("Bad Request: Your request body is invalid", { status: 400 });
+  const link = await prisma.link.create({
+    data: {
+      url: schema.data.url,
+      slug: schema.data.slug,
+      userId: schema.data.userId,
+      visitorId: schema.data.visitorId
+  });
+
+  return new Response("Link", { status: 200 });
 }

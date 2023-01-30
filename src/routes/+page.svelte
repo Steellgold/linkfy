@@ -13,15 +13,19 @@
   export let adjust: boolean = false; // TODO: Pro feature
   export let adjustedFinalUrl: string = ""; // TODO: Pro feature
 
-  function transformUrl() {
-    // STEPS:
-    // Get URL (baseUrl)
-    // Check if URL is valid
-    // Generate a random string (generatedUrl)
-    // Check if generatedUrl exists in the database, if yes, generate a new one, if not, continue
-    // Else, add the URL to the database
-    // Show the final URL (finalUrl)
+  async function transformUrl() {
     let generatedUrl = Math.random().toString(36).substring(2, 6);
+    
+    let res = await fetch("/api/link/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        url: baseUrl,
+        slug: generatedUrl
+      })
+    });
   }
 </script>
 

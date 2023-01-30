@@ -26,5 +26,5 @@ model Link {
   clicks    Int      @default(0)
   createdAt DateTime @default(now())
   userId    String?
-  visitorId String?
+  visitorId String
 }
