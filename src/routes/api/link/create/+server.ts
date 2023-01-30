@@ -5,8 +5,8 @@ import { rateLimit } from "$lib/RateLimit";
 
 export async function POST({ request, getClientAddress }: RequestEvent): Promise<Response> {
   if (rateLimit(getClientAddress().slice(7))) return new Response("Too Many Requests: You have exceeded the rate limit", { status: 429 });
-
   if (!request.body) return new Response("Bad Request: Your request body is empty", { status: 400 });
+
   const body = await request.json();
   const schema = z.object({
     url: z.string().url(),

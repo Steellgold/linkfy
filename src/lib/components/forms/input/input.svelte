@@ -54,6 +54,7 @@
     readonly={props.readonly}
     required={props.required}
     autofocus={props.autofocus}
+    value={value}
     on:input={update}
     on:input
   />

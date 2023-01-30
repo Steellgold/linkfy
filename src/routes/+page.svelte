@@ -14,7 +14,11 @@
   export let adjust: boolean = false; // TODO: Pro feature
   export let adjustedFinalUrl: string = ""; // TODO: Pro feature
 
+  let generateDisabled: boolean = true;
+
   async function transformUrl() {
+    if ((document.querySelector("button") as HTMLButtonElement).disabled) return;
+
     let generatedUrl = Math.random().toString(36).substring(2, 6);
     
     let res = await fetch("/api/link/create", {
@@ -31,9 +35,19 @@
 
     if (res.ok) {
       // TODO: Add a toast
+      finalUrl = `${window.location.origin}/${generatedUrl}`;
     } else {
       console.error("Whoops, something went wrong. Please try again later.");
     }
+  }
+
+  function checkUrl() {
+    baseUrl.startsWith("http://") || baseUrl.startsWith("https://") ? generateDisabled = false : generateDisabled = true;
+  }
+
+  function copyToClipboard() {
+    // TODO: If the finalUrl is empty, show a toast saying "Please generate a link first", otherwise, copy the link to the clipboard and show a toast saying "Link copied to clipboard"
+    navigator.clipboard.writeText(finalUrl);
   }
 </script>
 
@@ -45,29 +59,18 @@
 
   <form>
     <div class="mb-3">
-      <Input bind:value={baseUrl} props={{
-        placeholder: "Link to shorten",
-        size: "small",
-        width: "full",
-        autofocus: true
-      }} />
+      <Input bind:value={baseUrl} props={{ placeholder: "Link to shorten", size: "small", width: "full", autofocus: true }} on:input={checkUrl} />
     </div>
 
-    {#if !adjust}
-      <div class="mb-3">
-        <Input bind:value={finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
-      </div>
-    {:else}
-      <div class="mb-3">
-        <Input bind:value={adjustedFinalUrl} props={{ placeholder: "Choose a shortened link", size: "small", width: "full", tip: "linkfy.fr/" }} />
-      </div>
-    {/if}
+    <div class="mb-3">
+      <Input bind:value={finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
+    </div>
 
     <div class="flex items-center justify-between text-sm font-normal gap-2">
-      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }} on:click={transformUrl}>
+      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: generateDisabled }} on:click={transformUrl}>
         <IconUnlink /> Transform
       </Button>
-      <Button props={{ type: "button", size: "medium", variant: "blue" }}>
+      <Button props={{ type: "button", size: "medium", variant: "blue" }} on:click={copyToClipboard}>
         <IconCopy />
       </Button>
       <Link props={{ href: "/app/history", size: "medium", variant: "blue" }}>
