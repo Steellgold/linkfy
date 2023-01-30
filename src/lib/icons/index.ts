@@ -11,4 +11,9 @@ export { default as IconBellRinging } from "./bell-ringing.svelte";
 export { default as IconUserPlus } from "./user-plus.svelte";
 export { default as IconUserCircle } from "./user-circle.svelte";
 
+export { default as IconInfoCircle } from "./info-circle.svelte";
+export { default as IconTrafficCone } from "./traffic-cone.svelte";
+
+export { default as IconCheck } from "./check.svelte";
+
 export { default as IconArrowBack } from "./arrow-back.svelte";

@@ -29,9 +29,9 @@
 
     if (res.ok) {
       finalUrl = `${window.location.origin}/${generatedUrl}`;
-      pushToast("Your link has been shortened");
+      pushToast("Your link has been shortened", "success");
     } else {
-      pushToast("Whoops, something went wrong, try again later");
+      pushToast("Whoops, something went wrong, try again later", "danger");
     }
   }
 
@@ -42,9 +42,9 @@
 
   function copyToClipboard() {
     if (finalUrl === "") {
-      pushToast("Please generate a link first");
+      pushToast("Please generate a link first", "warning");
     } else {
-      pushToast("Link copied to clipboard");
+      pushToast("Link copied to clipboard", "success");
       navigator.clipboard.writeText(finalUrl);
     }
   }
