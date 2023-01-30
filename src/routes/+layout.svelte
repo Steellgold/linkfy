@@ -7,6 +7,7 @@
   import Cookies from "js-cookie";
   import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 	import '../app.postcss';
+  import { Toasts } from '$lib/components/layout/toast';
 
   onMount(() => {
     if (Cookies.get('fpVisitorId') === undefined) {
@@ -40,3 +41,5 @@
 <Header>
   <slot></slot>
 </Header>
+
+<Toasts />

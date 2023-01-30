@@ -5,14 +5,12 @@
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
   import type { PageData } from './$types';
   import Cookies from "js-cookie";
+  import { pushToast } from "$lib/components/layout/toast";
 
   export let data: PageData;
 
   export let baseUrl: string = "";
   export let finalUrl: string = "";
-
-  export let adjust: boolean = false; // TODO: Pro feature
-  export let adjustedFinalUrl: string = ""; // TODO: Pro feature
 
   let generateDisabled: boolean = true;
 
@@ -26,28 +24,29 @@
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        url: baseUrl,
-        slug: generatedUrl,
-        visitorId: Cookies.get("fpVisitorId")
-      })
+      body: JSON.stringify({ url: baseUrl, slug: generatedUrl, visitorId: Cookies.get("fpVisitorId") })
     });
 
     if (res.ok) {
-      // TODO: Add a toast
       finalUrl = `${window.location.origin}/${generatedUrl}`;
+      pushToast("Your link has been shortened");
     } else {
-      console.error("Whoops, something went wrong. Please try again later.");
+      pushToast("Whoops, something went wrong, try again later");
     }
   }
 
   function checkUrl() {
     baseUrl.startsWith("http://") || baseUrl.startsWith("https://") ? generateDisabled = false : generateDisabled = true;
+    if (baseUrl === "") generateDisabled = true;
   }
 
   function copyToClipboard() {
-    // TODO: If the finalUrl is empty, show a toast saying "Please generate a link first", otherwise, copy the link to the clipboard and show a toast saying "Link copied to clipboard"
-    navigator.clipboard.writeText(finalUrl);
+    if (finalUrl === "") {
+      pushToast("Please generate a link first");
+    } else {
+      pushToast("Link copied to clipboard");
+      navigator.clipboard.writeText(finalUrl);
+    }
   }
 </script>
 
