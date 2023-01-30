@@ -4,6 +4,7 @@
   import { Button, Link } from "$lib/components/button";
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
   import type { PageData } from './$types';
+  import Cookies from "js-cookie";
 
   export let data: PageData;
 
@@ -23,9 +24,16 @@
       },
       body: JSON.stringify({
         url: baseUrl,
-        slug: generatedUrl
+        slug: generatedUrl,
+        visitorId: Cookies.get("fpVisitorId")
       })
     });
+
+    if (res.ok) {
+      // TODO: Add a toast
+    } else {
+      console.error("Whoops, something went wrong. Please try again later.");
+    }
   }
 </script>
 
