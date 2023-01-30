@@ -10,7 +10,7 @@
   };
 </script>
 
-<nav class="bg-gray-800 lg:mb-3">
+<nav class="bg-gray-800 lg:mb-5">
   <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-16">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -29,7 +29,7 @@
           {/if}
         </button>
       </div>
-      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+      <div class="flex-1 flex items-stretch justify-start">
         <div class="flex-shrink-0 flex items-center">
           <a href="/">
             <img class="hidden sm:block h-8 w-auto" src="/link.png" alt="Linkfy">
