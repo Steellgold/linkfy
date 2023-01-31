@@ -13,12 +13,14 @@
   export let finalUrl: string = "";
 
   let generateDisabled: boolean = true;
+  let generated = true;
 
   async function transformUrl() {
     if ((document.querySelector("button") as HTMLButtonElement).disabled) return;
-
     let generatedUrl = Math.random().toString(36).substring(2, 6);
-    
+    generated = false;
+    generateDisabled = true;
+
     let res = await fetch("/api/link/create", {
       method: "POST",
       headers: {
@@ -27,11 +29,22 @@
       body: JSON.stringify({ url: baseUrl, slug: generatedUrl, visitorId: Cookies.get("fpVisitorId") })
     });
 
+    // Check if rate limit has been reached
+    if (res.status === 429) {
+      pushToast("You have reached the rate limit, please try again later", "danger");
+      generated = true;
+      generateDisabled = false;
+      return;
+    }
+
     if (res.ok) {
       finalUrl = `${window.location.origin}/${generatedUrl}`;
       pushToast("Your link has been shortened", "success");
+      generated = true;
+      generateDisabled = false;
     } else {
       pushToast("Whoops, something went wrong, try again later", "danger");
+      generated = true;
     }
   }
 
@@ -61,15 +74,19 @@
       <Input bind:value={baseUrl} props={{ placeholder: "Link to shorten", size: "small", width: "full", autofocus: true }} on:input={checkUrl} />
     </div>
 
-    <div class="mb-3">
-      <Input bind:value={finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
-    </div>
+    {#if !generated}
+      <div class="mb-3 animate-pulse h-4 p-5 bg-gray-600 rounded w-full"></div>
+    {:else}
+      <div class="mb-3">
+        <Input bind:value={finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
+      </div>
+    {/if}
 
     <div class="flex items-center justify-between text-sm font-normal gap-2">
       <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: generateDisabled }} on:click={transformUrl}>
         <IconUnlink /> Transform
       </Button>
-      <Button props={{ type: "button", size: "medium", variant: "blue" }} on:click={copyToClipboard}>
+      <Button props={{ type: "button", size: "medium", variant: "blue", disabled: finalUrl === "" }} on:click={copyToClipboard}>
         <IconCopy />
       </Button>
       <Link props={{ href: "/app/history", size: "medium", variant: "blue" }}>
