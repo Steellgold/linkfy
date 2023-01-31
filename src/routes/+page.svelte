@@ -3,11 +3,8 @@
   import { Input } from "$lib/components/forms/input";
   import { Button, Link } from "$lib/components/button";
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
-  import type { PageData } from './$types';
   import Cookies from "js-cookie";
   import { pushToast } from "$lib/components/layout/toast";
-
-  export let data: PageData;
 
   export let baseUrl: string = "";
   export let finalUrl: string = "";
@@ -71,7 +68,7 @@
 
   <form>
     <div class="mb-3">
-      <Input bind:value={baseUrl} props={{ placeholder: "Link to shorten", size: "small", width: "full", autofocus: true }} on:input={checkUrl} />
+      <Input bind:value={baseUrl} props={{ placeholder: "Link to shorten", size: "small", width: "full" }} on:input={checkUrl} />
     </div>
 
     {#if !generated}

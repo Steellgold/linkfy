@@ -9,7 +9,6 @@
     disabled: false,
     readonly: false,
     required: false,
-    autofocus: false,
     tip: undefined,
 
     id: Math.random().toString(36).substring(7),
@@ -53,7 +52,6 @@
     disabled={props.disabled}
     readonly={props.readonly}
     required={props.required}
-    autofocus={props.autofocus}
     value={value}
     on:input={update}
     on:input

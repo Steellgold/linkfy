@@ -8,7 +8,6 @@ export interface InputProps {
   disabled?: boolean;
   readonly?: boolean;
   required?: boolean;
-  autofocus?: boolean;
   tip?: string;
 
   id?: string;
