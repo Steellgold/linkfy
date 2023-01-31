@@ -5,6 +5,7 @@
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
   import Cookies from "js-cookie";
   import { pushToast } from "$lib/components/layout/toast";
+  import { PUBLIC_URL } from "$env/static/public";
 
   export let baseUrl: string = "";
   export let finalUrl: string = "";
@@ -18,14 +19,7 @@
     generated = false;
     generateDisabled = true;
 
-    if (!baseUrl.startsWith("http://") || !baseUrl.startsWith("https://")) {
-      pushToast("Please enter a valid URL", "warning");
-      generated = true;
-      generateDisabled = false;
-      return;
-    }
-
-    let res = await fetch("/api/link/create", {
+    let res = await fetch(PUBLIC_URL + "api/link/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
