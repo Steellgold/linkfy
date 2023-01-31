@@ -18,6 +18,13 @@
     generated = false;
     generateDisabled = true;
 
+    if (baseUrl.startsWith("http://") || baseUrl.startsWith("https://")) {
+      pushToast("Please enter a valid URL", "warning");
+      generated = true;
+      generateDisabled = false;
+      return;
+    }
+
     let res = await fetch("/api/link/create", {
       method: "POST",
       headers: {
