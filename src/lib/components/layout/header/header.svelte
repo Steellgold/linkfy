@@ -52,10 +52,9 @@
 
 <!-- Mobile menu, show/hide based on menu state. -->
 <div class="sm:hidden" id="mobile-menu">
-  <div class="px-2 pb-1 space-y-1 bg-gray-800" in:fly="{{ x: 20, duration: 350 }}">
-    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+  <div class="px-2 pb-1 space-y-1 bg-gray-900" in:fly="{{ x: 20, duration: 350 }}">
     {#if mobileMenuOpen}
-      <a href="/" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 5, duration: 200 }}">Shortener</a>
+      <a href="/" class="bg-gray-900 hover:bg-gray-800 text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 5, duration: 200 }}">Shortener</a>
       <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 6, duration: 400 }}">Pricing</a>
       <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 7, duration: 600 }}">FAQ</a>
       <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" in:fly="{{ x: 8, duration: 800 }}">About</a>
