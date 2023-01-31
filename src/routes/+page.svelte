@@ -18,7 +18,7 @@
     generated = false;
     generateDisabled = true;
 
-    if (baseUrl.startsWith("http://") || baseUrl.startsWith("https://")) {
+    if (!baseUrl.startsWith("http://") || !baseUrl.startsWith("https://")) {
       pushToast("Please enter a valid URL", "warning");
       generated = true;
       generateDisabled = false;
