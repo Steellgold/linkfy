@@ -58,7 +58,7 @@
 
       <tbody>
         {#if loading}
-          {#each Array(total + 1) as _}
+          {#each Array(total + 3) as _}
             <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                 <div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div>

@@ -20,3 +20,4 @@ export { default as IconTrafficCone } from "./traffic-cone.svelte";
 export { default as IconCheck } from "./check.svelte";
 
 export { default as IconArrowBack } from "./arrow-back.svelte";
+export { default as IconArrowUpRight } from "./arrow-up-right.svelte";
