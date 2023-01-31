@@ -4,10 +4,10 @@
   import { onMount } from 'svelte'
   import { Header } from '$lib/components/layout/header';
   import { PUBLIC_FINGERPRINT_API_KEY } from '$env/static/public';
+  import { Toasts } from '$lib/components/layout/toast';
   import Cookies from "js-cookie";
   import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 	import '../app.postcss';
-  import { Toasts } from '$lib/components/layout/toast';
 
   onMount(() => {
     if (Cookies.get('fpVisitorId') === undefined) {
