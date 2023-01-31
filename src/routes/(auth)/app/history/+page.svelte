@@ -58,7 +58,7 @@
 
       <tbody>
         {#if loading}
-          {#each Array(10) as _}
+          {#each Array(total + 1) as _}
             <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                 <div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div>
@@ -72,31 +72,33 @@
             </tr>
           {/each}
         {:else}
-          {#each pages[currentPage] as link }
-            <tr class="border-b bg-gray-800 hover:bg-gray-700 group {link === pages[currentPage][pages[currentPage].length - 1] ? "border-transparent" : "border-gray-700"}">
-              <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                { minimize(link.url) }
-              </th>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <a href="{PUBLIC_URL + link.slug}" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
-                  {PUBLIC_URL + link.slug}
-                </a>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                { dayjs(link.createdAt).format("DD/MM/YYYY HH:mm") }
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                { formatNumbers(link.clicks) }
-              </td>
-              {#if $page.data.session?.user }
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium opacity-30 group-hover:opacity-100 transition-opacity duration-200">
-                  <Link props={{ href: "edit/" + link.slug, withIcon: true, variant: "blue", size: "small" }}>
-                    <IconEdit /> Edit
-                  </Link>
+          {#if total !== 0}
+            {#each pages[currentPage] as link }
+              <tr class="border-b bg-gray-800 hover:bg-gray-700 group {link === pages[currentPage][pages[currentPage].length - 1] ? "border-transparent" : "border-gray-700"}">
+                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                  { minimize(link.url) }
+                </th>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <a href="{PUBLIC_URL + link.slug}" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
+                    {PUBLIC_URL + link.slug}
+                  </a>
                 </td>
-              {/if}
-            </tr>
-          {/each}
+                <td class="px-6 py-4 whitespace-nowrap">
+                  { dayjs(link.createdAt).format("DD/MM/YYYY HH:mm") }
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  { formatNumbers(link.clicks) }
+                </td>
+                {#if $page.data.session?.user }
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium opacity-30 group-hover:opacity-100 transition-opacity duration-200">
+                    <Link props={{ href: "edit/" + link.slug, withIcon: true, variant: "blue", size: "small" }}>
+                      <IconEdit /> Edit
+                    </Link>
+                  </td>
+                {/if}
+              </tr>
+            {/each}
+          {/if}
         {/if}
       </tbody>
       {#if !loading && pages.length === 0}
