@@ -52,7 +52,7 @@
     disabled={props.disabled}
     readonly={props.readonly}
     required={props.required}
-    value={value}
+    value={value ?? ""}
     on:input={update}
     on:input
   />
