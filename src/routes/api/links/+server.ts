@@ -1,5 +1,4 @@
 import type { RequestEvent } from "./$types";
-import z from "zod";
 import prisma from "$lib/database/Prisma";
 import { rateLimit } from "$lib/RateLimit";
 
