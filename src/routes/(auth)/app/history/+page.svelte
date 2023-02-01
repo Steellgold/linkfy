@@ -6,10 +6,10 @@
   import { pushToast } from "$lib/components/layout/toast";
   import { IconArrowBack, IconEdit } from "$lib/icons";
   import { onMount } from "svelte";
+  import { formatNumbers, minimize } from "$lib/utils/Link";
   import Cookies from "js-cookie";
   import dayjs from "dayjs";
-    import { formatNumbers, minimize } from "$lib/utils/Link";
-
+  
   let loading: boolean = true;
   let pages = new Array();
   const linksPerPage = 10; // Can edit in the future to make it customizable
@@ -79,7 +79,7 @@
                   { minimize(link.url) }
                 </th>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <a href="{PUBLIC_URL + link.slug}" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500">
+                  <a href="{PUBLIC_URL + link.slug}" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500" data-sveltekit-preload-data="off">
                     {PUBLIC_URL + link.slug}
                   </a>
                 </td>
@@ -105,7 +105,7 @@
         <tfoot>
           <tr>
             <td colspan="5" class="px-6 py-4 whitespace-nowrap bg-gray-700">
-                <p class="text-gray-400">History was empty, try to shorten some links!</p>
+              <p class="text-gray-400">History was empty, try to shorten some links!</p>
             </td>
           </tr>
         </tfoot>
