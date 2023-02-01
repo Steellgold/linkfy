@@ -1,6 +1,6 @@
 import type { RequestEvent } from "./$types";
-import prisma from "$lib/database/Prisma";
 import { rateLimit } from "$lib/RateLimit";
+import prisma from "$lib/database/Prisma";
 
 export async function GET({ request, getClientAddress }: RequestEvent): Promise<Response> {
   if (rateLimit(getClientAddress().slice(7))) return new Response("Too Many Requests: You have exceeded the rate limit", { status: 429 });
@@ -14,6 +14,9 @@ export async function GET({ request, getClientAddress }: RequestEvent): Promise<
   const links = await prisma.link.findMany({
     where: {
       [userId ? "userId" : "visitorId"]: userId || visitorId
+    },
+    orderBy: {
+      createdAt: "desc"
     }
   });
 
