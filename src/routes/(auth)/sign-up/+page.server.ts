@@ -6,6 +6,18 @@ export const actions: Actions = {
   register: async({ request, locals }) => {
     const body = Object.fromEntries(await request.formData());
 
+    if (!body.email || !body.password || !body.confirmPassword) {
+      return fail(400, {
+        error: "Please fill out all fields"
+      });
+    }
+
+    if (body.password !== body.confirmPassword) {
+      return fail(400, {
+        error: "Passwords do not match"
+      });
+    }
+
     const { error: err } = await locals.sb.auth.signUp({
       email: body.email as string,
       password: body.password as string
@@ -14,11 +26,12 @@ export const actions: Actions = {
     if (err) {
       if (err instanceof AuthApiError && err.status === 400) {
         return fail(400, {
-          error: "Invalid email or password"
+          error: err.message
         });
       }
+
       return fail(500, {
-        error: "Server error. Please try again later."
+        error: err.message
       });
     }
 

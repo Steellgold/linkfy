@@ -14,11 +14,11 @@ export const actions: Actions = {
     if (err) {
       if (err instanceof AuthApiError && err.status === 400) {
         return fail(400, {
-          error: "Invalid credentials"
+          error: err.message
         });
       }
       return fail(500, {
-        message: "Server error. Try again later."
+        message: err.message
       });
     }
 

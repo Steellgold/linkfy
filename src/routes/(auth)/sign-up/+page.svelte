@@ -3,24 +3,34 @@
   import { Input } from "$lib/components/forms/input";
   import { Container } from "$lib/components/layout/container";
   import { PasswordForce } from "$lib/components/layout/password-force";
+  import { pushToast } from "$lib/components/layout/toast";
+  import type { ActionData } from "./$types";
 
   export let email: string;
   export let password: string;
   export let passwordConfirm: string;
+
+  export let form: ActionData;
+
+  $: if (form?.error) {
+    setTimeout(() => {
+      pushToast(form?.error ?? "An error occured", "danger");
+    }, 100);
+  }
 </script>
 
 <Container maxSize="md">
   <form method="POST" action="?/register">
     <div class="mb-3">
-      <Input bind:value={email} props={{ type: "email", label: "Email address", placeholder: "johndoe@example.com", width: "full", size: "small", name: "email" }} />
+      <Input bind:value={email} props={{ type: "email", label: "Email address", placeholder: "johndoe@example.com", width: "full", size: "small", name: "email", required: true }} />
     </div>
 
     <div class="mb-2">
-      <Input bind:value={password} props={{ label: "Password", type: "password", placeholder: "••••••••", width: "full", size: "small", name: "password" }} />
+      <Input bind:value={password} props={{ label: "Password", type: "password", placeholder: "••••••••", width: "full", size: "small", name: "password", required: true }} />
     </div>
 
     <div class="mb-3">
-      <Input bind:value={passwordConfirm} props={{ label: "Confirm your password", type: "password", placeholder: "••••••••", width: "full", size: "small" }} />
+      <Input bind:value={passwordConfirm} props={{ label: "Confirm your password", type: "password", placeholder: "••••••••", width: "full", size: "small", name: "confirmPassword", required: true }} />
     </div>
 
     <PasswordForce bind:password={password} />
