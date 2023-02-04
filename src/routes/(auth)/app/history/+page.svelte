@@ -122,7 +122,7 @@
           {/if}
         {/if}
       </tbody>
-      {#if !loading && pinfo.pages.length === 0}
+      {#if !loading && pinfo.total === 0}
         <tfoot>
           <tr>
             <td colspan="5" class="px-6 py-4 whitespace-nowrap bg-gray-700">
@@ -134,7 +134,7 @@
     </table>
   </div>
 
-  {#if !loading && pinfo.pages.length > 0}
+  {#if !loading && pinfo.total >= pinfo.linksPerPage}
     <div class="flex items-center justify-center gap-2 pb-5 pt-3">
       <Button props={{ size: "ultrasmall", variant: "blue"}} on:click={() => firstPage()}>
         <IconChevronsLeft />

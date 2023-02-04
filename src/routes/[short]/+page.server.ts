@@ -8,9 +8,9 @@ export const load = (async({ params, fetch }) => {
   const data = await fetch(PUBLIC_URL + "api/link?slug=" + params.short);
   const dataJson = await data.json();
 
-  if (data.status !== 200) throw redirect(303, PUBLIC_URL + params.short);
+  if (data.status !== 200) throw redirect(303, PUBLIC_URL);
 
-  await fetch(PUBLIC_URL + "api/link/update", {
+  const res = await fetch(PUBLIC_URL + "api/link/update", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"

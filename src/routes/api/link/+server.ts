@@ -9,8 +9,6 @@ export async function GET({ request, getClientAddress }: RequestEvent): Promise<
   const url = new URL(request.url);
   const slug = url.searchParams.get("slug");
 
-  console.log(slug);
-
   if (!slug) return new Response("Bad Request: Missing slug", { status: 400 });
 
   const schema = z.object({

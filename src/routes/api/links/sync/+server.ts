@@ -13,7 +13,8 @@ export async function GET({ request, getClientAddress }: RequestEvent): Promise<
 
   const links = await prisma.link.updateMany({
     where: {
-      visitorId: visitorId
+      visitorId: visitorId,
+      userId: null
     },
     data: {
       userId: userId
