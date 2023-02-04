@@ -18,6 +18,12 @@ export { default as IconInfoCircle } from "./info-circle.svelte";
 export { default as IconTrafficCone } from "./traffic-cone.svelte";
 
 export { default as IconCheck } from "./check.svelte";
+export { default as IconRefresh } from "./refresh.svelte";
+
+export { default as IconChevronLeft } from "./chevron-left.svelte";
+export { default as IconChevronsLeft } from "./chevrons-left.svelte";
+export { default as IconChevronRight } from "./chevron-right.svelte";
+export { default as IconChevronsRight } from "./chevrons-right.svelte";
 
 export { default as IconArrowBack } from "./arrow-back.svelte";
 export { default as IconArrowUpRight } from "./arrow-up-right.svelte";

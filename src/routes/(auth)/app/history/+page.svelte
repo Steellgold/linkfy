@@ -1,35 +1,56 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { PUBLIC_URL } from "$env/static/public";
-  import { Link } from "$lib/components/button";
+  import { Button, Link } from "$lib/components/button";
   import { Container } from "$lib/components/layout/container";
   import { pushToast } from "$lib/components/layout/toast";
-  import { IconArrowBack, IconEdit } from "$lib/icons";
+  import { IconArrowBack, IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight, IconEdit } from "$lib/icons";
   import { onMount } from "svelte";
   import { formatNumbers, minimize } from "$lib/utils/Link";
   import Cookies from "js-cookie";
   import dayjs from "dayjs";
   
   let loading: boolean = true;
-  let pages = new Array();
-  const linksPerPage = 10; // Can edit in the future to make it customizable
-  let currentPage = 0;
-  let total = 0;
+
+  let pinfo = {
+    current: 0,
+    total: 0,
+    pages: new Array(),
+    linksPerPage: 10
+  };
 
   onMount(async () => {
-    const res = await fetch(PUBLIC_URL + "api/links?visitorId=" + Cookies.get("fpVisitorId"));
+    let res = await fetch(PUBLIC_URL + "api/links?visitorId=" + Cookies.get("fpVisitorId"))
+    if ($page.data.session?.user) res = await fetch(PUBLIC_URL + "api/links?userId=" + $page.data.session?.user.id);
+    
     if (res.status !== 200) return pushToast("An error has occurred while fetching your history", "danger");
     const linksData = await res.json();
     const links = linksData;
-    const pagesCount = Math.ceil(links.length / linksPerPage);
+    const pagesCount = Math.ceil(links.length / pinfo.linksPerPage);
     
     for (let i = 0; i < pagesCount; i++) {
-      pages.push(links.slice(i * linksPerPage, (i + 1) * linksPerPage));
-      total += links.slice(i * linksPerPage, (i + 1) * linksPerPage).length;
+      pinfo.pages.push(links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage));
+      pinfo.total += links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage).length;
     }
 
     loading = false;
   });
+
+  function nextPage() {
+    if (pinfo.current + 1 < pinfo.pages.length) pinfo.current++;
+  }
+
+  function prevPage() {
+    if (pinfo.current - 1 >= 0) pinfo.current--;
+  }
+
+  function firstPage() {
+    pinfo.current = 0;
+  }
+
+  function lastPage() {
+    pinfo.current = pinfo.pages.length - 1;
+  }
 </script>
 
 <Container maxSize={ $page.data.session?.user ? "4xl" : "3xl" }>
@@ -58,7 +79,7 @@
 
       <tbody>
         {#if loading}
-          {#each Array(total + 3) as _}
+          {#each Array(pinfo.total + 3) as _}
             <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                 <div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div>
@@ -72,9 +93,9 @@
             </tr>
           {/each}
         {:else}
-          {#if total !== 0}
-            {#each pages[currentPage] as link }
-              <tr class="border-b bg-gray-800 hover:bg-gray-700 group {link === pages[currentPage][pages[currentPage].length - 1] ? "border-transparent" : "border-gray-700"}">
+          {#if pinfo.total !== 0}
+            {#each pinfo.pages[pinfo.current] as link }
+              <tr class="border-b bg-gray-800 hover:bg-gray-700 group {link === pinfo.pages[pinfo.current][pinfo.pages[pinfo.current].length - 1] ? "border-transparent" : "border-gray-700"}">
                 <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                   { minimize(link.url) }
                 </th>
@@ -101,7 +122,7 @@
           {/if}
         {/if}
       </tbody>
-      {#if !loading && pages.length === 0}
+      {#if !loading && pinfo.pages.length === 0}
         <tfoot>
           <tr>
             <td colspan="5" class="px-6 py-4 whitespace-nowrap bg-gray-700">
@@ -112,6 +133,30 @@
       {/if}
     </table>
   </div>
+
+  {#if !loading && pinfo.pages.length > 0}
+    <div class="flex items-center justify-center gap-2 pb-5 pt-3">
+      <Button props={{ size: "ultrasmall", variant: "blue"}} on:click={() => firstPage()}>
+        <IconChevronsLeft />
+      </Button>
+      <Button props={{ size: "ultrasmall", variant: "blue"}} on:click={() => prevPage()}>
+        <IconChevronLeft />
+      </Button>
+      <span class="text-gray-400">Page {pinfo.current + 1} of {pinfo.pages.length}</span>
+      <Button props={{ size: "ultrasmall", variant: "blue"}} on:click={() => nextPage()}>
+        <IconChevronRight />
+      </Button>
+      <Button props={{ size: "ultrasmall", variant: "blue"}} on:click={() => lastPage()}>
+        <IconChevronsRight />
+      </Button>
+    </div>
+  {/if}
+
+  {#if loading}
+    <div class="flex items-center justify-center gap-2 pb-5 pt-3">
+      <div class="animate-pulse h-4 bg-gray-600 rounded w-3/4"></div>
+    </div>
+  {/if}
 
   <div class="flex items-center justify-between text-sm font-normal gap-3">
     <Link props={{ href: "/", withIcon: true, variant: "blue", size: "large" }}>

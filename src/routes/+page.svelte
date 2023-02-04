@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { Container } from "$lib/components/layout/container";
   import { Input } from "$lib/components/forms/input";
   import { Button, Link } from "$lib/components/button";
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
-  import Cookies from "js-cookie";
   import { pushToast } from "$lib/components/layout/toast";
   import { PUBLIC_URL } from "$env/static/public";
+  import Cookies from "js-cookie";
 
   export let baseUrl: string = "";
   export let finalUrl: string = "";
@@ -19,12 +20,21 @@
     generated = false;
     generateDisabled = true;
 
+    // If connected, userId is set to the user's id
+    let json = JSON.stringify({});
+    
+    if (!$page.data.session?.user) {
+      json = JSON.stringify({ url: baseUrl, slug: generatedUrl, visitorId: Cookies.get("fpVisitorId") })
+    }else{
+      json = JSON.stringify({ url: baseUrl, slug: generatedUrl, visitorId: Cookies.get("fpVisitorId"), userId: $page.data.session?.user.id })
+    }
+
     let res = await fetch(PUBLIC_URL + "api/link/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ url: baseUrl, slug: generatedUrl, visitorId: Cookies.get("fpVisitorId") })
+      body: json
     });
 
     // Check if rate limit has been reached
