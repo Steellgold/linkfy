@@ -1,3 +1,7 @@
 {
-  "extends": "@bluzzi"
+  "extends": "@bluzzi",
+
+  "rules": {
+    "camelcase": "off"
+  }
 }

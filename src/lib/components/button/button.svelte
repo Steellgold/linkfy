@@ -1,32 +1,27 @@
 <script lang="ts">
-  import clsx from "clsx";
-  import type { ButtonProps } from ".";
+  import { colorClass, sizeClass, type ButtonProps } from ".";
 
-  export let ButtonProps: ButtonProps;
+  export let props: ButtonProps = {
+    type: "button",
+    disabled: false,
+    size: "medium",
+    variant: "blue",
+    withIcon: false
+  };
 
-  const sizeClass = clsx({
-    "px-3 py-2 text-xs": ButtonProps.size === "small",
-    "px-5 py-2.5 text-sm": ButtonProps.size === "default",
-    "w-full px-5 py-2.5": ButtonProps.size === "large"
-  });
-
-  let colorClass = clsx({
-    "bg-blue-600 hover:bg-blue-700 focus:ring-blue-800": ButtonProps.variant === "blue",
-    "bg-red-700 hover:bg-red-800 focus:ring-red-800": ButtonProps.variant === "red",
-    "bg-green-600 hover:bg-green-700 focus:ring-green-800": ButtonProps.variant === "green",
-    "bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-800": ButtonProps.variant === "yellow",
-    "bg-pro hover:bg-pro-h focus:ring-pro-f": ButtonProps.variant === "pro"
-  });
-
-  let colorClassDisabled = clsx({
-    "bg-blue-800": ButtonProps.variant === "blue",
-    "bg-red-500": ButtonProps.variant === "red",
-    "bg-green-400": ButtonProps.variant === "green",
-    "bg-yellow-400": ButtonProps.variant === "yellow",
-    "bg-pro-d": ButtonProps.variant === "pro"
-  });
+  let iconClass = "";
+  if (props.withIcon) iconClass = "flex items-center justify-center gap-2";
 </script>
 
-<button on:click disabled={ButtonProps.disabled} class="{sizeClass} {ButtonProps.disabled ? colorClassDisabled : colorClass} text-white focus:ring-2 outline-none font-medium rounded-lg text-center transition-all ease-in-out 3s {ButtonProps.hidden ? 'hidden' : ''}">
-  <slot></slot>
+<button
+  type={props.type}
+  class="{iconClass} rounded-lg px-4 py-2 text-center font-medium text-white focus:ring-0 {sizeClass[
+    props.size
+  ]} {colorClass[props.variant]} transition-all ease-in-out {props.disabled
+    ? 'cursor-not-allowed opacity-60'
+    : ''}"
+  disabled={props.disabled}
+  on:click
+>
+  <slot />
 </button>

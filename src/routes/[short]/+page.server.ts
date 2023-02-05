@@ -1,21 +1,29 @@
-import { getLink, updateLink } from "$lib/utils/db/Supabase";
-import { error as SvelteKitError, redirect, type LoadEvent } from "@sveltejs/kit";
+import { PUBLIC_URL } from "$env/static/public";
+import { redirect } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ params }: LoadEvent) {
-  const { short } = params;
-  const link = await getLink(short as string);
+export const load = (async ({ params, fetch }) => {
+  if (!params.short) throw redirect(303, PUBLIC_URL);
 
-  if (!link) {
-    throw SvelteKitError(404, {
-      message: "Link not found",
-      code: 404
-    });
-  }
+  const data = await fetch(PUBLIC_URL + "api/link?slug=" + params.short);
+  const dataJson = await data.json();
 
-  await updateLink(short as string, {
-    clicksCount: link.clicksCount + 1
+  if (data.status !== 200) throw redirect(303, PUBLIC_URL);
+
+  const res = await fetch(PUBLIC_URL + "api/link/update", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      slug: params.short,
+      data: {
+        clicks: dataJson.clicks + 1
+      }
+    })
   });
 
-  throw redirect(301, String(link.baseUrl));
-}
+  return {
+    url: dataJson.url
+  };
+}) satisfies PageServerLoad;
