@@ -134,7 +134,7 @@
     </table>
   </div>
 
-  {#if !loading && pinfo.total >= pinfo.linksPerPage}
+  {#if !loading && pinfo.total > pinfo.linksPerPage}
     <div class="flex items-center justify-center gap-2 pb-5 pt-3">
       <Button props={{ size: "ultrasmall", variant: "blue"}} on:click={() => firstPage()}>
         <IconChevronsLeft />
