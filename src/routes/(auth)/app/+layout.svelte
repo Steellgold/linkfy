@@ -15,7 +15,7 @@
     cancel();
   };
 </script>
-
+<!-- 
 {#if $page.data.session}
   <div class="mb-5 hidden sm:block">
     <div class="mx-auto max-w-7xl px-6">
@@ -26,7 +26,7 @@
               href="/"
               class="block rounded-md px-3 py-2 text-base font-medium text-white transition-colors hover:bg-gray-800"
             >
-              Mon compte
+              Account
             </a>
           </div>
         </div>
@@ -37,7 +37,7 @@
               <button
                 class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white transition-colors hover:bg-red-700"
               >
-                Déconnexion
+                Disconnect
               </button>
             </form>
           </div>
@@ -45,6 +45,6 @@
       </div>
     </div>
   </div>
-{/if}
+{/if} -->
 
 <slot />

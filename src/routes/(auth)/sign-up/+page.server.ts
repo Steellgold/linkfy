@@ -4,7 +4,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
-  register: async ({ request, locals, cookies }) => {
+  register: async({ request, locals, cookies }) => {
     const body = Object.fromEntries(await request.formData());
 
     if (!body.email || !body.password || !body.confirmPassword) {
@@ -29,11 +29,11 @@ export const actions: Actions = {
     }
 
     const res = await fetch(
-      PUBLIC_URL +
-        "api/links/sync?visitorId=" +
-        cookies.get("fpVisitorId") +
-        "&userId=" +
-        data.user?.id
+      PUBLIC_URL
+        + "api/links/sync?visitorId="
+        + cookies.get("fpVisitorId")
+        + "&userId="
+        + data.user?.id
     );
     if (!res.ok) return fail(500, { message: "Failed to synchronize links" });
 
