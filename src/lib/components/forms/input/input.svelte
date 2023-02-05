@@ -15,16 +15,18 @@
     name: "",
 
     size: "small",
-    width: "full",
+    width: "full"
   };
 
   export let value: string;
 
   let disabled: string;
-  if (props.disabled) disabled = disabledClass["true"]; else disabled = disabledClass["false"];
+  if (props.disabled) disabled = disabledClass["true"];
+  else disabled = disabledClass["false"];
 
   let roundedClass: string;
-  if (props.tip) roundedClass = "rounded-r-lg"; else roundedClass = "rounded-lg";
+  if (props.tip) roundedClass = "rounded-r-lg";
+  else roundedClass = "rounded-lg";
 
   function update(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -33,12 +35,14 @@
 </script>
 
 {#if props.label}
-  <label for={props.id} class="block mb-2 text-sm font-medium text-white">{props.label}</label>
+  <label for={props.id} class="mb-2 block text-sm font-medium text-white">{props.label}</label>
 {/if}
 
 <div class="flex">
   {#if props.tip}
-    <span class="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-md bg-gray-600 text-gray-400 border-gray-600">
+    <span
+      class="inline-flex items-center rounded-l-md border border-r-0 border-gray-600 bg-gray-600 px-3 text-sm text-gray-400"
+    >
       {props.tip ?? "coucou"}
     </span>
   {/if}
@@ -47,7 +51,9 @@
     type={props.type}
     id={props.id}
     name={props.name}
-    class="border {sizeClass[props.size]} {roundedClass} block p-2.5 text-white {widthClass[props.width]} outline-none focus:ring-1 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 {disabled}"
+    class="border {sizeClass[props.size]} {roundedClass} block p-2.5 text-white {widthClass[
+      props.width
+    ]} border-gray-600 bg-gray-700 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 {disabled}"
     placeholder={props.placeholder}
     disabled={props.disabled}
     readonly={props.readonly}

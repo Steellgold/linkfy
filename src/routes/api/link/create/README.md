@@ -4,11 +4,11 @@ This route is used to create a new link.
 
 #### Request
 
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `url` | `string` | **Required** The URL to shorten. |
-| `slug` | `string` | **Required** The slug to use for the link. |
-| `userId` | `string` | **Optional** The user ID to associate with the link. |
+| Parameter   | Type     | Description                                             |
+| ----------- | -------- | ------------------------------------------------------- |
+| `url`       | `string` | **Required** The URL to shorten.                        |
+| `slug`      | `string` | **Required** The slug to use for the link.              |
+| `userId`    | `string` | **Optional** The user ID to associate with the link.    |
 | `visitorId` | `string` | **Required** The visitor ID to associate with the link. |
 
 #### Response Codes

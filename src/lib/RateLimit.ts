@@ -1,8 +1,8 @@
 import * as DayJS from "dayjs";
 
-export const rl: { [key: string]: { count: number, expiration: number } } = {};
+export const rl: { [key: string]: { count: number; expiration: number } } = {};
 
-export function rateLimit(ipAddress: string) : boolean {
+export function rateLimit(ipAddress: string): boolean {
   const key = `rate-limit-${ipAddress}`;
   const now = DayJS.default().unix();
 

@@ -3,7 +3,10 @@ export { default as Toasts } from "./toast.svelte";
 import { get, writable } from "svelte/store";
 export const toasts = writable<string[]>([]);
 
-export function pushToast(message: string, type: "danger" | "success" | "warning" | "info" = "info") {
+export function pushToast(
+  message: string,
+  type: "danger" | "success" | "warning" | "info" = "info"
+) {
   if (get(toasts).length > 0) toasts.set([]);
 
   toasts.set([...get(toasts), [message, type]]);

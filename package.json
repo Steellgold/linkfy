@@ -8,11 +8,12 @@
     "preview": "vite preview --host",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "story:dev": "histoire dev",
     "story:build": "histoire build",
-    "story:preview": "histoire preview"
+    "story:preview": "histoire preview",
+    "lint": "eslint . & prettier --plugin-search-dir . --check .",
+    "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
     "@bluzzi/eslint-config": "^0.8.3",
@@ -27,6 +28,8 @@
     "postcss": "^8.4.21",
     "postcss-load-config": "^4.0.1",
     "prettier": "^2.8.3",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prettier-plugin-svelte": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.2",
     "prisma": "^4.9.0",
     "svelte": "^3.55.1",

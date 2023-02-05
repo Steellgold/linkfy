@@ -2,7 +2,7 @@ import { PUBLIC_URL } from "$env/static/public";
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load = (async({ params, fetch }) => {
+export const load = (async ({ params, fetch }) => {
   if (!params.short) throw redirect(303, PUBLIC_URL);
 
   const data = await fetch(PUBLIC_URL + "api/link?slug=" + params.short);

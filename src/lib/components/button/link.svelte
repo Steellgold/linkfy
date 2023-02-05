@@ -1,11 +1,11 @@
 <script lang="ts">
   import { colorClass, sizeClass, type LinkProps } from ".";
-  
+
   export let props: LinkProps = {
     href: "",
     size: "medium",
     variant: "blue",
-    withIcon: false,
+    withIcon: false
   };
 
   let iconClass = "";
@@ -14,6 +14,9 @@
 
 <a
   href={props.href}
-  class="{iconClass} text-white focus:ring-0 focus:outline-none font-medium rounded-lg px-4 py-2 text-center {sizeClass[props.size]} {colorClass[props.variant]}">
-  <slot></slot>
+  class="{iconClass} rounded-lg px-4 py-2 text-center font-medium text-white focus:outline-none focus:ring-0 {sizeClass[
+    props.size
+  ]} {colorClass[props.variant]}"
+>
+  <slot />
 </a>

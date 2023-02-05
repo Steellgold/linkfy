@@ -18,17 +18,17 @@ export interface InputProps {
 }
 
 export const sizeClass = {
-  "small": "text-sm",
-  "medium": "text-base",
-  "large": "text-lg"
+  small: "text-sm",
+  medium: "text-base",
+  large: "text-lg"
 };
 
 export const widthClass = {
-  "full": "w-full",
-  "auto": "w-auto"
+  full: "w-full",
+  auto: "w-auto"
 };
 
 export const disabledClass = {
-  "true": "text-gray-300 placeholder-gray-500",
-  "false": "text-white placeholder-gray-400"
+  true: "text-gray-300 placeholder-gray-500",
+  false: "text-white placeholder-gray-400"
 };

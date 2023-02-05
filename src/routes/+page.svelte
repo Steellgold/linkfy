@@ -22,11 +22,20 @@
 
     // If connected, userId is set to the user's id
     let json = JSON.stringify({});
-    
+
     if (!$page.data.session?.user) {
-      json = JSON.stringify({ url: baseUrl, slug: generatedUrl, visitorId: Cookies.get("fpVisitorId") })
-    }else{
-      json = JSON.stringify({ url: baseUrl, slug: generatedUrl, visitorId: Cookies.get("fpVisitorId"), userId: $page.data.session?.user.id })
+      json = JSON.stringify({
+        url: baseUrl,
+        slug: generatedUrl,
+        visitorId: Cookies.get("fpVisitorId")
+      });
+    } else {
+      json = JSON.stringify({
+        url: baseUrl,
+        slug: generatedUrl,
+        visitorId: Cookies.get("fpVisitorId"),
+        userId: $page.data.session?.user.id
+      });
     }
 
     let res = await fetch(PUBLIC_URL + "api/link/create", {
@@ -57,7 +66,9 @@
   }
 
   function checkUrl() {
-    baseUrl.startsWith("http://") || baseUrl.startsWith("https://") ? generateDisabled = false : generateDisabled = true;
+    baseUrl.startsWith("http://") || baseUrl.startsWith("https://")
+      ? (generateDisabled = false)
+      : (generateDisabled = true);
     if (baseUrl === "") generateDisabled = true;
   }
 
@@ -73,33 +84,55 @@
 
 <Container maxSize="md">
   <div class="mb-2 p-0">
-    <h1 class="mb-1 text-xl font-bold md:text-2xl text-white">Shorten your links</h1>
-    <p class="text-sm font-normal text-white">When you click on the "Use" button, the link will be shortened and you will be redirected to the link.</p>
+    <h1 class="mb-1 text-xl font-bold text-white md:text-2xl">Shorten your links</h1>
+    <p class="text-sm font-normal text-white">
+      When you click on the "Use" button, the link will be shortened and you will be redirected to
+      the link.
+    </p>
   </div>
 
   <form>
     <div class="mb-3">
-      <Input bind:value={baseUrl} props={{ placeholder: "Link to shorten", size: "small", width: "full" }} on:input={checkUrl} />
+      <Input
+        bind:value={baseUrl}
+        props={{ placeholder: "Link to shorten", size: "small", width: "full" }}
+        on:input={checkUrl}
+      />
     </div>
 
     {#if !generated}
-      <div class="mb-3 animate-pulse h-4 p-5 bg-gray-600 rounded w-full"></div>
+      <div class="mb-3 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
     {:else}
       <div class="mb-3">
-        <Input bind:value={finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
+        <Input
+          bind:value={finalUrl}
+          props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }}
+        />
       </div>
     {/if}
 
-    <div class="flex items-center justify-between text-sm font-normal gap-2">
-      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: generateDisabled }} on:click={transformUrl}>
+    <div class="flex items-center justify-between gap-2 text-sm font-normal">
+      <Button
+        props={{
+          type: "button",
+          size: "large",
+          variant: "blue",
+          withIcon: true,
+          disabled: generateDisabled
+        }}
+        on:click={transformUrl}
+      >
         <IconUnlink /> Transform
       </Button>
-      <Button props={{ type: "button", size: "medium", variant: "blue", disabled: finalUrl === "" }} on:click={copyToClipboard}>
+      <Button
+        props={{ type: "button", size: "medium", variant: "blue", disabled: finalUrl === "" }}
+        on:click={copyToClipboard}
+      >
         <IconCopy />
       </Button>
       <Link props={{ href: "/app/history", size: "medium", variant: "blue" }}>
         <IconHistory />
       </Link>
     </div>
-  </form>    
+  </form>
 </Container>
