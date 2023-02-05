@@ -27,12 +27,17 @@
   };
 
   onMount(async () => {
-    let res = await fetch(PUBLIC_URL + "api/links?visitorId=" + Cookies.get("fpVisitorId"));
-    if ($page.data.session?.user)
+    let res = null;
+    if ($page.data.session?.user) {
       res = await fetch(PUBLIC_URL + "api/links?userId=" + $page.data.session?.user.id);
+    } else {
+      res = await fetch(PUBLIC_URL + "api/links?visitorId=" + Cookies.get("fpVisitorId"));
+    }
 
-    if (res.status !== 200)
+    if (res.status !== 200) {
       return pushToast("An error has occurred while fetching your history", "danger");
+    }
+    
     const linksData = await res.json();
     const links = linksData;
     const pagesCount = Math.ceil(links.length / pinfo.linksPerPage);
