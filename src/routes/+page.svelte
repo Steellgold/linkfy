@@ -15,6 +15,10 @@
   let generated = true;
 
   async function transformUrl() {
+    if (baseUrl.length > 2048 || baseUrl.length < 10) {
+      return pushToast("The URL must be less than 2048 characters and more than 10 characters", "danger");
+    }
+
     if ((document.querySelector("button") as HTMLButtonElement).disabled) return;
     let generatedUrl = Math.random().toString(36).substring(2, 6);
     generated = false;
