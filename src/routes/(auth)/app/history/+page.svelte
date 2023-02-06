@@ -10,7 +10,8 @@
     IconChevronRight,
     IconChevronsLeft,
     IconChevronsRight,
-    IconEdit
+    IconEdit,
+    IconTrash
   } from "$lib/icons";
   import { onMount } from "svelte";
   import { formatNumbers, minimize } from "$lib/utils/Link";
@@ -143,17 +144,17 @@
               </td>
               {#if $page.data.session?.user}
                 <td
-                  class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium opacity-30 transition-opacity duration-200 group-hover:opacity-100"
+                  class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium transition-colors duration-200"
                 >
                   <Link
                     props={{
                       href: "edit/" + link.slug,
                       withIcon: true,
-                      variant: "blue",
+                      variant: "action",
                       size: "small"
                     }}
                   >
-                    <IconEdit /> Edit
+                    <IconEdit />
                   </Link>
                 </td>
               {/if}
