@@ -60,6 +60,5 @@
     required={props.required}
     value={value ?? ""}
     on:input={update}
-    on:input
   />
 </div>
