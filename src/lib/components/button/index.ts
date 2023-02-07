@@ -20,7 +20,7 @@ export const colorClass = {
   blue: "bg-blue-600 hover:bg-blue-700",
   red: "bg-red-800 hover:bg-red-700",
   pro: "bg-pro-300 hover:bg-pro-400",
-  action: "bg-[#19222e] group-hover:bg-[#283547]"
+  action: "bg-transparent"
 };
 
 export const sizeClass = {

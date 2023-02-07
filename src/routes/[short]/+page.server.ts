@@ -10,7 +10,7 @@ export const load = (async({ params, fetch }) => {
 
   if (data.status !== 200) throw redirect(303, PUBLIC_URL);
 
-  const res = await fetch(PUBLIC_URL + "api/link/update", {
+  await fetch(PUBLIC_URL + "api/link/update", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"

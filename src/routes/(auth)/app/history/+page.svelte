@@ -119,10 +119,10 @@
         {:else if pinfo.total !== 0}
           {#each pinfo.pages[pinfo.current] as link}
             <tr
-              class="group border-b bg-gray-800 hover:bg-gray-700 {link ===
+              class="group border-b bg-gray-800 hover:bg-[#242f3d] {link ===
               pinfo.pages[pinfo.current][pinfo.pages[pinfo.current].length - 1]
                 ? 'border-transparent'
-                : 'border-gray-700'}"
+                : 'border-gray-700'} transition-colors duration-200"
             >
               <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-white">
                 {minimize(link.url)}
