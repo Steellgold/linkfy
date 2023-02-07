@@ -18,7 +18,7 @@ export interface LinkProps {
 
 export const colorClass = {
   blue: "bg-blue-600 hover:bg-blue-700",
-  red: "bg-red-800 hover:bg-red-700",
+  red: "bg-red-600 opacity-40 hover:bg-red-700 hover:opacity-80",
   pro: "bg-pro-300 hover:bg-pro-400",
   action: "bg-transparent"
 };
