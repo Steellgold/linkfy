@@ -6,82 +6,74 @@
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
   import { pushToast } from "$lib/components/layout/toast";
   import { PUBLIC_URL } from "$env/static/public";
+  import { urlsGenerated } from "$lib/stores/Stores";
   import Cookies from "js-cookie";
 
-  export let baseUrl: string = "";
-  export let finalUrl: string = "";
+  let link = {
+    baseUrl: "",
+    finalUrl: "",
+    slug: "",
 
-  let generateDisabled: boolean = true;
-  let generated = true;
+    inGeneration: false,
+    isGenerated: false,
+    canGenerate: false
+  }
 
   async function transformUrl() {
-    if (baseUrl.length > 2048 || baseUrl.length < 10) {
-      return pushToast("The URL must be less than 2048 characters and more than 10 characters", "danger");
+    if (urlsGenerated.includes(link.baseUrl)) {
+      pushToast("Please, enter an different url", "danger");
+      return;
+    } else {
+      urlsGenerated.push(link.baseUrl);
     }
 
     if ((document.querySelector("button") as HTMLButtonElement).disabled) return;
-    let generatedUrl = Math.random().toString(36).substring(2, 6);
-    generated = false;
-    generateDisabled = true;
 
-    // If connected, userId is set to the user's id
+    link.slug = Math.random().toString(36).substring(2, 6);
+    link.inGeneration = true;
+
     let json = JSON.stringify({});
 
     if (!$page.data.session?.user) {
-      json = JSON.stringify({
-        url: baseUrl,
-        slug: generatedUrl,
-        visitorId: Cookies.get("fpVisitorId")
-      });
+      json = JSON.stringify({ url: link.baseUrl, slug: link.slug, visitorId: Cookies.get("fpVisitorId") });
     } else {
-      json = JSON.stringify({
-        url: baseUrl,
-        slug: generatedUrl,
-        visitorId: Cookies.get("fpVisitorId"),
-        userId: $page.data.session?.user.id
-      });
+      json = JSON.stringify({ url: link.baseUrl, slug: link.slug, visitorId: Cookies.get("fpVisitorId"), userId: $page.data.session?.user.id });
     }
 
     let res = await fetch(PUBLIC_URL + "api/link/create", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: json
     });
 
-    // Check if rate limit has been reached
     if (res.status === 429) {
       pushToast("You have reached the rate limit, please try again later", "danger");
-      generated = true;
-      generateDisabled = false;
+      link.inGeneration = false;
+      link.isGenerated = false;
       return;
     }
 
     if (res.ok) {
-      finalUrl = `${window.location.origin}/${generatedUrl}`;
+      link.finalUrl = `${window.location.origin}/${link.slug}`;
       pushToast("Your link has been shortened", "success");
-      generated = true;
-      generateDisabled = false;
+      link.inGeneration = false;
+      link.isGenerated = true;
     } else {
       pushToast("Whoops, something went wrong, try again later", "danger");
-      generated = true;
     }
   }
 
   function checkUrl() {
-    baseUrl.startsWith("http://") || baseUrl.startsWith("https://")
-      ? (generateDisabled = false)
-      : (generateDisabled = true);
-    if (baseUrl === "") generateDisabled = true;
+    if (link.baseUrl === "") link.canGenerate = false;
+    if (link.baseUrl.startsWith("http://") || link.baseUrl.startsWith("https://")) link.canGenerate = true;
   }
 
   function copyToClipboard() {
-    if (finalUrl === "") {
+    if (link.finalUrl === "") {
       pushToast("Please generate a link first", "warning");
     } else {
       pushToast("Link copied to clipboard", "success");
-      navigator.clipboard.writeText(finalUrl);
+      navigator.clipboard.writeText(link.finalUrl);
     }
   }
 </script>
@@ -97,41 +89,22 @@
 
   <form>
     <div class="mb-3">
-      <Input
-        bind:value={baseUrl}
-        props={{ placeholder: "Link to shorten", size: "small", width: "full" }}
-        on:input={checkUrl}
-      />
+      <Input bind:value={link.baseUrl} props={{ placeholder: "Link to shorten", size: "small", width: "full" }} on:input={checkUrl} />
     </div>
 
-    {#if !generated}
+    {#if link.inGeneration}
       <div class="mb-3 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
     {:else}
       <div class="mb-3">
-        <Input
-          bind:value={finalUrl}
-          props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }}
-        />
+        <Input bind:value={link.finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
       </div>
     {/if}
 
     <div class="flex items-center justify-between gap-2 text-sm font-normal">
-      <Button
-        props={{
-          type: "button",
-          size: "large",
-          variant: "blue",
-          withIcon: true,
-          disabled: generateDisabled
-        }}
-        on:click={transformUrl}
-      >
+      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: !link.canGenerate }} on:click={transformUrl}>
         <IconUnlink /> Transform
       </Button>
-      <Button
-        props={{ type: "button", size: "medium", variant: "blue", disabled: finalUrl === "" }}
-        on:click={copyToClipboard}
-      >
+      <Button props={{ type: "button", size: "medium", variant: "blue", disabled: link.finalUrl === "" }} on:click={copyToClipboard}>
         <IconCopy />
       </Button>
       <Link props={{ href: "/app/history", size: "medium", variant: "blue" }}>
