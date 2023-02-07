@@ -2,7 +2,6 @@
   import { Button } from "$lib/components/button";
   import { Input } from "$lib/components/forms/input";
   import { Container } from "$lib/components/layout/container";
-  import { PasswordForce } from "$lib/components/layout/password-force";
   import { pushToast } from "$lib/components/layout/toast";
   import type { ActionData } from "./$types";
 
@@ -66,9 +65,7 @@
       />
     </div>
 
-    <PasswordForce bind:password />
-
-    <div class="mt-5">
+    <div class="mt-0">
       <Button props={{ type: "submit", size: "large", variant: "blue" }}>S'inscrire</Button>
     </div>
 
