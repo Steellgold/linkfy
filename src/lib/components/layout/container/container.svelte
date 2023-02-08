@@ -20,10 +20,8 @@
   let centeredClass = centered ? "items-center mx-auto" : "";
 </script>
 
-<div class="flex flex-col {centeredClass} px-4 py-4 lg:py-0">
-  <div
-    class="w-full rounded-lg border p-4 shadow md:mt-0 {size} border-gray-700 bg-gray-800 sm:p-5"
-  >
+<div class="flex flex-col {centeredClass} px-3 py-4 lg:py-0">
+  <div class="w-full rounded-lg border p-4 shadow md:mt-0 {size} border-gray-700 bg-gray-800 sm:p-5">
     <slot />
   </div>
 </div>
