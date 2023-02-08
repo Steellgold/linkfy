@@ -100,39 +100,23 @@
               <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-white">
                 <div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" />
               </th>
-              <td class="whitespace-nowrap px-6 py-4"
-                ><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td
-              >
-              <td class="whitespace-nowrap px-6 py-4"
-                ><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td
-              >
-              <td class="whitespace-nowrap px-6 py-4"
-                ><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td
-              >
+              <td class="whitespace-nowrap px-6 py-4"><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td>
+              <td class="whitespace-nowrap px-6 py-4"><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td>
+              <td class="whitespace-nowrap px-6 py-4"><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td>
+              
               {#if $page.data.session?.user}
-                <td class="whitespace-nowrap px-6 py-4"
-                  ><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td
-                >
+                <td class="whitespace-nowrap px-6 py-4"><div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" /></td>
               {/if}
             </tr>
           {/each}
         {:else if pinfo.total !== 0}
           {#each pinfo.pages[pinfo.current] as link}
-            <tr
-              class="group border-b bg-gray-800 hover:bg-[#242f3d] {link ===
-              pinfo.pages[pinfo.current][pinfo.pages[pinfo.current].length - 1]
-                ? 'border-transparent'
-                : 'border-gray-700'} transition-colors duration-200"
-            >
+            <tr class="group border-b bg-gray-800 hover:bg-[#242f3d] {link === pinfo.pages[pinfo.current][pinfo.pages[pinfo.current].length - 1] ? 'border-transparent' : 'border-gray-700'} transition-colors duration-200">
               <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-white">
                 {minimize(link.url)}
               </th>
               <td class="whitespace-nowrap px-6 py-4">
-                <a
-                  href={PUBLIC_URL + link.slug}
-                  class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500"
-                  data-sveltekit-preload-data="off"
-                >
+                <a href={PUBLIC_URL + link.slug} class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500" data-sveltekit-preload-data="off">
                   {PUBLIC_URL + link.slug}
                 </a>
               </td>
@@ -143,17 +127,8 @@
                 {formatNumbers(link.clicks)}
               </td>
               {#if $page.data.session?.user}
-                <td
-                  class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium transition-colors duration-200"
-                >
-                  <Link
-                    props={{
-                      href: PUBLIC_URL + link.slug + "/edit",
-                      withIcon: true,
-                      variant: "action",
-                      size: "small"
-                    }}
-                  >
+                <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium transition-colors duration-200">
+                  <Link props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
                     <IconEdit />
                   </Link>
                 </td>
@@ -176,17 +151,17 @@
 
   {#if !loading && pinfo.total > pinfo.linksPerPage}
     <div class="flex items-center justify-center gap-2 pb-5 pt-3">
-      <Button props={{ size: "ultrasmall", variant: "blue" }} on:click={() => firstPage()}>
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => firstPage()}>
         <IconChevronsLeft />
       </Button>
-      <Button props={{ size: "ultrasmall", variant: "blue" }} on:click={() => prevPage()}>
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => prevPage()}>
         <IconChevronLeft />
       </Button>
       <span class="text-gray-400">Page {pinfo.current + 1} of {pinfo.pages.length}</span>
-      <Button props={{ size: "ultrasmall", variant: "blue" }} on:click={() => nextPage()}>
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => nextPage()}>
         <IconChevronRight />
       </Button>
-      <Button props={{ size: "ultrasmall", variant: "blue" }} on:click={() => lastPage()}>
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => lastPage()}>
         <IconChevronsRight />
       </Button>
     </div>
