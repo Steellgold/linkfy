@@ -16,6 +16,7 @@ export { default as IconInfoCircle } from "./info-circle.svelte";
 export { default as IconLayoutCollage } from "./layout-collage.svelte";
 export { default as IconRefresh } from "./refresh.svelte";
 export { default as IconTrafficCone } from "./traffic-cone.svelte";
+export { default as IconTrash } from "./trash.svelte";
 export { default as IconUnlink } from "./unlink.svelte";
 export { default as IconUserCircle } from "./user-circle.svelte";
 export { default as IconUserPlus } from "./user-plus.svelte";

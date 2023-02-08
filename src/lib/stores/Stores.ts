@@ -1,0 +1,1 @@
+export const urlsGenerated: string[] = [];

@@ -10,7 +10,8 @@
     IconChevronRight,
     IconChevronsLeft,
     IconChevronsRight,
-    IconEdit
+    IconEdit,
+    IconTrash
   } from "$lib/icons";
   import { onMount } from "svelte";
   import { formatNumbers, minimize } from "$lib/utils/Link";
@@ -118,10 +119,10 @@
         {:else if pinfo.total !== 0}
           {#each pinfo.pages[pinfo.current] as link}
             <tr
-              class="group border-b bg-gray-800 hover:bg-gray-700 {link ===
+              class="group border-b bg-gray-800 hover:bg-[#242f3d] {link ===
               pinfo.pages[pinfo.current][pinfo.pages[pinfo.current].length - 1]
                 ? 'border-transparent'
-                : 'border-gray-700'}"
+                : 'border-gray-700'} transition-colors duration-200"
             >
               <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-white">
                 {minimize(link.url)}
@@ -143,17 +144,17 @@
               </td>
               {#if $page.data.session?.user}
                 <td
-                  class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium opacity-30 transition-opacity duration-200 group-hover:opacity-100"
+                  class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium transition-colors duration-200"
                 >
                   <Link
                     props={{
-                      href: "edit/" + link.slug,
+                      href: PUBLIC_URL + link.slug + "/edit",
                       withIcon: true,
-                      variant: "blue",
+                      variant: "action",
                       size: "small"
                     }}
                   >
-                    <IconEdit /> Edit
+                    <IconEdit />
                   </Link>
                 </td>
               {/if}

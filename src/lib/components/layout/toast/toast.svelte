@@ -17,7 +17,7 @@
   };
 </script>
 
-<div class="fixed left-auto top-0 right-2">
+<div class="fixed bottom-1 right-2">
   {#each $toasts as toast}
     <div class="w-50 sm:w-100 my-3" transition:fly={{ x: 200, duration: 500 }}>
       <div
