@@ -5,8 +5,8 @@
   import { IconCheck, IconTrash } from "$lib/icons";
   import type { PageData } from './$types';
   import { PUBLIC_URL } from "$env/static/public";
-    import { pushToast } from "$lib/components/layout/toast";
-    import { goto } from "$app/navigation";
+  import { pushToast } from "$lib/components/layout/toast";
+  import { goto } from "$app/navigation";
   export let data: PageData;
 
   let url: string = data.slugData.url;
@@ -88,7 +88,7 @@
           <IconTrash />
         </Button>
       {:else}
-        <div class="mb-3 h-4 w-80 animate-pulse rounded bg-gray-600 p-5" />
+        <div class="mb-3 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
         <div class="mb-3 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
       {/if}
 

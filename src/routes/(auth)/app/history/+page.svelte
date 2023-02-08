@@ -148,7 +148,7 @@
                 >
                   <Link
                     props={{
-                      href: "edit/" + link.slug,
+                      href: PUBLIC_URL + link.slug + "/edit",
                       withIcon: true,
                       variant: "action",
                       size: "small"
