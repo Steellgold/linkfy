@@ -15,7 +15,6 @@
   } from "$lib/icons";
   import { onMount } from "svelte";
   import { formatNumbers, minimize } from "$lib/utils/Link";
-  import Cookies from "js-cookie";
   import dayjs from "dayjs";
   import Cookies from "js-cookie";
   import {
@@ -31,6 +30,7 @@
     import TableRowLoading from "$lib/components/layout/table/table-row-loading.svelte";
 
   let loading: boolean = true;
+  let showSearchResults: boolean = false;
 
   let pinfo = {
     current: 0,
@@ -63,20 +63,43 @@
     loading = false;
   });
 
+  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
   function nextPage() {
     if (pinfo.current + 1 < pinfo.pages.length) pinfo.current++;
   }
 
+  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
   function prevPage() {
     if (pinfo.current - 1 >= 0) pinfo.current--;
   }
 
+  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
   function firstPage() {
     pinfo.current = 0;
   }
 
+  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
   function lastPage() {
     pinfo.current = pinfo.pages.length - 1;
+  }
+
+  let searchResults: any[] = [];
+  let search: string = "";
+
+  function update(e: Event) {
+    search = (e.target as HTMLInputElement).value ?? "";
+
+    if (search !== "") showSearchResults = true;
+    else showSearchResults = false;
+    searchResults = [];
+
+    for (let i = 0; i < pinfo.pages.length; i++) {
+      for (let j = 0; j < pinfo.pages[i].length; j++) {
+        if (pinfo.pages[i][j].url.startsWith(search)) {
+          searchResults.push(pinfo.pages[i][j]);
+        }
+      }
+    }
   }
 </script>
 
@@ -89,6 +112,14 @@
         devices or access statistics of their usage.
       </p>
     {/if}
+    
+    <div class="relative mt-2">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+        <IconSearch />
+      </div>
+      
+      <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm border rounded-lg outline-none bg-gray-700 border-gray-600 placeholder-gray-400 text-white" placeholder="https://google.com" required on:input={update} />
+    </div>
   </div>
 
   <Table>
@@ -131,6 +162,29 @@
           {/each}
         {/if}
       {:else}
+        {#each searchResults as link}
+          {#if loading}
+            <TableRowLoading count={4} />
+            <TableRowLoading count={4} />
+            <TableRowLoading count={4} />
+          {:else}
+            <TableRow>
+              <TableCell first={true}>{minimize(link.url)}</TableCell>
+              <TableCell>
+                <a href={PUBLIC_URL + link.slug} class=" text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
+                  {PUBLIC_URL + link.slug}
+                </a>
+              </TableCell>
+              <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
+              <TableCell>{formatNumbers(link.clicks)}</TableCell>
+              {#if $page.data.session?.user}
+                <TableCell>
+                  <Link props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}><IconEdit /></Link>
+                </TableCell>
+              {/if}
+            </TableRow>
+          {/if}
+        {/each}
       {/if}
     </TableBody>
     

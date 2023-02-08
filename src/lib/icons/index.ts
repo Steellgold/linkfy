@@ -20,3 +20,4 @@ export { default as IconTrash } from "./trash.svelte";
 export { default as IconUnlink } from "./unlink.svelte";
 export { default as IconUserCircle } from "./user-circle.svelte";
 export { default as IconUserPlus } from "./user-plus.svelte";
+export { default as IconSearch } from "./search.svelte";
