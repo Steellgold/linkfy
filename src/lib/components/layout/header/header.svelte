@@ -95,7 +95,7 @@
               <a href="/" class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Dashboard</a>
             </li>
 
-            <form action="/app/logout" method="POST" use:enhance={submitLogout}>
+            <form action="/logout" method="POST" use:enhance={submitLogout}>
               <button class="block w-full px-4 py-2 text-left hover:bg-red-600 hover:text-white transition-colors">
                 Sign out
               </button>
