@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Container } from "$lib/components/layout/container";
   import { Input } from "$lib/components/forms/input";
-  import { Button } from "$lib/components/button";
-  import { IconCheck, IconTrash } from "$lib/icons";
+  import { Button, Link } from "$lib/components/button";
+  import { IconArrowBack, IconCheck, IconTrash } from "$lib/icons";
   import type { PageData } from './$types';
   import { PUBLIC_URL } from "$env/static/public";
   import { pushToast } from "$lib/components/layout/toast";
@@ -84,11 +84,16 @@
           <IconCheck /> Save
         </Button>
 
+        <Link props={{ href: "/history", size: "medium", variant: "blue", withIcon: true }}>
+          <IconArrowBack />
+        </Link>
+
         <Button props={{ type: "button", size: "medium", variant: "red", disabled: deleted }} on:click={deleteLink}>
           <IconTrash />
         </Button>
       {:else}
         <div class="mb-3 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
+        <div class="mb-3 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
         <div class="mb-3 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
       {/if}
 

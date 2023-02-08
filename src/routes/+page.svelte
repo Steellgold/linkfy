@@ -107,7 +107,7 @@
       <Button props={{ type: "button", size: "medium", variant: "blue", disabled: link.finalUrl === "" }} on:click={copyToClipboard}>
         <IconCopy />
       </Button>
-      <Link props={{ href: "/app/history", size: "medium", variant: "blue" }}>
+      <Link props={{ href: "/history", size: "medium", variant: "blue" }}>
         <IconHistory />
       </Link>
     </div>
