@@ -3,9 +3,9 @@ import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async({ params, fetch }) => {
-  if (!params.short) throw redirect(303, PUBLIC_URL);
+  if (!params.slug) throw redirect(303, PUBLIC_URL);
 
-  const data = await fetch(PUBLIC_URL + "api/link?slug=" + params.short);
+  const data = await fetch(PUBLIC_URL + "api/link?slug=" + params.slug);
   const dataJson = await data.json();
 
   if (data.status !== 200) throw redirect(303, PUBLIC_URL);
@@ -16,7 +16,7 @@ export const load = (async({ params, fetch }) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      slug: params.short,
+      slug: params.slug,
       data: {
         clicks: dataJson.clicks + 1
       }
