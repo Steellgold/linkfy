@@ -25,9 +25,9 @@
     TableHeader,
     TableHeadRow,
     TableHeadRowCell,
+    TableCellLoading,
     TableRow
   } from "$lib/components/layout/table";
-    import TableRowLoading from "$lib/components/layout/table/table-row-loading.svelte";
 
   let loading: boolean = true;
   let showSearchResults: boolean = false;
@@ -139,9 +139,9 @@
     <TableBody>
       {#if !showSearchResults}
         {#if loading}
-          <TableRowLoading count={4} />
-          <TableRowLoading count={4} />
-          <TableRowLoading count={4} />
+          <TableCellLoading count={4} />
+          <TableCellLoading count={4} />
+          <TableCellLoading count={4} />
         {:else}
           {#each pinfo.pages[pinfo.current] as link}
             <TableRow>
@@ -164,9 +164,9 @@
       {:else}
         {#each searchResults as link}
           {#if loading}
-            <TableRowLoading count={4} />
-            <TableRowLoading count={4} />
-            <TableRowLoading count={4} />
+            <TableCellLoading count={4} />
+            <TableCellLoading count={4} />
+            <TableCellLoading count={4} />
           {:else}
             <TableRow>
               <TableCell first={true}>{minimize(link.url)}</TableCell>
