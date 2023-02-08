@@ -24,6 +24,7 @@ model Link {
   url       String
   slug      String   @unique
   clicks    Int      @default(0)
+  status    Boolean  @default(true)
   createdAt DateTime @default(now())
   userId    String?
   visitorId String

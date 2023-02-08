@@ -22,7 +22,8 @@ export async function PUT({ request, getClientAddress }: RequestEvent): Promise<
           .regex(/^https?:\/\//)
           .optional(),
         slug: z.string().optional(),
-        clicks: z.number().optional()
+        clicks: z.number().optional(),
+        status: z.boolean().optional()
       })
     })
     .safeParse(body);

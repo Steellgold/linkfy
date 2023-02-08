@@ -28,6 +28,7 @@ export const load = (async({ params, locals })  => {
     slugData: {
       slug: link.slug,
       url: link.url,
+      status: link.status,
       userId: link.userId
     }
   };
