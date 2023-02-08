@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Container } from "$lib/components/layout/container";
-  import { Input } from "$lib/components/forms/input";
+  import { Input, Toggle } from "$lib/components/forms";
   import { Button, Link } from "$lib/components/button";
   import { IconArrowBack, IconCheck, IconTrash } from "$lib/icons";
   import type { PageData } from './$types';
@@ -10,42 +10,36 @@
   export let data: PageData;
 
   let url: string = data.slugData.url;
-  // let slug: string = data.slugData.slug;
+  // let slug: string = data.slugData.slug; TODO
+  let status: boolean = data.slugData.status;
+  
+  let changes = { url: false, status: false };
+  $: somethingChanged = changes.url == false && changes.status == false;
 
-  async function save() {
-    if (url === data.slugData.url) return;
-
-    const res = await fetch(PUBLIC_URL + "api/link/update", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        slug: data.slugData.slug,
-        data: {
-          url: url
-        },
-      }),
-    });
-
-    if (res.ok) {
-      pushToast("Link updated successfully", "success");
-    } else {
-      pushToast("Something went wrong", "danger");
-    }
-  }
+  $: changes.url = url !== data.slugData.url;
+  $: changes.status = status !== data.slugData.status;
 
   let deleted = false;
+
+  async function save() {
+    const res = await fetch(PUBLIC_URL + "api/link/update", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: data.slugData.slug, data: { url: url, status: status } }),
+    });
+
+    if (res.ok) pushToast("Link updated successfully", "success");
+    else pushToast("Something went wrong", "danger");
+
+    data.slugData = await res.json();
+  }
+
   async function deleteLink() {
     deleted = true;
     const res = await fetch(PUBLIC_URL + "api/link/delete", {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        slug: data.slugData.slug,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: data.slugData.slug }),
     });
 
     if (res.ok) {
@@ -66,22 +60,27 @@
   <form class="flex flex-col gap-4">
     <Input bind:value={url} props={{ placeholder: "https://example.com", size: "small", width: "full" }} />
 
-    <div class="relative w-[250px] sm:w-[405px]" >
+    <div class="relative">
       <span class="text-xs font-medium text-center p-0.5 leading-none rounded-full px-2 bg-pro-900 text-pro-200 absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0">Pro</span>
       
-      <Input value={data.slugData.slug} props={{
-        placeholder: "https://example.com",
-        size: "small",
-        width: "full",
-        tip: PUBLIC_URL,
-        disabled: true
-      }} />
+      <Input value={data.slugData.slug} props={{ placeholder: "https://example.com", size: "small", width: "full", tip: PUBLIC_URL, disabled: true }} />
     </div>
+
+    <!-- <div class="flex relative items-center">
+      <Toggle props={{ label: "Password protection", disabled: false }} />
+      <span class="text-xs font-medium text-center p-0.5 leading-none rounded-full px-2 bg-pro-900 text-pro-200 absolute left-[195px]">Pro</span>
+    </div> -->
+
+    <Toggle props={{ label: status ? "Click here to disable it" : "Click here to activate it", disabled: false, checked: status }} bind:checked={status} />
 
     <div class="flex items-center justify-between gap-2 text-sm font-normal">
       {#if !deleted}
-        <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, }} on:click={save}>
-          <IconCheck /> Save
+        <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: somethingChanged }} on:click={save}>
+          {#if !somethingChanged}
+            <IconCheck /> Save changes
+          {:else}
+            Nothing changed
+          {/if}
         </Button>
 
         <Link props={{ href: "/history", size: "medium", variant: "blue", withIcon: true }}>
@@ -96,10 +95,6 @@
         <div class="mb-3 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
         <div class="mb-3 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
       {/if}
-
-      <!-- TODO: Add a toggle, for "Active/Inactive" -->
-      <!-- TODO: Button for access statistics, "PRO" -->
-      <!-- TODO: Add a field "Password protection" pro? if not limit number of links can have? -->
     </div>
   </form>
 </Container>
