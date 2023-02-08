@@ -89,14 +89,14 @@
           </svg>
         </button>
         
-        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="sessionDropdown">
+        <div id="dropdown" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 bg-gray-700">
+          <ul class="py-2 text-sm text-gray-200" aria-labelledby="sessionDropdown">
             <li>
-              <a href="/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+              <a href="/" class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Dashboard</a>
             </li>
 
             <form action="/app/logout" method="POST" use:enhance={submitLogout}>
-              <button class="block w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-red-600 dark:hover:text-white transition-colors">
+              <button class="block w-full px-4 py-2 text-left hover:bg-red-600 hover:text-white transition-colors">
                 Sign out
               </button>
             </form>
