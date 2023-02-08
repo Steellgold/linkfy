@@ -5,14 +5,14 @@ export interface ButtonProps {
   type?: "button" | "submit";
   disabled?: boolean;
   size: "ultrasmall" | "small" | "medium" | "large";
-  variant: "blue" | "red" | "pro" | "action";
+  variant: "blue" | "red" | "pro" | "action" | "gray"
   withIcon?: boolean;
 }
 
 export interface LinkProps {
   href: string;
   size: "ultrasmall" | "small" | "medium" | "large";
-  variant: "blue" | "red" | "pro" | "action";
+  variant: "blue" | "red" | "pro" | "action" | "gray"
   withIcon?: boolean;
 }
 
@@ -20,7 +20,8 @@ export const colorClass = {
   blue: "bg-blue-600 hover:bg-blue-700",
   red: "bg-red-600 opacity-80 hover:bg-red-700 hover:opacity-90",
   pro: "bg-pro-300 hover:bg-pro-400",
-  action: "bg-transparent"
+  action: "bg-transparent",
+  gray: "bg-gray-600 hover:bg-gray-500"
 };
 
 export const sizeClass = {
