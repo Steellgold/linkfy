@@ -1,4 +1,5 @@
 import { PUBLIC_URL } from "$env/static/public";
+import prisma from "$lib/database/Prisma";
 import { AuthApiError } from "@supabase/supabase-js";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
@@ -27,14 +28,40 @@ export const actions: Actions = {
       return fail(500, { message: err.message });
     }
 
-    const res = await fetch(
-      PUBLIC_URL
-        + "api/links/sync?visitorId="
-        + cookies.get("fpVisitorId")
-        + "&userId="
-        + data.user?.id
-    );
+    const res = await fetch(PUBLIC_URL + "api/links/sync?visitorId=" + cookies.get("fpVisitorId") + "&userId=" + data.user?.id);
     if (!res.ok) return fail(500, { message: "Failed to synchronize links" });
+
+    if (data.user?.id && data.user?.email) {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: data.user.id
+        }
+      });
+
+      if (user) {
+        locals.user = {
+          email: user.email,
+          isPremium: user.isPremium,
+          role: user.role as "user" | "admin"
+        };
+      } else {
+        const user = await prisma.user.create({
+          data: {
+            id: data.user.id,
+            email: data.user.email
+          }
+        });
+
+
+        locals.user = {
+          email: data.user.email,
+          isPremium: user?.isPremium ?? false,
+          role: user?.role as "user" | "admin" ?? "user"
+        };
+      }
+    } else {
+      console.error("User ID or email not found");
+    }
 
     throw redirect(303, "/");
   }

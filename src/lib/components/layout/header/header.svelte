@@ -48,7 +48,7 @@
       <div class="flex flex-1 items-stretch justify-start">
         <div class="flex flex-shrink-0 items-center">
           <a href="/">
-            <img class="hidden h-8 w-auto sm:block" src="https://ddxqiolukruhxmwewesm.supabase.co/storage/v1/object/public/assets/link.png" alt="Linkfy" />
+            <img class="hidden h-8 w-auto sm:block" src="/link.png" alt="Linkfy" />
           </a>
         </div>
       </div>
