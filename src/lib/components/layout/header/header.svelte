@@ -34,37 +34,13 @@
         >
           <span class="sr-only">Open main menu</span>
           {#if !mobileMenuOpen}
-            <svg
-              class="block h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
           {/if}
           {#if mobileMenuOpen}
-            <svg
-              class="block h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           {/if}
         </button>
@@ -72,7 +48,7 @@
       <div class="flex flex-1 items-stretch justify-start">
         <div class="flex flex-shrink-0 items-center">
           <a href="/">
-            <img class="hidden h-8 w-auto sm:block" src="/link.png" alt="Linkfy" />
+            <img class="hidden h-8 w-auto sm:block" src="https://ddxqiolukruhxmwewesm.supabase.co/storage/v1/object/public/assets/link.png" alt="Linkfy" />
           </a>
         </div>
       </div>
