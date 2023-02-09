@@ -119,6 +119,12 @@
       </div>
       
       <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm border rounded-lg outline-none bg-gray-700 border-gray-600 placeholder-gray-400 text-white" placeholder="https://google.com" required on:input={update} />
+
+      {#if showSearchResults}
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+          <span class="text-sm font-normal text-gray-400">{searchResults.length} results</span>
+        </div>
+      {/if}
     </div>
   </div>
 
