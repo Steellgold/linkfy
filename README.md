@@ -2,7 +2,7 @@
 
 # Linkfy
 
-Linkfy is an easy to use link shortner tool built using SvelteKit. [Learn More about SvelteKit](https://github.com/topics/sveltekit)
+Linkfy is an easy to use link shortener tool built using SvelteKit. [Learn More about SvelteKit](https://github.com/topics/sveltekit)
 
 App is currently hosted on [https://linkfy.fr/](https://linkfy.fr/).
 
@@ -14,7 +14,9 @@ App is currently hosted on [https://linkfy.fr/](https://linkfy.fr/).
 
 * Short Link: Adding a link allows it to be shortened. The user can copy the link easily so it can be shared. 
 * Link History: The user is able to see their history of all of the links they have shortened. (you must be logged in to use it accross multiple devices)
-* ![image](https://github.com/vmarlowe/images/blob/main/history.png?raw=true)
+
+![image](https://github.com/vmarlowe/images/blob/main/history.png?raw=true)
+
 * View Count: For each shortened link, the user is able to see how many views a link received. 
 * History Search: The user is able to search through all of their previous shortened links. 
 
