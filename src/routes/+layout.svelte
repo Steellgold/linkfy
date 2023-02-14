@@ -18,15 +18,11 @@
       fpPromise
         .then((fp) => fp.get())
         .then((result) => {
-          Cookies.set("fpVisitorId", result.visitorId);
+          Cookies.set("fpVisitorId", result.visitorId, { expires: 365 });
         })
         .catch((error) => {
           // Some AdBlockers block FingerprintJS Pro and it's impossible to detect them
-          Cookies.set(
-            "fpVisitorId",
-            Math.random().toString(36).substring(2, 15) +
-              Math.random().toString(36).substring(2, 15)
-          );
+          Cookies.set("fpVisitorId", Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), { expires: 365 });
         });
     }
 

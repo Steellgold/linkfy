@@ -34,7 +34,7 @@
     let visitorId = Cookies.get("fpVisitorId");
     if (visitorId == undefined) {
       let generated = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      Cookies.set("fpVisitorId", generated);
+      Cookies.set("fpVisitorId", generated, { expires: 365 });
       visitorId = generated;
     }
 

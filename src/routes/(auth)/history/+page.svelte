@@ -42,10 +42,26 @@
   };
 
   onMount(async () => {
+    let query = {};
+    let visitorId = Cookies.get("fpVisitorId");
+
+    if (visitorId == undefined) {
+      visitorId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      Cookies.set("fpVisitorId", visitorId, { expires: 365 });
+    }
+
+    if ($page.data.session?.user) {
+      query = {
+        userId: $page.data.session?.user.id
+      };
+    } else {
+      query = {
+        visitorId: visitorId
+      };
+    }
+
     let response = await restRequest<Link[]>("get", PUBLIC_URL + "api/links", {
-      query: {
-        visitorId: "TaQqIrJWmmGaTCNnQpdm"
-      }
+      query: query
     }, [], true);
 
     if (!response.success) {
