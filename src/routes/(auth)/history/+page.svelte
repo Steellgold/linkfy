@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { PUBLIC_URL } from "$env/static/public";
-  import { Button, Link } from "$lib/components/button";
+  import { Button, Link as LinkButton } from "$lib/components/button";
   import { Container } from "$lib/components/layout/container";
   import { pushToast } from "$lib/components/layout/toast";
   import {
@@ -14,7 +14,7 @@
     IconSearch
   } from "$lib/icons";
   import { onMount } from "svelte";
-  import { formatNumbers, minimize } from "$lib/utils/Link";
+  import { formatNumbers, minimize } from "$lib/utils/link";
   import dayjs from "dayjs";
   import Cookies from "js-cookie";
   import {
@@ -28,6 +28,8 @@
     TableCellLoading,
     TableRow
   } from "$lib/components/layout/table";
+  import { restRequest } from "$lib/utils/request/request";
+  import type { Link } from "$lib/types/link.type";
 
   let loading: boolean = true;
   let showSearchResults: boolean = false;
@@ -40,19 +42,17 @@
   };
 
   onMount(async () => {
-    let res = null;
-    if ($page.data.session?.user) {
-      res = await fetch(PUBLIC_URL + "api/links?userId=" + $page.data.session?.user.id);
-    } else {
-      res = await fetch(PUBLIC_URL + "api/links?visitorId=" + Cookies.get("fpVisitorId"));
-    }
+    let response = await restRequest<Link[]>("get", PUBLIC_URL + "api/links", {
+      query: {
+        visitorId: "TaQqIrJWmmGaTCNnQpdm"
+      }
+    }, [], true);
 
-    if (res.status !== 200) {
+    if (!response.success) {
       return pushToast("An error has occurred while fetching your history", "danger");
     }
-    
-    const linksData = await res.json();
-    const links = linksData;
+
+    const links = response.data;
     const pagesCount = Math.ceil(links.length / pinfo.linksPerPage);
 
     for (let i = 0; i < pagesCount; i++) {
@@ -161,7 +161,9 @@
               <TableCell>{formatNumbers(link.clicks)}</TableCell>
               {#if $page.data.session?.user}
                 <TableCell>
-                  <Link props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}><IconEdit /></Link>
+                  <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
+                    <IconEdit />
+                  </LinkButton>
                 </TableCell>
               {/if}
             </TableRow>
@@ -185,7 +187,9 @@
               <TableCell>{formatNumbers(link.clicks)}</TableCell>
               {#if $page.data.session?.user}
                 <TableCell>
-                  <Link props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}><IconEdit /></Link>
+                  <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
+                    <IconEdit />
+                  </LinkButton>
                 </TableCell>
               {/if}
             </TableRow>
@@ -226,8 +230,8 @@
   {/if}
 
   <div class="flex items-center justify-between gap-3 text-sm font-normal">
-    <Link props={{ href: "/", withIcon: true, variant: "blue", size: "large" }}>
+    <LinkButton props={{ href: "/", withIcon: true, variant: "blue", size: "large" }}>
       <IconArrowBack /> Back to home
-    </Link>
+    </LinkButton>
   </div>
 </Container>

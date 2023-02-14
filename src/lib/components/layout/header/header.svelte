@@ -2,7 +2,7 @@
   import { enhance, type SubmitFunction } from "$app/forms";
   import { page } from "$app/stores";
   import { Link } from "$lib/components/button";
-  import { supabaseClient } from "$lib/database/Supabase";
+  import { supabaseClient } from "$lib/database/supabase";
   import { IconUserCircle } from "$lib/icons";
   import { fly } from "svelte/transition";
 
