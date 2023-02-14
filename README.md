@@ -50,6 +50,9 @@ Linkfy is an open-source project, and contributions from the community are alway
 
 ## Authors
 - [@Steellgold](https://github.com/Steellgold)
+
+## Contributors
+- [@SergArcila](https://github.com/SergArcila)
 - [@vmarlowe](https://github.com/vmarlowe)
 
 ## License
@@ -66,5 +69,4 @@ To learn more about the technologies used to build Linkfy, check out the followi
 * [Learn about ts-node](https://www.npmjs.com/package/ts-node)
 
 ## Contact:
-If you have any questions or feedback about Linkfy, please feel free to reach out to the development team at @Steellgold and @vmarlowe. We're always here to help!
-
+If you have any questions or feedback about Linkfy, please feel free to reach out to the development team at @Steellgold. We're always here to help! via Twitter or email: contact@steellgold.fr
