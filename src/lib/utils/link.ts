@@ -18,6 +18,14 @@ export function formatNumbers(number: number) : string {
   return number.toString();
 }
 
+export function validateUrl(url: string) : boolean {
+  const schema = z.object({
+    url: z.string().regex(/^(http(s):\/\/.)[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/)
+  }).safeParse({ url });
+
+  return schema.success;
+}
+
 export function generateSlug(length = 5) : string {
   const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let slug = "";
@@ -27,7 +35,7 @@ export function generateSlug(length = 5) : string {
   return slug;
 }
 
-export async function createLink(url: string, visitorId: string | null, userId: string | null) : Promise<Link | boolean> {
+export async function createLink(url: string, visitorId: string | null, userId: string | null) : Promise<Link | null> {
   const response = await restRequest<Link>("post", PUBLIC_URL + "api/link/create", {
     headers: {
       "Content-Type": "application/json"
@@ -41,7 +49,7 @@ export async function createLink(url: string, visitorId: string | null, userId: 
   });
 
   if (!response.success) {
-    return false;
+    return null;
   }
 
   return response.data;

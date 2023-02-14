@@ -4,28 +4,20 @@
   import { Input } from "$lib/components/forms/input";
   import { Button, Link as LinkButton } from "$lib/components/button";
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
-  import { createLink, isAlreadyGenerated } from "$lib/utils/link";
+  import { createLink, isAlreadyGenerated, validateUrl } from "$lib/utils/link";
   import { PUBLIC_URL } from "$env/static/public";
   import type { Link, LinkGeneration } from "$lib/types/link.type";
   import Cookies from "js-cookie";
-    import { pushToast } from "$lib/components/layout/toast";
+  import { pushToast } from "$lib/components/layout/toast";
+    import { z } from "zod";
 
   let links: Link[] = [];
-  let link: Link = {
-    url: "",
-    slug: "",
-    visitorId: ""
-  }
-
-  let linkGeneration: LinkGeneration = {
-    inGeneration: false,
-    isGenerated: false,
-    finalUrl: ""
-  }
+  let link: Link = { url: "", slug: "", visitorId: ""};
+  let linkGeneration: LinkGeneration = { inGeneration: false, isGenerated: false, finalUrl: "" }
 
   async function transform() {
-    if (isAlreadyGenerated(link.url, links)) {
-      pushToast("Please, enter a new link to shorten.", "danger");
+    if (!validateUrl(link.url) || isAlreadyGenerated(link.url, links)) {
+      pushToast("The link is not valid or has already been shortened.", "danger");
       return;
     }
 
@@ -39,17 +31,20 @@
     }
 
     const response = await createLink(link.url, visitorId, $page.data.session?.user.id ?? null);
-
-    if (response !== false) {
-      links.push(link);
+    
+    if (response) {
+      links.push(response);
 
       linkGeneration = {
         inGeneration: false,
         isGenerated: true,
         finalUrl: PUBLIC_URL + response.slug,
       };
-
+      
       pushToast("Link shortened successfully.", "success");
+    } else {
+      pushToast("An error occurred while generating the link.", "danger");
+      return;
     }
   }
 
@@ -81,7 +76,7 @@
     {/if}
 
     <div class="flex items-center justify-between gap-2 text-sm font-normal">
-      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }} on:click={transform}>
+      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: linkGeneration.inGeneration || link.url === "" }} on:click={transform}>
         <IconUnlink /> Transform
       </Button>
       <Button props={{ type: "button", size: "medium", variant: "blue", disabled: !linkGeneration.isGenerated }}>
