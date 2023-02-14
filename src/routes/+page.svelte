@@ -9,10 +9,9 @@
   import type { Link, LinkGeneration } from "$lib/types/link.type";
   import Cookies from "js-cookie";
   import { pushToast } from "$lib/components/layout/toast";
-    import { z } from "zod";
 
   let links: Link[] = [];
-  let link: Link = { url: "", slug: "", visitorId: ""};
+  let link: Link = { url: "", slug: "", visitorId: "", clicks: 0 };
   let linkGeneration: LinkGeneration = { inGeneration: false, isGenerated: false, finalUrl: "" }
 
   async function transform() {
@@ -54,11 +53,11 @@
 </script>
 
 <Container maxSize="md">
-  <div class="mb-2 p-0">
+  <div class="mb-3 p-0">
     <h1 class="mb-1 text-xl font-bold text-white md:text-2xl">Shorten your links</h1>
     <p class="text-sm font-normal text-white">
-      When you click on the "Use" button, the link will be shortened and you will be redirected to
-      the link.
+      Paste a link to shorten it, and share it with your friends. <br>
+      You can also check your history, and see how many times your links have been visited.
     </p>
   </div>
 
@@ -87,4 +86,17 @@
       </LinkButton>
     </div>
   </form>
+</Container>
+
+<Container>
+  <script type="text/javascript">
+    atOptions = {
+      'key' : '5cfdd28a88f06cbbdd617cf8e9878854',
+      'format' : 'iframe',
+      'height' : 60,
+      'width' : 468,
+      'params' : {}
+    };
+    document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/5cfdd28a88f06cbbdd617cf8e9878854/invoke.js"></scr' + 'ipt>');
+  </script>
 </Container>
