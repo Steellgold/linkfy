@@ -1,5 +1,5 @@
 import { PUBLIC_URL } from "$env/static/public";
-import prisma from "$lib/database/Prisma";
+import prisma from "$lib/database/prisma";
 import { AuthApiError } from "@supabase/supabase-js";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { enhance, type SubmitFunction } from "$app/forms";
   import { page } from "$app/stores";
-  import { supabaseClient } from "$lib/database/Supabase";
+  import { supabaseClient } from "$lib/database/supabase";
   import { fly } from "svelte/transition";
   import type { PageData } from "./$types";
 
