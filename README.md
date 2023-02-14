@@ -6,8 +6,8 @@ Linkfy is a powerful yet simple-to-use tool that helps you shorten and manage yo
 
 The app is currently hosted at https://linkfy.fr/, and is available for use anytime, anywhere.
 
-##### Table of Contents
-- [Description of features](#description of features)
+## Table of Contents
+- [Description of features](#description-of-features)
 
 ## Description of features
 * Login: Easily log into your existing Linkfy account to access your link history and other features.
