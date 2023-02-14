@@ -16,7 +16,7 @@ export async function POST({ request, getClientAddress }: RequestEvent): Promise
     .object({
       url: z.string().url(),
       slug: z.string(),
-      userId: z.string().optional(),
+      userId: z.string().optional().nullable(),
       visitorId: z.string()
     })
     .safeParse(body);

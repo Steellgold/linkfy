@@ -2,79 +2,59 @@
   import { page } from "$app/stores";
   import { Container } from "$lib/components/layout/container";
   import { Input } from "$lib/components/forms/input";
-  import { Button, Link } from "$lib/components/button";
+  import { Button, Link as LinkButton } from "$lib/components/button";
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
-  import { pushToast } from "$lib/components/layout/toast";
+  import { createLink, isAlreadyGenerated } from "$lib/utils/link";
   import { PUBLIC_URL } from "$env/static/public";
-  import { urlsGenerated } from "$lib/stores/Stores";
+  import type { Link, LinkGeneration } from "$lib/types/link.type";
   import Cookies from "js-cookie";
+    import { pushToast } from "$lib/components/layout/toast";
 
-  let link = {
-    baseUrl: "",
-    finalUrl: "",
+  let links: Link[] = [];
+  let link: Link = {
+    url: "",
     slug: "",
+    visitorId: ""
+  }
 
+  let linkGeneration: LinkGeneration = {
     inGeneration: false,
     isGenerated: false,
-    canGenerate: false
+    finalUrl: ""
   }
 
-  async function transformUrl() {
-    if (urlsGenerated.includes(link.baseUrl)) {
-      pushToast("Please, enter an different url", "danger");
-      return;
-    } else {
-      urlsGenerated.push(link.baseUrl);
-    }
-
-    if ((document.querySelector("button") as HTMLButtonElement).disabled) return;
-
-    link.slug = Math.random().toString(36).substring(2, 6);
-    link.inGeneration = true;
-
-    let json = JSON.stringify({});
-
-    if (!$page.data.session?.user) {
-      json = JSON.stringify({ url: link.baseUrl, slug: link.slug, visitorId: Cookies.get("fpVisitorId") });
-    } else {
-      json = JSON.stringify({ url: link.baseUrl, slug: link.slug, visitorId: Cookies.get("fpVisitorId"), userId: $page.data.session?.user.id });
-    }
-
-    let res = await fetch(PUBLIC_URL + "api/link/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: json
-    });
-
-    if (res.status === 429) {
-      pushToast("You have reached the rate limit, please try again later", "danger");
-      link.inGeneration = false;
-      link.isGenerated = false;
+  async function transform() {
+    if (isAlreadyGenerated(link.url, links)) {
+      pushToast("Please, enter a new link to shorten.", "danger");
       return;
     }
 
-    if (res.ok) {
-      link.finalUrl = `${window.location.origin}/${link.slug}`;
-      pushToast("Your link has been shortened", "success");
-      link.inGeneration = false;
-      link.isGenerated = true;
-    } else {
-      pushToast("Whoops, something went wrong, try again later", "danger");
+    linkGeneration.inGeneration = true;
+
+    let visitorId = Cookies.get("fpVisitorId");
+    if (visitorId == undefined) {
+      let generated = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      Cookies.set("fpVisitorId", generated);
+      visitorId = generated;
+    }
+
+    const response = await createLink(link.url, visitorId, $page.data.session?.user.id ?? null);
+
+    if (response !== false) {
+      links.push(link);
+
+      linkGeneration = {
+        inGeneration: false,
+        isGenerated: true,
+        finalUrl: PUBLIC_URL + response.slug,
+      };
+
+      pushToast("Link shortened successfully.", "success");
     }
   }
 
-  function checkUrl() {
-    if (link.baseUrl === "") link.canGenerate = false;
-    if (link.baseUrl.startsWith("http://") || link.baseUrl.startsWith("https://")) link.canGenerate = true;
-  }
-
-  function copyToClipboard() {
-    if (link.finalUrl === "") {
-      pushToast("Please generate a link first", "warning");
-    } else {
-      pushToast("Link copied to clipboard", "success");
-      navigator.clipboard.writeText(link.finalUrl);
-    }
+  $: if (link.url !== "") {
+    linkGeneration.isGenerated = false;
   }
 </script>
 
@@ -89,27 +69,27 @@
 
   <form>
     <div class="mb-3">
-      <Input bind:value={link.baseUrl} props={{ placeholder: "Link to shorten", size: "small", width: "full" }} on:input={checkUrl} />
+      <Input bind:value={link.url} props={{ placeholder: "Link to shorten", size: "small", width: "full" }} />
     </div>
 
-    {#if link.inGeneration}
+    {#if linkGeneration.inGeneration}
       <div class="mb-3 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
     {:else}
       <div class="mb-3">
-        <Input bind:value={link.finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
+        <Input bind:value={linkGeneration.finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
       </div>
     {/if}
 
     <div class="flex items-center justify-between gap-2 text-sm font-normal">
-      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: !link.canGenerate }} on:click={transformUrl}>
+      <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true }} on:click={transform}>
         <IconUnlink /> Transform
       </Button>
-      <Button props={{ type: "button", size: "medium", variant: "blue", disabled: link.finalUrl === "" }} on:click={copyToClipboard}>
+      <Button props={{ type: "button", size: "medium", variant: "blue", disabled: !linkGeneration.isGenerated }}>
         <IconCopy />
       </Button>
-      <Link props={{ href: "/history", size: "medium", variant: "blue" }}>
+      <LinkButton props={{ href: "/history", size: "medium", variant: "blue" }}>
         <IconHistory />
-      </Link>
+      </LinkButton>
     </div>
   </form>
 </Container>
