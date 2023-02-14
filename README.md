@@ -8,6 +8,13 @@ The app is currently hosted at https://linkfy.fr/, and is available for use anyt
 
 ## Table of Contents
 - [Description of features](#description-of-features)
+- [Getting Started](#getting-started)
+- [Contributing to Linkfy](#contributing-to-linkfy)
+- [Authors](#authors)
+- [License](#license)
+- [Additional Resources](#additional-resources)
+- [Contact](#contact)
+
 
 ## Description of features
 * Login: Easily log into your existing Linkfy account to access your link history and other features.
@@ -37,7 +44,7 @@ npm install or pnpm install
 
 Linkfy is an open-source project, and contributions from the community are always welcome. If you have ideas for new features or bug fixes, please open an issue to discuss them before submitting a pull request. Together, we can make Linkfy the best link shortener tool on the web!
 
-## **Authors**
+## Authors
 - [@Steellgold](https://github.com/Steellgold)
 - [@vmarlowe](https://github.com/vmarlowe)
 
