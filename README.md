@@ -8,6 +8,7 @@ The app is currently hosted at https://linkfy.fr/, and is available for use anyt
 
 ## Table of Contents
 - [Description of features](#description-of-features)
+- [Video Example](#video-example)
 - [Getting Started](#getting-started)
 - [Contributing to Linkfy](#contributing-to-linkfy)
 - [Authors](#authors)
