@@ -30,6 +30,9 @@ The app is currently hosted at https://linkfy.fr/, and is available for use anyt
 * View Count: Get a detailed view of how many clicks each of your shortened links has received, so you can see how your campaigns are performing.
 * History Search: Search through your link history with ease, and quickly find the links you're looking for.
 
+## Video example
+[![Video showing Linkfy in action](http://img.youtube.com/vi/_2l2Yq6qZrM/0.jpg)](http://www.youtube.com/watch?v=_2l2Yq6qZrM)
+
 ## Getting Started
 
 * Getting started with Linkfy is simple. All you need to do is install the project's dependencies using npm or pnpm. This project uses ts-node, so be sure to install that as well.
