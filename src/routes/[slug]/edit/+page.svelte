@@ -10,6 +10,7 @@
   import { page } from "$app/stores";
   import { restRequest } from "$lib/utils/request/request";
   import type { Link } from "$lib/types/link.type";
+  import { deleteLink } from "$lib/utils/link";
 
   export let data: PageData;
 
@@ -21,8 +22,8 @@
     clicks: data.link.clicks
   };
 
-  let changes = { url: false, status: false };
-  $: somethingChanged = changes.url == false && changes.status == false;
+  let changes = { url: false, status: false, password: false, subdomain: false };
+  $: somethingChanged = changes.url == false && changes.status == false && changes.password == false && changes.subdomain == false;
 
   $: changes.url = link.url !== data.link.url;
   $: changes.status = link.status !== data.link.status;
@@ -50,14 +51,11 @@
     link = response.data;
   }
 
-  async function deleteLink() {
+  async function removeLink() {
     deleted = true;
-    const res = await restRequest("delete", PUBLIC_URL + "api/link/delete", {
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug: data.link.slug })
-    });
+    const response = await deleteLink(data.link.slug);
 
-    if (res.success) {
+    if (response) {
       pushToast("Link deleted successfully", "success");
       goto("/history");
     } else {
@@ -68,42 +66,43 @@
 
 <Container maxSize="md">
   <div class="mb-3 p-0">
-    <div class="flex flex-row items-center">
-      <h1 class="text-2xl font-bold text-white">Edit link</h1>
-
-      {#if !$page.data.user?.isPremium}
-        <div class="flex flex-row ml-auto text-pro-200">
-          <button data-tooltip-target="tooltip-pro" type="button" class="flex focus:outline-none rounded-lg text-sm px-3 py-1 text-center bg-pro-200 text-gray-900">
-            <IconRocket />&nbsp;
-            <span class="text-sm font-medium ml-1">Pro</span>
-          </button>
-
-          <div id="tooltip-pro" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-              There are still 5 settings to unlock.
-              <div class="tooltip-arrow" data-popper-arrow></div>
-          </div>
-        </div>
-      {/if}
-    </div>
+    <h1 class="text-2xl font-bold text-white">Edit link</h1>
     <p class="text-sm font-normal text-gray-500">Here, you can edit some of the settings for your link.</p>
+    {#if !$page.data.user?.isPremium}
+      <p class="flex gap-1 text-sm font-normal text-pro-200">
+        <IconRocket />
+        Upgrade to Pro to get access a more advanced link editor.
+      </p>
+    {/if}
   </div>
 
   <form class="flex flex-col gap-1">
     <Input bind:value={link.url} props={{ placeholder: "https://example.com", size: "small", width: "full" }} />
 
     {#if $page.data.user?.isPremium}
-      <div class="relative">
-        <Input value={data.link.slug} props={{ placeholder: "https://example.com", size: "small", width: "full", tip: PUBLIC_URL, disabled: !$page.data.user?.isPremium }} />
+      <div class="relative mt-1">
+        <Input value={data.link.slug} props={{ placeholder: "https://example.com", size: "small", width: "full", tip: "https://linkfy.fr/", disabled: !$page.data.user?.isPremium }} />
       </div>
     {/if}
 
-    <!-- <div class="flex relative items-center">
-      <Toggle props={{ label: "Password protection", disabled: false }} />
-      <span class="text-xs font-medium text-center p-0.5 leading-none rounded-full px-2 bg-pro-900 text-pro-200 absolute left-[195px]">Pro</span>
-    </div> -->
-
-    <div class="mt-3">
+    <div class="mt-3 flex flex-col gap-3">
       <Toggle props={{ label: link.status ? "Click here to disable it" : "Click here to activate it", disabled: false, checked: link.status }} bind:checked={link.status} />
+
+      {#if $page.data.user?.isPremium}
+        <div class="flex relative items-center">
+          <Toggle props={{ label: "Password protection", checked: changes.password }} bind:checked={changes.password} />
+        </div>
+
+        {#if changes.password }
+          <Input props={{
+            placeholder: "Password needed to access this link",
+            size: "small",
+            width: "full",
+            disabled: !$page.data.user?.isPremium,
+            type: "password"
+          }} value="" />
+        {/if}
+      {/if}
     </div>
 
     <div class="flex items-center justify-between gap-2 text-sm font-normal mt-3">
@@ -120,7 +119,7 @@
           <IconArrowBack />
         </LinkButton>
 
-        <Button props={{ type: "button", size: "medium", variant: "red", disabled: deleted }} on:click={deleteLink}>
+        <Button props={{ type: "button", size: "medium", variant: "red", disabled: deleted }} on:click={removeLink}>
           <IconTrash />
         </Button>
       {:else}
