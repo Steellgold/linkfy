@@ -2,7 +2,6 @@ import { PUBLIC_URL } from "$env/static/public";
 import { AuthApiError } from "@supabase/supabase-js";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
-import prisma from "$lib/database/prisma";
 
 export const actions: Actions = {
   login: async({ request, locals, cookies }) => {
