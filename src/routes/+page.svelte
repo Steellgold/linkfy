@@ -87,16 +87,3 @@
     </div>
   </form>
 </Container>
-
-<Container>
-  <script type="text/javascript">
-    atOptions = {
-      'key' : '5cfdd28a88f06cbbdd617cf8e9878854',
-      'format' : 'iframe',
-      'height' : 60,
-      'width' : 468,
-      'params' : {}
-    };
-    document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/5cfdd28a88f06cbbdd617cf8e9878854/invoke.js"></scr' + 'ipt>');
-  </script>
-</Container>
