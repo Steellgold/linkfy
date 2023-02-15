@@ -1,11 +1,6 @@
+import type { User } from "$lib/types/user.type";
 import type { TypedSupabaseClient } from "@supabase/auth-helpers-sveltekit/dist/types";
 import type { Session } from "@supabase/supabase-js";
-
-interface User {
-  email: string;
-  isPremium: boolean;
-  role: "user" | "admin";
-}
 
 declare global {
   declare namespace App {

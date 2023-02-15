@@ -1,16 +1,22 @@
 import { PUBLIC_URL } from "$env/static/public";
+import type { Link } from "$lib/types/link.type";
+import { restRequest } from "$lib/utils/request/request";
 import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load = (async({ params, fetch }) => {
+// eslint-disable-next-line
+export const load = (async({ params }) => {
   if (!params.slug) throw redirect(303, PUBLIC_URL);
 
-  const data = await fetch(PUBLIC_URL + "api/link?slug=" + params.slug);
-  if (!data.ok) throw error(404, { message: "This link not exist or has been disabled", code: 404 });
+  const data = await restRequest<Link>("get", PUBLIC_URL + "api/link", {
+    query: {
+      slug: params.slug
+    }
+  }, [], true);
 
-  const dataJson = await data.json();
-
-  if (data.status !== 200) throw redirect(303, PUBLIC_URL);
+  if (!data.success) {
+    throw error(404, { message: "This link not exist or has been disabled", code: 404 });
+  }
 
   await fetch(PUBLIC_URL + "api/link/update", {
     method: "PUT",
@@ -20,13 +26,13 @@ export const load = (async({ params, fetch }) => {
     body: JSON.stringify({
       slug: params.slug,
       data: {
-        clicks: dataJson.clicks + 1
+        clicks: data.data.clicks + 1
       }
     })
   });
 
   return {
-    url: dataJson.url,
-    status: dataJson.status
+    url: data.data.url,
+    status: data.data.status
   };
 }) satisfies PageServerLoad;

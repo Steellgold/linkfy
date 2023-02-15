@@ -3,6 +3,7 @@ import type { LayoutServerLoad } from "./$types";
 
 export const load: LayoutServerLoad = async(event) => {
   return {
-    session: await getServerSession(event)
+    session: await getServerSession(event),
+    user: event.locals.user
   };
 };
