@@ -11,7 +11,8 @@
     IconChevronsLeft,
     IconChevronsRight,
     IconEdit,
-    IconSearch
+    IconSearch,
+    IconTrash
   } from "$lib/icons";
   import { onMount } from "svelte";
   import { formatNumbers, minimize } from "$lib/utils/link";

@@ -27,5 +27,7 @@ export async function DELETE({ request, getClientAddress }: RequestEvent): Promi
     }
   });
 
-  return new Response("OK", { status: 200 });
+  return new Response(JSON.stringify({
+    success: true
+  }), { status: 200 });
 }
