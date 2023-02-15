@@ -44,7 +44,7 @@
 
     if (res.ok) {
       pushToast("Link deleted successfully", "success");
-      goto("/");
+      goto("/history");
     } else {
       pushToast("Something went wrong", "danger");
     }
