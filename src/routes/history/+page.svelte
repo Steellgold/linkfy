@@ -135,7 +135,7 @@
         <IconSearch />
       </div>
       
-      <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm border rounded-lg outline-none bg-gray-700 border-gray-600 placeholder-gray-400 text-white" placeholder="https://google.com" required on:input={update} />
+      <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="https://google.com" required on:input={update} />
 
       {#if showSearchResults}
         <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
@@ -166,52 +166,57 @@
           <TableCellLoading count={4} />
           <TableCellLoading count={4} />
         {:else}
-          {#each pinfo.pages[pinfo.current] as link}
-            <TableRow>
-              <TableCell first={true}>{minimize(link.url)}</TableCell>
-              <TableCell>
-                <a href={PUBLIC_URL + link.slug} class=" text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
-                  {PUBLIC_URL + link.slug}
-                </a>
-              </TableCell>
-              <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
-              <TableCell>{formatNumbers(link.clicks)}</TableCell>
-              {#if $page.data.session?.user}
+          <!-- Check if array not null -->
+          {#if pinfo.pages[pinfo.current]}
+            {#each pinfo.pages[pinfo.current] as link}
+              <TableRow>
+                <TableCell first={true}>{minimize(link.url)}</TableCell>
                 <TableCell>
-                  <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
-                    <IconEdit />
-                  </LinkButton>
+                  <a href={PUBLIC_URL + link.slug} class="text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
+                    {PUBLIC_URL + link.slug}
+                  </a>
                 </TableCell>
-              {/if}
-            </TableRow>
-          {/each}
+                <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
+                <TableCell>{formatNumbers(link.clicks)}</TableCell>
+                {#if $page.data.session?.user}
+                  <TableCell>
+                    <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", size: "small", withIcon: true, variant: "action" }}>
+                      <IconEdit />
+                    </LinkButton>
+                  </TableCell>
+                {/if}
+              </TableRow>
+            {/each}
+          {/if}
         {/if}
       {:else}
-        {#each searchResults as link}
-          {#if loading}
-            <TableCellLoading count={4} />
-            <TableCellLoading count={4} />
-            <TableCellLoading count={4} />
-          {:else}
-            <TableRow>
-              <TableCell first={true}>{minimize(link.url)}</TableCell>
-              <TableCell>
-                <a href={PUBLIC_URL + link.slug} class=" text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
-                  {PUBLIC_URL + link.slug}
-                </a>
-              </TableCell>
-              <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
-              <TableCell>{formatNumbers(link.clicks)}</TableCell>
-              {#if $page.data.session?.user}
+        {#if pinfo.pages[pinfo.current]}
+          {#each searchResults as link}
+            {#if loading}
+              <TableCellLoading count={4} />
+              <TableCellLoading count={4} />
+              <TableCellLoading count={4} />
+            {:else}
+              <TableRow>
+                <TableCell first={true}>{minimize(link.url)}</TableCell>
                 <TableCell>
-                  <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
-                    <IconEdit />
-                  </LinkButton>
+                  <a href={PUBLIC_URL + link.slug} class=" text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
+                    {PUBLIC_URL + link.slug}
+                  </a>
                 </TableCell>
-              {/if}
-            </TableRow>
-          {/if}
-        {/each}
+                <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
+                <TableCell>{formatNumbers(link.clicks)}</TableCell>
+                {#if $page.data.session?.user}
+                  <TableCell>
+                    <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
+                      <IconEdit />
+                    </LinkButton>
+                  </TableCell>
+                {/if}
+              </TableRow>
+            {/if}
+          {/each}
+        {/if}
       {/if}
     </TableBody>
     
