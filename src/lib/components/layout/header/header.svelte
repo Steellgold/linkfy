@@ -6,9 +6,6 @@
   import { IconLayoutDashboard, IconLogout, IconRocket, IconUserCircle } from "$lib/icons";
   import { fly } from "svelte/transition";
 
-  console.log($page.data.user);
-
-
   let mobileMenuOpen = false;
   const toggleMobileMenu = () => {
     mobileMenuOpen = !mobileMenuOpen;
@@ -67,7 +64,7 @@
         </button>
         
         <div id="dropdown" class="z-10 hidden divide-y divide-gray-600 rounded-lg shadow w-44 bg-gray-700">
-          <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+          <div class="px-4 py-3 text-sm text-white">
             <div class="font-medium">
               {#if $page.data.session.user.email}
                 {$page.data.session.user.email}
