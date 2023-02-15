@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import { Link } from "$lib/components/button";
   import { supabaseClient } from "$lib/database/supabase";
-  import { IconLayoutDashboard, IconLogout, IconRocket, IconUserCircle } from "$lib/icons";
+  import { IconHistory, IconLayoutDashboard, IconLogout, IconRocket, IconUserCircle } from "$lib/icons";
   import { fly } from "svelte/transition";
 
   let mobileMenuOpen = false;
@@ -20,12 +20,12 @@
 	};
 </script>
 
-<nav class="bg-gray-900 mb-6">
+<nav class="bg-transparent-900">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
-        <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-0 focus:ring-inset" aria-controls="mobile-menu" aria-expanded="false" on:click={toggleMobileMenu}>
+        <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-0 focus:ring-inset" aria-controls="mobile-menu" aria-expanded="false" on:click={toggleMobileMenu}>
           <span class="sr-only">Open main menu</span>
           {#if !mobileMenuOpen}
             <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -81,6 +81,13 @@
             </li>
 
             <li>
+              <a href="/history" class="flex items-center gap-4 px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <IconHistory />
+                History
+              </a>
+            </li>
+
+            <li>
               <a href="/" class="flex gap-4 px-4 py-2 hover:bg-gray-600 transition-colors">
                 <IconRocket />
                 Pro
@@ -104,9 +111,9 @@
 
 <!-- Mobile menu, show/hide based on menu state. -->
 <div class="sm:hidden" id="mobile-menu">
-  <div class="space-y-1 bg-gray-900 px-2 pb-1" in:fly={{ x: 20, duration: 350 }}>
+  <div class="space-y-1 px-2 pb-1" in:fly={{ x: 20, duration: 350 }}>
     {#if mobileMenuOpen}
-      <a href="/" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white hover:bg-gray-800"
+      <a href="/" class="block rounded-md bg-blue-600 px-3 py-2 text-base font-medium text-white"
         in:fly={{ x: 5, duration: 200 }}>Shortener</a>
       <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
         in:fly={{ x: 6, duration: 400 }}>Pricing</a>

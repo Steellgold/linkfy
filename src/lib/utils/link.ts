@@ -65,6 +65,23 @@ export async function getLink(slug: string) : Promise<Link | boolean> {
   return response.data;
 }
 
+export async function deleteLink(slug: string) : Promise<boolean> {
+  const response = await restRequest("delete", PUBLIC_URL + "api/link/delete", {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      slug: slug
+    })
+  });
+
+  if (!response.success) {
+    return false;
+  }
+
+  return response.success;
+}
+
 export function isAlreadyGenerated(url: string, links: Link[]) : boolean {
   return links.some(link => link.url === url);
 }
