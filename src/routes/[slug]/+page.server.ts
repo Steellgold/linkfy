@@ -19,7 +19,7 @@ export const load = (async({ params }) => {
   }
 
   try {
-    fetch(PUBLIC_API_URL + "link/" + params.slug);
+    await fetch(PUBLIC_API_URL + "link/" + params.slug);
   } catch (e) {
     console.error(e);
   }
