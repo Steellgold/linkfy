@@ -18,7 +18,7 @@ export const load = (async({ params }) => {
     throw error(404, { message: "This link not exist or has been disabled", code: 404 });
   }
 
-  await fetch(PUBLIC_API_URL + "link/" + params.slug);
+  fetch(PUBLIC_API_URL + "link/" + params.slug);
 
   return {
     url: data.data.url,
