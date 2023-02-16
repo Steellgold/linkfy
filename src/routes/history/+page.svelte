@@ -3,37 +3,17 @@
   import { PUBLIC_URL } from "$env/static/public";
   import { Button, Link as LinkButton } from "$lib/components/button";
   import { Container } from "$lib/components/layout/container";
-  import { pushToast } from "$lib/components/layout/toast";
-  import {
-    IconArrowBack,
-    IconChevronLeft,
-    IconChevronRight,
-    IconChevronsLeft,
-    IconChevronsRight,
-    IconEdit,
-    IconSearch,
-    IconTrash
-  } from "$lib/icons";
-  import { onMount } from "svelte";
+  import { IconArrowBack, IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight, IconEdit, IconSearch } from "$lib/icons";
   import { formatNumbers, minimize } from "$lib/utils/link";
   import dayjs from "dayjs";
-  import Cookies from "js-cookie";
-  import {
-    Table,
-    TableBody,
-    TableCell,
-    TableFooter,
-    TableHeader,
-    TableHeadRow,
-    TableHeadRowCell,
-    TableCellLoading,
-    TableRow
-  } from "$lib/components/layout/table";
-  import { restRequest } from "$lib/utils/request/request";
-  import type { Link } from "$lib/types/link.type";
+  import { Table, TableBody, TableCell, TableCellLoading, TableFooter, TableHeader, TableHeadRow, TableHeadRowCell, TableRow } from "$lib/components/layout/table";
+  import type { PageData } from "./$types";
+  import { onMount } from "svelte";
 
-  let loading: boolean = true;
+  export let data: PageData;
+
   let showSearchResults: boolean = false;
+  let loading: boolean = true;
 
   let pinfo = {
     current: 0,
@@ -42,43 +22,13 @@
     linksPerPage: 10
   };
 
-  onMount(async () => {
-    let query = {};
-    let visitorId = Cookies.get("fpVisitorId");
+  const links = data.links;
+  const pagesCount = Math.ceil(links.length / pinfo.linksPerPage);
 
-    if (visitorId == undefined) {
-      visitorId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      Cookies.set("fpVisitorId", visitorId, { expires: 365 });
-    }
-
-    if ($page.data.session?.user) {
-      query = {
-        userId: $page.data.session?.user.id
-      };
-    } else {
-      query = {
-        visitorId: visitorId
-      };
-    }
-
-    let response = await restRequest<Link[]>("get", PUBLIC_URL + "api/links", {
-      query: query
-    }, [], true);
-
-    if (!response.success) {
-      return pushToast("An error has occurred while fetching your history", "danger");
-    }
-
-    const links = response.data;
-    const pagesCount = Math.ceil(links.length / pinfo.linksPerPage);
-
-    for (let i = 0; i < pagesCount; i++) {
-      pinfo.pages.push(links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage));
-      pinfo.total += links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage).length;
-    }
-
-    loading = false;
-  });
+  for (let i = 0; i < pagesCount; i++) {
+    pinfo.pages.push(links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage));
+    pinfo.total += links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage).length;
+  }
 
   // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
   function nextPage() {
@@ -118,6 +68,10 @@
       }
     }
   }
+
+  onMount(() => {
+    loading = false;
+  });
 </script>
 
 <Container maxSize={$page.data.session?.user ? "4xl" : "3xl"}>
@@ -131,10 +85,7 @@
     {/if}
     
     <div class="relative mt-2">
-      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
-        <IconSearch />
-      </div>
-      
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400"><IconSearch /></div>
       <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="https://google.com" required on:input={update} />
 
       {#if showSearchResults}
@@ -160,95 +111,84 @@
     </TableHeader>
 
     <TableBody>
-      {#if !showSearchResults}
-        {#if loading}
-          <TableCellLoading count={4} />
-          <TableCellLoading count={4} />
-          <TableCellLoading count={4} />
-        {:else}
-          <!-- Check if array not null -->
-          {#if pinfo.pages[pinfo.current]}
-            {#each pinfo.pages[pinfo.current] as link}
-              <TableRow>
-                <TableCell first={true}>{minimize(link.url)}</TableCell>
-                <TableCell>
-                  <a href={PUBLIC_URL + link.slug} class="text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
-                    {PUBLIC_URL + link.slug}
-                  </a>
-                </TableCell>
-                <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
-                <TableCell>{formatNumbers(link.clicks)}</TableCell>
-                {#if $page.data.session?.user}
-                  <TableCell>
-                    <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", size: "small", withIcon: true, variant: "action" }}>
-                      <IconEdit />
-                    </LinkButton>
-                  </TableCell>
-                {/if}
-              </TableRow>
-            {/each}
-          {/if}
-        {/if}
+      {#if loading}
+        <TableCellLoading count={4} />
+        <TableCellLoading count={4} />
+        <TableCellLoading count={4} />
       {:else}
-        {#if pinfo.pages[pinfo.current]}
-          {#each searchResults as link}
-            {#if loading}
-              <TableCellLoading count={4} />
-              <TableCellLoading count={4} />
-              <TableCellLoading count={4} />
-            {:else}
-              <TableRow>
-                <TableCell first={true}>{minimize(link.url)}</TableCell>
-                <TableCell>
-                  <a href={PUBLIC_URL + link.slug} class=" text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
-                    {PUBLIC_URL + link.slug}
-                  </a>
-                </TableCell>
-                <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
-                <TableCell>{formatNumbers(link.clicks)}</TableCell>
-                {#if $page.data.session?.user}
-                  <TableCell>
-                    <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
-                      <IconEdit />
-                    </LinkButton>
-                  </TableCell>
-                {/if}
-              </TableRow>
+      {#if !showSearchResults}
+      {#if pinfo.pages[pinfo.current]}
+        {#each pinfo.pages[pinfo.current] as link}
+          <TableRow>
+            <TableCell first={true}>{minimize(link.url)}</TableCell>
+            <TableCell>
+              <a href={PUBLIC_URL + link.slug} class="text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
+                {PUBLIC_URL + link.slug}
+              </a>
+            </TableCell>
+            <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
+            <TableCell>{formatNumbers(link.clicks)}</TableCell>
+            {#if $page.data.session?.user}
+              <TableCell>
+                <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", size: "small", withIcon: true, variant: "action" }}>
+                  <IconEdit />
+                </LinkButton>
+              </TableCell>
             {/if}
-          {/each}
-        {/if}
+          </TableRow>
+        {/each}
+      {/if}
+    {:else}
+      {#if pinfo.pages[pinfo.current]}
+        {#each searchResults as link}
+          <TableRow>
+            <TableCell first={true}>{minimize(link.url)}</TableCell>
+            <TableCell>
+              <a href={PUBLIC_URL + link.slug} class=" text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
+                {PUBLIC_URL + link.slug}
+              </a>
+            </TableCell>
+            <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
+            <TableCell>{formatNumbers(link.clicks)}</TableCell>
+            {#if $page.data.session?.user}
+              <TableCell>
+                <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
+                  <IconEdit />
+                </LinkButton>
+              </TableCell>
+            {/if}
+          </TableRow>
+        {/each}
+      {/if}
+    {/if}
       {/if}
     </TableBody>
     
-    {#if !loading && !showSearchResults && pinfo.total === 0}
+    {#if !showSearchResults && pinfo.total === 0}
       <TableFooter>
         <p class="text-gray-400">History was empty, try to shorten some links!</p>
       </TableFooter>
     {/if}
   </Table>
 
-  {#if loading}
+  {#if pinfo.total > pinfo.linksPerPage}
     <div class="flex items-center justify-center gap-2 pb-5 pt-3">
-      <div class="h-4 w-3/4 animate-pulse rounded bg-gray-600" />
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => firstPage()}>
+        <IconChevronsLeft />
+      </Button>
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => prevPage()}>
+        <IconChevronLeft />
+      </Button>
+      
+      <span class="text-gray-400">Page {pinfo.current + 1} of {pinfo.pages.length}</span>
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => nextPage()}>
+        <IconChevronRight />
+      </Button>
+      
+      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => lastPage()}>
+        <IconChevronsRight />
+      </Button>
     </div>
-  {:else}
-    {#if pinfo.total > pinfo.linksPerPage}
-      <div class="flex items-center justify-center gap-2 pb-5 pt-3">
-        <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => firstPage()}>
-          <IconChevronsLeft />
-        </Button>
-        <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => prevPage()}>
-          <IconChevronLeft />
-        </Button>
-        <span class="text-gray-400">Page {pinfo.current + 1} of {pinfo.pages.length}</span>
-        <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => nextPage()}>
-          <IconChevronRight />
-        </Button>
-        <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => lastPage()}>
-          <IconChevronsRight />
-        </Button>
-      </div>
-    {/if}
   {/if}
 
   <div class="flex items-center justify-between gap-3 text-sm font-normal">

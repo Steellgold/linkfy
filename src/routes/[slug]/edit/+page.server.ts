@@ -1,4 +1,4 @@
-import { PUBLIC_URL } from "$env/static/public";
+import { PUBLIC_API_URL } from "$env/static/public";
 import type { Link } from "$lib/types/link.type";
 import { restRequest } from "$lib/utils/request/request";
 import { redirect } from "@sveltejs/kit";
@@ -16,11 +16,7 @@ export const load = (async({ params, locals })  => {
     throw redirect(303, "/");
   }
 
-  const response = await restRequest<Link>("get", PUBLIC_URL + "api/link", {
-    query: {
-      slug: slug
-    }
-  }, [], true);
+  const response = await restRequest<Link>("get", PUBLIC_API_URL + "link/get/" + slug);
 
   if (!response.success) {
     throw redirect(303, "/");
