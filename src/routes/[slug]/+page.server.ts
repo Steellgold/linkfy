@@ -20,8 +20,6 @@ export const load = (async({ params }) => {
 
   fetch(PUBLIC_API_URL + "link/" + params.slug);
 
-  return {
-    url: data.data.url,
-    status: data.data.status
-  };
+  if (!data.data.status) throw error(423, { message: "This link has been disabled", code: 423 });
+  throw redirect(303, data.data.url);
 }) satisfies PageServerLoad;
