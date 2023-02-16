@@ -18,7 +18,11 @@ export const load = (async({ params }) => {
     throw error(404, { message: "This link not exist or has been disabled", code: 404 });
   }
 
-  fetch(PUBLIC_API_URL + "link/" + params.slug);
+  try {
+    fetch(PUBLIC_API_URL + "link/" + params.slug);
+  } catch (e) {
+    console.error(e);
+  }
 
   if (!data.data.status) throw error(423, { message: "This link has been disabled", code: 423 });
   throw redirect(303, data.data.url);
