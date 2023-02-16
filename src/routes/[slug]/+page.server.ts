@@ -1,4 +1,4 @@
-import { PUBLIC_URL } from "$env/static/public";
+import { PUBLIC_URL, PUBLIC_API_URL } from "$env/static/public";
 import type { Link } from "$lib/types/link.type";
 import { restRequest } from "$lib/utils/request/request";
 import { error, redirect } from "@sveltejs/kit";
@@ -18,17 +18,10 @@ export const load = (async({ params }) => {
     throw error(404, { message: "This link not exist or has been disabled", code: 404 });
   }
 
-  await fetch(PUBLIC_URL + "api/link/update", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      slug: params.slug,
-      data: {
-        clicks: data.data.clicks + 1
-      }
-    })
+  await restRequest("get", PUBLIC_API_URL + "link/increment", {
+    query: {
+      slug: params.slug
+    }
   });
 
   return {
