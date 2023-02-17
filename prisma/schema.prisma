@@ -8,10 +8,10 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  role      String   @default("user")
-  isPremium Boolean  @default(false)
+  id        String  @id @default(cuid())
+  email     String  @unique
+  isPremium Boolean @default(false)
+  role      String  @default("user")
 }
 
 model Link {
@@ -19,8 +19,8 @@ model Link {
   url       String
   slug      String   @unique
   clicks    Int      @default(0)
-  status    Boolean  @default(true)
   createdAt DateTime @default(now())
-  userId    String? // TODO: Relation with User
+  userId    String?
   visitorId String
+  status    Boolean  @default(true)
 }
