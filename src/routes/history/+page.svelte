@@ -130,9 +130,9 @@
             <TableCell>{formatNumbers(link.clicks)}</TableCell>
             {#if $page.data.session?.user}
               <TableCell>
-                <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", size: "small", withIcon: true, variant: "action" }}>
+                <a href="{PUBLIC_URL + link.slug}/edit" class="group-hover:text-white transition-all bg-red-700">
                   <IconEdit />
-                </LinkButton>
+                </a>
               </TableCell>
             {/if}
           </TableRow>
@@ -152,9 +152,9 @@
             <TableCell>{formatNumbers(link.clicks)}</TableCell>
             {#if $page.data.session?.user}
               <TableCell>
-                <LinkButton props={{ href: PUBLIC_URL + link.slug + "/edit", withIcon: true, variant: "action", size: "small" }}>
+                <a href="{PUBLIC_URL + link.slug}/edit" class="group-hover:text-white transition-all bg-red-700">
                   <IconEdit />
-                </LinkButton>
+                </a>
               </TableCell>
             {/if}
           </TableRow>
