@@ -7,7 +7,7 @@ import type { PageServerLoad } from "./$types";
 // eslint-disable-next-line
 export const load = (async({ params }) => {
   if (!params.slug) throw redirect(303, PUBLIC_URL);
-  const data = await restRequest<Link>("get", PUBLIC_API_URL + "link/get/s/" + params.slug + "/url,status");
+  const data = await restRequest<Link>("get", PUBLIC_API_URL + "link/get/" + params.slug + "/url,status");
 
   if (!data.success) {
     throw error(404, { message: "This link not exist or has been disabled", code: 404 });
