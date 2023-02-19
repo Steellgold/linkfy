@@ -11,10 +11,12 @@ declare global {
       sb: TypedSupabaseClient;
       session: Session | null;
       user: User | null;
+      visitorId: string;
     }
     interface PageData {
       session: import("@supabase/supabase-js").Session | null;
       user: User | null;
+      visitorId: string;
     }
     // interface Platform {}
   }

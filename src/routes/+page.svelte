@@ -7,7 +7,6 @@
   import { createLink, isAlreadyGenerated, validateUrl } from "$lib/utils/link";
   import { PUBLIC_URL } from "$env/static/public";
   import type { Link, LinkGeneration } from "$lib/types/link.type";
-  import Cookies from "js-cookie";
   import { pushToast } from "$lib/components/layout/toast";
 
   let links: Link[] = [];
@@ -22,14 +21,7 @@
 
     linkGeneration.inGeneration = true;
 
-    let visitorId = Cookies.get("fpVisitorId");
-    if (visitorId == undefined) {
-      let generated = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      Cookies.set("fpVisitorId", generated, { expires: 365 });
-      visitorId = generated;
-    }
-
-    const response = await createLink(link.url, visitorId, $page.data.session?.user.id ?? null);
+    const response = await createLink(link.url, $page.data.visitorId, $page.data.session?.user.id ?? null);
     
     if (response) {
       links.push(response);

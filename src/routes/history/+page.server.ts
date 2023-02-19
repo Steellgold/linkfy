@@ -9,10 +9,8 @@ export const load = (async({ cookies, locals }) => {
   let requestUrl = "";
   if (locals.user) {
     requestUrl = "user/" + locals.user.id;
-  } else if (cookies.get("fpVisitorId")) {
-    requestUrl = "visitor/" + cookies.get("fpVisitorId");
   } else {
-    throw error(500, { message: "Internal server error", code: 500 });
+    requestUrl = "visitor/" + locals.visitorId;
   }
 
   const response = await restRequest<Link[]>("get", PUBLIC_API_URL + "links/get/" + requestUrl);

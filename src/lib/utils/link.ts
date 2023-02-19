@@ -85,3 +85,7 @@ export async function deleteLink(slug: string) : Promise<boolean> {
 export function isAlreadyGenerated(url: string, links: Link[]) : boolean {
   return links.some(link => link.url === url);
 }
+
+export function genVisitorId() : string {
+  return "vId-" + generateSlug(4) + "-" + generateSlug(4) + "-" + generateSlug(4) + "-" + generateSlug(4);
+}
