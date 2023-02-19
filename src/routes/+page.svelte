@@ -21,6 +21,7 @@
 
     linkGeneration.inGeneration = true;
 
+    console.log("Your visitorId: ", $page.data.visitorId);
     const response = await createLink(link.url, $page.data.visitorId, $page.data.session?.user.id ?? null);
     
     if (response) {
