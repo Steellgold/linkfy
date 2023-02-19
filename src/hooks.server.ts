@@ -8,6 +8,7 @@ export const handle: Handle = async({ event, resolve }) => {
   const { session, supabaseClient } = await getSupabase(event);
 
   const visitorId = event.cookies.get("fpVisitorId");
+
   if (!visitorId) {
     event.locals.visitorId = genVisitorId();
     event.cookies.set("fpVisitorId", event.locals.visitorId, {  path: "/", maxAge: 60 * 60 * 24 * 365 });
