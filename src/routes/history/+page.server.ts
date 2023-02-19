@@ -20,6 +20,7 @@ export const load = (async({ cookies, locals }) => {
   }
 
   return {
-    links: response.data
+    links: response.data,
+    visitorId: locals.visitorId
   };
 }) satisfies PageServerLoad;
