@@ -112,9 +112,9 @@
 
     <TableBody>
       {#if loading}
-        <TableCellLoading count={4} />
-        <TableCellLoading count={4} />
-        <TableCellLoading count={4} />
+        <TableCellLoading count={$page.data.session?.user ? 4 : 3} />
+        <TableCellLoading count={$page.data.session?.user ? 4 : 3} />
+        <TableCellLoading count={$page.data.session?.user ? 4 : 3} />
       {:else}
       {#if !showSearchResults}
       {#if pinfo.pages[pinfo.current]}

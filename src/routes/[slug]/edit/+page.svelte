@@ -123,9 +123,9 @@
           <IconTrash />
         </Button>
       {:else}
-        <div class="mb-3 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
-        <div class="mb-3 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
-        <div class="mb-3 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
+        <div class="mb-1 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
+        <div class="mb-1 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
+        <div class="mb-1 h-4 w-10 animate-pulse rounded bg-gray-600 p-5" />
       {/if}
     </div>
   </form>

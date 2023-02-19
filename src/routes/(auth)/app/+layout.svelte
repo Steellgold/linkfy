@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { SubmitFunction } from "$app/forms";
-  import { page } from "$app/stores";
   import { supabaseClient } from "$lib/database/supabase";
-  import { fly } from "svelte/transition";
   import type { PageData } from "./$types";
 
   export let data: PageData;
