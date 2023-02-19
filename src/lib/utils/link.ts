@@ -87,5 +87,5 @@ export function isAlreadyGenerated(url: string, links: Link[]) : boolean {
 }
 
 export function genVisitorId() : string {
-  return "vId-" + generateSlug(4) + "-" + generateSlug(4) + "-" + generateSlug(4) + "-" + generateSlug(4);
+  return "vId-" + generateSlug(40);
 }
