@@ -27,7 +27,6 @@ export const load = (async({ params, locals })  => {
   }
 
   return {
-    link: response.data,
-    visitorId: locals.visitorId
+    link: response.data
   };
 }) satisfies PageServerLoad;
