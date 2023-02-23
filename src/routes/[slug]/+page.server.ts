@@ -13,7 +13,8 @@ export const load = (async({ params }) => {
     throw error(404, { message: "This link not exist or has been disabled", code: 404 });
   }
 
-  // TODO: Send a "ping" for increase the link's clicks, and other stats/things
+  await restRequest("put", PUBLIC_API_URL + "link/increment/" + params.slug);
+
   return {
     status: data.data.status,
     url: data.data.url

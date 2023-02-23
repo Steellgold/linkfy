@@ -2,18 +2,18 @@ import type { Method, RequestParams } from "./request.types";
 import type { Response } from "./request.types";
 import { paramsToString } from "./request.utils";
 
-export const restRequest = async<T>(
+export const restRequest = async <T>(
   method: Method,
   endpoint: string,
-  config: RequestParams = {},
+  { query, ...config }: RequestParams = {},
   contentTypesNeeded: string[] = [],
-  asPrefix = false): Promise<Response<T>> => {
-
-  if (config.query) {
-    endpoint += paramsToString(config.query, asPrefix);
+  asPrefix = false
+): Promise<Response<T>> => {
+  if (query) {
+    endpoint += paramsToString(query, asPrefix);
   }
 
-  const response = await fetch(endpoint, { ...config, method: method });
+  const response = await fetch(endpoint, { ...config, method });
 
   if (!response.ok) {
     return {
@@ -22,8 +22,9 @@ export const restRequest = async<T>(
     };
   }
 
+  const contentType = response.headers.get("content-type");
+
   if (contentTypesNeeded.length > 0) {
-    const contentType = response.headers.get("content-type");
     if (!contentType) {
       return {
         success: false,
@@ -32,6 +33,7 @@ export const restRequest = async<T>(
     }
 
     const isContentTypeValid = contentTypesNeeded.some(contentTypeNeeded => contentType.includes(contentTypeNeeded));
+
     if (!isContentTypeValid) {
       return {
         success: false,
