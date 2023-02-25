@@ -24,3 +24,4 @@ export { default as IconUserPlus } from "./user-plus.svelte";
 export { default as IconLogout } from "./logout.svelte";
 export { default as IconSearch } from "./search.svelte";
 export { default as IconRocket } from "./rocket.svelte";
+export { default as IconLockOpen } from "./lock-open.svelte";
