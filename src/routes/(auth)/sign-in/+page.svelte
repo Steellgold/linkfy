@@ -18,7 +18,7 @@
 </script>
 
 <Container maxSize="md">
-  <form action="?/login" method="POST">
+  <form method="POST">
     <div class="mb-3">
       <Input bind:value={email} props={{ type: "email", label: "Email address", placeholder: "johndoe@example.com", width: "full", size: "small", name: "email", required: true }} />
     </div>

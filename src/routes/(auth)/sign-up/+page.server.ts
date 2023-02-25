@@ -13,7 +13,7 @@ export const load = (async({ locals }) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-  register: async({ request, locals, cookies }) => {
+  default: async({ request, locals, cookies }) => {
     const body = Object.fromEntries(await request.formData());
 
     if (!body.email || !body.password || !body.confirmPassword) {

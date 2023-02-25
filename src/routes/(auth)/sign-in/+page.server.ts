@@ -4,7 +4,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
-  login: async({ request, locals, cookies }) => {
+  default: async({ request, locals, cookies }) => {
     const body = Object.fromEntries(await request.formData());
 
     const { error: err, data } = await locals.sb.auth.signInWithPassword({
