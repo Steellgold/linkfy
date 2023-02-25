@@ -20,8 +20,11 @@
     }
 
     linkGeneration.inGeneration = true;
-    const response = await createLink(link.url, $page.data.visitorId, $page.data.session?.user.id ?? null);
-    
+    const response = await createLink(link.url, $page.data.visitorId, $page.data.session?.user.id ?? null, {
+      password: link.password == "" ? null : link.password,
+      slug: link.slug == "" ? null : link.slug,
+    });
+
     if (response) {
       links.push(response);
 
@@ -38,7 +41,6 @@
     }
   }
 
-  // Copy the link to the clipboard
   function copy() {
     navigator.clipboard.writeText(linkGeneration.finalUrl);
     pushToast("Link copied to clipboard.", "success");

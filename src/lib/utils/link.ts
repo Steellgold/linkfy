@@ -1,4 +1,4 @@
-import { PUBLIC_URL } from "$env/static/public";
+import { PUBLIC_API_URL, PUBLIC_URL } from "$env/static/public";
 import type { Link } from "$lib/types/link.type";
 import { z } from "zod";
 import { restRequest } from "./request/request";
@@ -35,16 +35,22 @@ export function generateSlug(length = 5) : string {
   return slug;
 }
 
-export async function createLink(url: string, visitorId: string | null, userId: string | null) : Promise<Link | null> {
-  const response = await restRequest<Link>("post", PUBLIC_URL + "api/link/create", {
-    headers: {
-      "Content-Type": "application/json"
-    },
+export type LinkOptions = {
+  password: string | null;
+  slug: string | null;
+};
+
+export async function createLink(url: string, visitorId: string | null, userId: string | null, options: LinkOptions = {
+  password: null,
+  slug: null
+}) : Promise<Link | null> {
+  const response = await restRequest<Link>("post", PUBLIC_API_URL + "link/create", {
     body: JSON.stringify({
       url,
-      slug: generateSlug(),
+      slug: options.slug ? options.slug : generateSlug(),
       userId,
-      visitorId
+      visitorId,
+      password: options.password ? options.password : null
     })
   });
 
