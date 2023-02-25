@@ -7,8 +7,8 @@
   import { formatNumbers, minimize } from "$lib/utils/link";
   import dayjs from "dayjs";
   import { Table, TableBody, TableCell, TableCellLoading, TableFooter, TableHeader, TableHeadRow, TableHeadRowCell, TableRow } from "$lib/components/layout/table";
-  import type { PageData } from "./$types";
   import { onMount } from "svelte";
+  import type { PageData } from "./$types";
 
   export let data: PageData;
 
