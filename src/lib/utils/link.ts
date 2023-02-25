@@ -40,17 +40,17 @@ export type LinkOptions = {
   slug: string | null;
 };
 
-export async function createLink(url: string, visitorId: string | null, userId: string | null, options: LinkOptions = {
+export async function createLink(url: string, visitorId: string, userId: string | null, options: LinkOptions = {
   password: null,
   slug: null
 }) : Promise<Link | null> {
   const response = await restRequest<Link>("post", PUBLIC_API_URL + "link/create", {
     body: JSON.stringify({
-      url,
+      url: url,
       slug: options.slug ? options.slug : generateSlug(),
-      userId,
-      visitorId,
-      password: options.password ? options.password : null
+      password: options.password ? options.password : null,
+      userId: userId,
+      visitorId: visitorId
     })
   });
 
