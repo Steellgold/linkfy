@@ -3,7 +3,7 @@
   import { PUBLIC_URL } from "$env/static/public";
   import { Button, Link as LinkButton } from "$lib/components/button";
   import { Container } from "$lib/components/layout/container";
-  import { IconArrowBack, IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight, IconEdit, IconSearch } from "$lib/icons";
+  import { IconArrowBack, IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight, IconEdit, IconLock, IconLockOpen, IconSearch } from "$lib/icons";
   import { formatNumbers, minimize } from "$lib/utils/link";
   import dayjs from "dayjs";
   import { Table, TableBody, TableCell, TableCellLoading, TableFooter, TableHeader, TableHeadRow, TableHeadRowCell, TableRow } from "$lib/components/layout/table";
@@ -105,6 +105,10 @@
         <TableHeadRowCell>Views</TableHeadRowCell>
         
         {#if $page.data.session?.user}
+          {#if $page.data.user?.isPremium}
+            <TableHeadRowCell><span class="sr-only">Locked</span></TableHeadRowCell>
+          {/if}
+          
           <TableHeadRowCell><span class="sr-only">Actions</span></TableHeadRowCell>
         {/if}
       </TableHeadRow>
@@ -129,8 +133,22 @@
             <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
             <TableCell>{formatNumbers(link.clicks)}</TableCell>
             {#if $page.data.session?.user}
+              {#if $page.data.user?.isPremium}
+                <TableCell>
+                  {#if link.password !== "none"}
+                    <span class="group-hover:text-red-500 transition-all">
+                      <IconLock />
+                    </span>
+                  {:else}
+                    <span class="group-hover:text-green-500 transition-all">
+                      <IconLockOpen />
+                    </span>
+                  {/if}
+                </TableCell>
+              {/if}
+
               <TableCell>
-                <a href="{PUBLIC_URL + link.slug}/edit" class="group-hover:text-white transition-all bg-red-700">
+                <a href="{PUBLIC_URL + link.slug}/edit" class="group-hover:text-white transition-all">
                   <IconEdit />
                 </a>
               </TableCell>
