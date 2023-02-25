@@ -23,5 +23,5 @@ model Link {
   userId    String?
   visitorId String
   status    Boolean  @default(true)
-  password  String?  @default("none")
+  password  String   @default("none")
 }

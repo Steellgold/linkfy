@@ -19,7 +19,8 @@
     slug: data.link.slug,
     visitorId: data.link.visitorId,
     status: data.link.status,
-    clicks: data.link.clicks
+    clicks: data.link.clicks,
+    password: data.link.password,
   };
 
   let changes = { url: false, status: false, password: false, subdomain: false };
