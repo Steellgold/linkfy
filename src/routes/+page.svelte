@@ -6,11 +6,11 @@
   import { IconCopy, IconHistory, IconUnlink } from "$lib/icons";
   import { createLink, isAlreadyGenerated, validateUrl } from "$lib/utils/link";
   import { PUBLIC_URL } from "$env/static/public";
-  import type { Link, LinkGeneration } from "$lib/types/link.type";
   import { pushToast } from "$lib/components/layout/toast";
+  import type { Link, LinkGeneration } from "$lib/types/link.type";
 
   let links: Link[] = [];
-  let link: Link = { url: "", slug: "", visitorId: "", clicks: 0 };
+  let link: Link = { url: "", slug: "", visitorId: "", clicks: 0, password: "" };
   let linkGeneration: LinkGeneration = { inGeneration: false, isGenerated: false, finalUrl: "" }
 
   async function transform() {
@@ -38,6 +38,12 @@
     }
   }
 
+  // Copy the link to the clipboard
+  function copy() {
+    navigator.clipboard.writeText(linkGeneration.finalUrl);
+    pushToast("Link copied to clipboard.", "success");
+  }
+
   $: if (link.url !== "") {
     linkGeneration.isGenerated = false;
   }
@@ -57,19 +63,31 @@
       <Input bind:value={link.url} props={{ placeholder: "Link to shorten", size: "small", width: "full" }} />
     </div>
 
-    {#if linkGeneration.inGeneration}
-      <div class="mb-3 h-4 w-full animate-pulse rounded bg-gray-600 p-5" />
-    {:else}
+    {#if $page.data.user?.isPremium}
+      <div class="grid gap-2 mb-2 sm:grid-cols-2">
+        <div class="mb-1">
+          <Input value="" props={{ placeholder: "mySuperLink", size: "small", width: "full", tip: "linkfy.fr/", disabled: !$page.data.user?.isPremium }} />
+        </div>
+  
+        <div>
+          <Input bind:value={link.password} props={{ placeholder: "Password (optional)", size: "small", width: "full" }} />
+        </div>
+      </div>
+    {/if}
+
+    {#if linkGeneration.isGenerated}
+      <hr class="mb-3 border-gray-700 border-opacity-50 border-2 rounded-full" />
+      
       <div class="mb-3">
         <Input bind:value={linkGeneration.finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
       </div>
     {/if}
 
-    <div class="flex items-center justify-between gap-2 text-sm font-normal">
+    <div class="mt-3 sm:mt-1 flex items-center justify-between gap-2 text-sm font-normal">
       <Button props={{ type: "button", size: "large", variant: "blue", withIcon: true, disabled: linkGeneration.inGeneration || link.url === "" }} on:click={transform}>
         <IconUnlink /> Transform
       </Button>
-      <Button props={{ type: "button", size: "medium", variant: "blue", disabled: !linkGeneration.isGenerated }}>
+      <Button props={{ type: "button", size: "medium", variant: "blue", disabled: !linkGeneration.isGenerated }} on:click={copy}>
         <IconCopy />
       </Button>
       <LinkButton props={{ href: "/history", size: "medium", variant: "blue" }}>
