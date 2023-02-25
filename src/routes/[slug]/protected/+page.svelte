@@ -32,7 +32,7 @@
 
   <form method="POST">
     <div class="mb-3">
-      <Input value="" props={{ placeholder: "•••••••••••", size: "small", width: "full", name: "password" }} />
+      <Input value="" props={{ type: "password", placeholder: "•••••••••••", size: "small", width: "full", name: "password" }} />
     </div>
 
     <div class="flex items-center justify-between gap-2 text-sm font-normal">

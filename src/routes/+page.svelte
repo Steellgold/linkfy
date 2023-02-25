@@ -68,18 +68,16 @@
     {#if $page.data.user?.isPremium}
       <div class="grid gap-2 mb-2 sm:grid-cols-2">
         <div class="mb-1">
-          <Input value="" props={{ placeholder: "mySuperLink", size: "small", width: "full", tip: "linkfy.fr/", disabled: !$page.data.user?.isPremium }} />
+          <Input bind:value={link.slug} props={{ placeholder: "mySuperLink", size: "small", width: "full", tip: "linkfy.fr/", disabled: !$page.data.user?.isPremium }} />
         </div>
   
         <div>
-          <Input bind:value={link.password} props={{ placeholder: "Password (optional)", size: "small", width: "full" }} />
+          <Input bind:value={link.password} props={{ type: "password", placeholder: "Password (optional)", size: "small", width: "full" }} />
         </div>
       </div>
     {/if}
 
     {#if linkGeneration.isGenerated}
-      <hr class="mb-3 border-gray-700 border-opacity-50 border-2 rounded-full" />
-      
       <div class="mb-3">
         <Input bind:value={linkGeneration.finalUrl} props={{ placeholder: "Shortened link", size: "small", width: "full", disabled: true }} />
       </div>

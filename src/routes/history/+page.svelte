@@ -106,7 +106,7 @@
         
         {#if $page.data.session?.user}
           {#if $page.data.user?.isPremium}
-            <TableHeadRowCell><span class="sr-only">Locked</span></TableHeadRowCell>
+            <TableHeadRowCell><span class="sr-only">Protected</span></TableHeadRowCell>
           {/if}
           
           <TableHeadRowCell><span class="sr-only">Actions</span></TableHeadRowCell>
@@ -169,6 +169,20 @@
             <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
             <TableCell>{formatNumbers(link.clicks)}</TableCell>
             {#if $page.data.session?.user}
+              {#if $page.data.user?.isPremium}
+                <TableCell>
+                  {#if link.password !== "none"}
+                    <span class="group-hover:text-red-500 transition-all">
+                      <IconLock />
+                    </span>
+                  {:else}
+                    <span class="group-hover:text-green-500 transition-all">
+                      <IconLockOpen />
+                    </span>
+                  {/if}
+                </TableCell>
+              {/if}
+
               <TableCell>
                 <a href="{PUBLIC_URL + link.slug}/edit" class="group-hover:text-white transition-all bg-red-700">
                   <IconEdit />
