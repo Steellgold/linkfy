@@ -3,7 +3,7 @@ import { rateLimit } from "$lib/RateLimit";
 import type { RequestEvent } from "./$types";
 
 export async function GET({ request, getClientAddress }: RequestEvent): Promise<Response> {
-  if (rateLimit(getClientAddress().slice(7))) {
+  if (rateLimit(getClientAddress())) {
     return new Response("Too Many Requests: You have exceeded the rate limit", { status: 429 });
   }
 

@@ -4,7 +4,7 @@ import z from "zod";
 import type { RequestEvent } from "./$types";
 
 export async function POST({ request, getClientAddress }: RequestEvent): Promise<Response> {
-  if (rateLimit(getClientAddress().slice(7))) {
+  if (rateLimit(getClientAddress())) {
     return new Response("Too Many Requests: You have exceeded the rate limit", { status: 429 });
   }
   if (!request.body) {
@@ -31,7 +31,7 @@ export async function POST({ request, getClientAddress }: RequestEvent): Promise
       slug: schema.data.slug,
       userId: schema.data.userId || null,
       visitorId: schema.data.visitorId,
-      ipAddr: getClientAddress().slice(7)
+      ipAddr: getClientAddress()
     }
   });
 
