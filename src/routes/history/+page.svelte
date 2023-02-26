@@ -1,231 +1,85 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import { PUBLIC_URL } from "$env/static/public";
-  import { Button, Link as LinkButton } from "$lib/components/button";
-  import { Container } from "$lib/components/layout/container";
-  import { IconArrowBack, IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight, IconEdit, IconLock, IconLockOpen, IconSearch } from "$lib/icons";
-  import { formatNumbers, minimize } from "$lib/utils/link";
-  import dayjs from "dayjs";
-  import { Table, TableBody, TableCell, TableCellLoading, TableFooter, TableHeader, TableHeadRow, TableHeadRowCell, TableRow } from "$lib/components/layout/table";
-  import { onMount } from "svelte";
-  import type { PageData } from "./$types";
-
-  export let data: PageData;
-
-  let showSearchResults: boolean = false;
-  let loading: boolean = true;
-
-  let pinfo = {
-    current: 0,
-    total: 0,
-    pages: new Array(),
-    linksPerPage: 10
-  };
-
-  const links = data.links;
-  const pagesCount = Math.ceil(links.length / pinfo.linksPerPage);
-
-  for (let i = 0; i < pagesCount; i++) {
-    pinfo.pages.push(links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage));
-    pinfo.total += links.slice(i * pinfo.linksPerPage, (i + 1) * pinfo.linksPerPage).length;
-  }
-
-  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
-  function nextPage() {
-    if (pinfo.current + 1 < pinfo.pages.length) pinfo.current++;
-  }
-
-  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
-  function prevPage() {
-    if (pinfo.current - 1 >= 0) pinfo.current--;
-  }
-
-  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
-  function firstPage() {
-    pinfo.current = 0;
-  }
-
-  // TODO: Move nextPage, prevPage, firstPage, lastPage to an Separate component
-  function lastPage() {
-    pinfo.current = pinfo.pages.length - 1;
-  }
-
-  let searchResults: any[] = [];
-  let search: string = "";
-
-  function update(e: Event) {
-    search = (e.target as HTMLInputElement).value ?? "";
-
-    if (search !== "") showSearchResults = true;
-    else showSearchResults = false;
-    searchResults = [];
-
-    for (let i = 0; i < pinfo.pages.length; i++) {
-      for (let j = 0; j < pinfo.pages[i].length; j++) {
-        if (pinfo.pages[i][j].url.startsWith(search)) {
-          searchResults.push(pinfo.pages[i][j]);
-        }
-      }
-    }
-  }
-
-  onMount(() => {
-    loading = false;
-  });
+  import { Button } from "$lib/components/forms/button";
+  import { Input } from "$lib/components/forms/input";
+  import { minimize } from "$lib/utils/StringUtils";
 </script>
 
-<Container maxSize={$page.data.session?.user ? "4xl" : "3xl"}>
-  <div class="mb-2 p-0">
-    <h1 class="mb-1 text-xl font-bold text-white md:text-2xl">History</h1>
-    {#if !$page.data.session?.user}
-      <p class="flex items-center gap-2 text-sm font-normal text-red-300">
-        If you are not logged in, you will not be able to save all your links generated on different
-        devices or access statistics of their usage.
+<div class="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
+  <div class="w-full rounded-lg border-2 p-4 shadow md:mt-0 sm:max-w-4xl border-gray-700 bg-gray-800 sm:p-5">
+    <div class="mb-2 p-0">
+      <h1 class="mb-1 text-xl font-bold text-white md:text-2xl">History</h1>
+      <p class="text-sm font-normal text-white">
+        THis is your history page, you can see all your links here, and you can also delete them.
       </p>
-    {/if}
-    
-    <div class="relative mt-2">
-      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400"><IconSearch /></div>
-      <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="https://google.com" required on:input={update} />
+    </div>
 
-      {#if showSearchResults}
-        <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
-          <span class="text-sm font-normal text-gray-400">{searchResults.length} results</span>
-        </div>
-      {/if}
+    <div class="bg-gray-800 relative sm:rounded-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-400">
+          <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+            <tr>
+              <th scope="col" class="px-4 py-3">URL</th>
+              <th scope="col" class="px-4 py-3">Shortened URL</th>
+              <th scope="col" class="px-4 py-3">Created date</th>
+              <th scope="col" class="px-4 py-3">Clicks</th>
+              <th scope="col" class="px-4 py-3">Last</th>
+              <th scope="col" class="px-4 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>  
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-700">
+              <th scope="row" class="px-4 py-3 font-medium whitespace-nowrap text-white">{ minimize("https://google.com", 17) }</th>
+              <td class="px-4 py-3">x1aAz</td>
+              <td class="px-4 py-3">Apple</td>
+              <td class="px-4 py-3">03/02/2021 23:16</td>
+              <td class="px-4 py-3">26/02/2023 14:18</td>
+              <td class="px-4 py-3 flex gap-1">
+                <a href="/" class="hover:text-white p-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M11 7h-5a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-5"></path>
+                    <path d="M10 14l10 -10"></path>
+                    <path d="M15 4l5 0l0 5"></path>
+                  </svg>
+                </a>
+
+                <a href="/" class="hover:text-white p-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+                    <path d="M11 15v2"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M17 13v4"></path>
+                  </svg>
+                </a>
+
+                <a href="/" class="hover:text-white p-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+                    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+                    <path d="M16 5l3 3"></path>
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <Table>
-    <TableHeader>
-      <TableHeadRow>
-        <TableHeadRowCell>URL</TableHeadRowCell>
-        <TableHeadRowCell>Shortened URL</TableHeadRowCell>
-        <TableHeadRowCell>Date</TableHeadRowCell>
-        <TableHeadRowCell>Views</TableHeadRowCell>
-        
-        {#if $page.data.session?.user}
-          {#if $page.data.user?.isPremium}
-            <TableHeadRowCell><span class="sr-only">Protected</span></TableHeadRowCell>
-          {/if}
-          
-          <TableHeadRowCell><span class="sr-only">Actions</span></TableHeadRowCell>
-        {/if}
-      </TableHeadRow>
-    </TableHeader>
-
-    <TableBody>
-      {#if loading}
-        <TableCellLoading count={$page.data.session?.user ? 4 : 3} />
-        <TableCellLoading count={$page.data.session?.user ? 4 : 3} />
-        <TableCellLoading count={$page.data.session?.user ? 4 : 3} />
-      {:else}
-      {#if !showSearchResults}
-      {#if pinfo.pages[pinfo.current]}
-        {#each pinfo.pages[pinfo.current] as link}
-          <TableRow>
-            <TableCell first={true}>{minimize(link.url)}</TableCell>
-            <TableCell>
-              <a href={PUBLIC_URL + link.slug} class="text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
-                {PUBLIC_URL + link.slug}
-              </a>
-            </TableCell>
-            <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
-            <TableCell>{formatNumbers(link.clicks)}</TableCell>
-            {#if $page.data.session?.user}
-              {#if $page.data.user?.isPremium}
-                <TableCell>
-                  {#if link.password !== "none"}
-                    <span class="group-hover:text-red-500 transition-all">
-                      <IconLock />
-                    </span>
-                  {:else}
-                    <span class="group-hover:text-green-500 transition-all">
-                      <IconLockOpen />
-                    </span>
-                  {/if}
-                </TableCell>
-              {/if}
-
-              <TableCell>
-                <a href="{PUBLIC_URL + link.slug}/edit" class="group-hover:text-white transition-all">
-                  <IconEdit />
-                </a>
-              </TableCell>
-            {/if}
-          </TableRow>
-        {/each}
-      {/if}
-    {:else}
-      {#if pinfo.pages[pinfo.current]}
-        {#each searchResults as link}
-          <TableRow>
-            <TableCell first={true}>{minimize(link.url)}</TableCell>
-            <TableCell>
-              <a href={PUBLIC_URL + link.slug} class=" text-blue-400 hover:text-blue-500" data-sveltekit-preload-data="off">
-                {PUBLIC_URL + link.slug}
-              </a>
-            </TableCell>
-            <TableCell>{dayjs(link.createdAt).format("DD/MM/YYYY HH:mm")}</TableCell>
-            <TableCell>{formatNumbers(link.clicks)}</TableCell>
-            {#if $page.data.session?.user}
-              {#if $page.data.user?.isPremium}
-                <TableCell>
-                  {#if link.password !== "none"}
-                    <span class="group-hover:text-red-500 transition-all">
-                      <IconLock />
-                    </span>
-                  {:else}
-                    <span class="group-hover:text-green-500 transition-all">
-                      <IconLockOpen />
-                    </span>
-                  {/if}
-                </TableCell>
-              {/if}
-
-              <TableCell>
-                <a href="{PUBLIC_URL + link.slug}/edit" class="group-hover:text-white transition-all bg-red-700">
-                  <IconEdit />
-                </a>
-              </TableCell>
-            {/if}
-          </TableRow>
-        {/each}
-      {/if}
-    {/if}
-      {/if}
-    </TableBody>
-    
-    {#if !showSearchResults && pinfo.total === 0}
-      <TableFooter>
-        <p class="text-gray-400">History was empty, try to shorten some links!</p>
-      </TableFooter>
-    {/if}
-  </Table>
-
-  {#if pinfo.total > pinfo.linksPerPage}
-    <div class="flex items-center justify-center gap-2 pb-5 pt-3">
-      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => firstPage()}>
-        <IconChevronsLeft />
-      </Button>
-      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => prevPage()}>
-        <IconChevronLeft />
-      </Button>
-      
-      <span class="text-gray-400">Page {pinfo.current + 1} of {pinfo.pages.length}</span>
-      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => nextPage()}>
-        <IconChevronRight />
-      </Button>
-      
-      <Button props={{ size: "ultrasmall", variant: "gray" }} on:click={() => lastPage()}>
-        <IconChevronsRight />
-      </Button>
-    </div>
-  {/if}
-
-  <div class="flex items-center justify-between gap-3 text-sm font-normal">
-    <LinkButton props={{ href: "/", withIcon: true, variant: "blue", size: "large" }}>
-      <IconArrowBack /> Back to home
-    </LinkButton>
+  <div class="mt-2">
+    <a href="/" class="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left-line-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M9.586 4l-6.586 6.586a2 2 0 0 0 0 2.828l6.586 6.586a2 2 0 0 0 2.18 .434l.145 -.068a2 2 0 0 0 1.089 -1.78v-2.586h5a1 1 0 0 0 1 -1v-6l-.007 -.117a1 1 0 0 0 -.993 -.883l-5 -.001v-2.585a2 2 0 0 0 -3.414 -1.414z" stroke-width="0" fill="currentColor"></path>
+        <path d="M4.415 12l6.585 -6.586v3.586l.007 .117a1 1 0 0 0 .993 .883l5 -.001v4l-5 .001a1 1 0 0 0 -1 1v3.586l-6.585 -6.586z" stroke-width="0" fill="currentColor"></path>
+        <path d="M21 8a1 1 0 0 1 .993 .883l.007 .117v6a1 1 0 0 1 -1.993 .117l-.007 -.117v-6a1 1 0 0 1 1 -1z" stroke-width="0" fill="currentColor"></path>
+     </svg>
+      Ride to the home page
+    </a>
   </div>
-</Container>
+</div>

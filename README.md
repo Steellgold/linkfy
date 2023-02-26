@@ -1,72 +1,38 @@
+# create-svelte
 
-# Linkfy - A User-Friendly Link Shortener
-![image](https://user-images.githubusercontent.com/51505384/217577641-b293628e-2c92-422c-a94c-e2a3978165db.png)
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-Linkfy is a powerful yet simple-to-use tool that helps you shorten and manage your links. Built using SvelteKit, Linkfy offers a fast and intuitive experience for users of all skill levels. Whether you're looking to shorten a link for sharing on social media or tracking clicks for a marketing campaign, Linkfy has got you covered.
+## Creating a project
 
-The app is currently hosted at https://linkfy.fr/, and is available for use anytime, anywhere.
-
-## Table of Contents
-- [Description of features](#description-of-features)
-- [Video Example](#video-example)
-- [Getting Started](#getting-started)
-- [Contributing to Linkfy](#contributing-to-linkfy)
-- [Authors](#authors)
-- [License](#license)
-- [Additional Resources](#additional-resources)
-- [Contact](#contact)
-
-
-## Description of features
-* Login: Easily log into your existing Linkfy account to access your link history and other features.
-* Register: Creating a new account is quick and easy, with a simple registration form that requires only a few details.
-
-![image](https://github.com/vmarlowe/images/blob/main/register.png?raw=true)
-
-* Short Link: Add a link to be shortened with just a few clicks, and easily copy the shortened link for sharing on any platform.
-* Link History: Keep track of all the links you've shortened with Linkfy, and access your history from any device (note: users must be logged in to use this feature).
-
-![image](https://github.com/vmarlowe/images/blob/main/history.png?raw=true)
-
-* View Count: Get a detailed view of how many clicks each of your shortened links has received, so you can see how your campaigns are performing.
-* History Search: Search through your link history with ease, and quickly find the links you're looking for.
-
-## Video example
-[![Video showing Linkfy in action](http://img.youtube.com/vi/_2l2Yq6qZrM/0.jpg)](http://www.youtube.com/watch?v=_2l2Yq6qZrM)
-
-## Getting Started
-
-* Getting started with Linkfy is simple. All you need to do is install the project's dependencies using npm or pnpm. This project uses ts-node, so be sure to install that as well.
-
-Use the package manager [npm](https://docs.npmjs.com/) or pnpm to install the project's dependenices. This project uses ts-node.
+If you're seeing this, you've probably already done this step. Congrats!
 
 ```bash
-npm install or pnpm install
+# create a new project in the current directory
+npm create svelte@latest
+
+# create a new project in my-app
+npm create svelte@latest my-app
 ```
 
-## Contributing to Linkfy
+## Developing
 
-Linkfy is an open-source project, and contributions from the community are always welcome. If you have ideas for new features or bug fixes, please open an issue to discuss them before submitting a pull request. Together, we can make Linkfy the best link shortener tool on the web!
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-## Authors
-- [@Steellgold](https://github.com/Steellgold)
+```bash
+npm run dev
 
-## Contributors
-- [@SergArcila](https://github.com/SergArcila)
-- [@vmarlowe](https://github.com/vmarlowe)
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
-## License
+## Building
 
-[MIT](https://choosealicense.com/licenses/mit/) 
-Linkfy is released under the MIT License, meaning that it's free to use and distribute for both personal and commercial purposes.
+To create a production version of your app:
 
-## Additional Resources
-To learn more about the technologies used to build Linkfy, check out the following resources:
-* [Learn More about SvelteKit](https://kit.svelte.dev)
-* [Learn about Prisma Schema](https://www.prisma.io/docs/concepts/components/prisma-schema)
-* [Learn about Tailwind CSS](https://tailwindcss.com/)
-* [Learn about Supabase](https://supabase.com/)
-* [Learn about ts-node](https://www.npmjs.com/package/ts-node)
+```bash
+npm run build
+```
 
-## Contact:
-If you have any questions or feedback about Linkfy, please feel free to reach out to the development team at @Steellgold. We're always here to help! via Twitter or email: contact@steellgold.fr
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

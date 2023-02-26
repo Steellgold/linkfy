@@ -1,26 +1,14 @@
 <script lang="ts">
-  import { supabaseClient } from "$lib/database/supabase";
-  import { invalidateAll } from "$app/navigation";
-  import { onMount } from "svelte";
-  import { Header } from "$lib/components/layout/header";
-  import { Toasts } from "$lib/components/layout/toast";
-  import "../app.postcss";
-
-  onMount(() => {
-    const {
-      data: { subscription }
-    } = supabaseClient.auth.onAuthStateChange(() => {
-      invalidateAll();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  });
+  import { Navbar } from "$lib/components/layout/navbar";
+  import "../app.css"
 </script>
 
-<Header>
-  <slot />
-</Header>
+<section>
+  <div class="absolute top-[-30%] bottom-0 right-0 left-0 w-full h-[75%] bg-gradient-to-b from-gray-800 to-transparent skew-y-[-10deg] transform-origin-top-left overflow-hidden -z-1"></div>
 
-<Toasts />
+  <div class="relative">
+    <Navbar />
+    
+    <slot />
+  </div>
+</section>
