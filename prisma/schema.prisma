@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User { // TODO, is not for now. We will add it later.
+model User {
   id        String   @id @default(cuid())
   email     String   @unique
   isPremium Boolean  @default(false) // Secure the field with payments check.
@@ -28,4 +28,5 @@ model Link {
   createdAt DateTime @default(now())
   userId    String?
   visitorId String
+  ipAddr    String   @default("")
 }

@@ -30,7 +30,8 @@ export async function POST({ request, getClientAddress }: RequestEvent): Promise
       url: schema.data.url,
       slug: schema.data.slug,
       userId: schema.data.userId || null,
-      visitorId: schema.data.visitorId
+      visitorId: schema.data.visitorId,
+      ipAddr: getClientAddress().slice(7)
     }
   });
 
