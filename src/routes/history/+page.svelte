@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { Button } from "$lib/components/forms/button";
-  import { Input } from "$lib/components/forms/input";
   import { minimize } from "$lib/utils/StringUtils";
 </script>
 
@@ -9,11 +7,12 @@
     <div class="mb-2 p-0">
       <h1 class="mb-1 text-xl font-bold text-white md:text-2xl">History</h1>
       <p class="text-sm font-normal text-white">
-        THis is your history page, you can see all your links here, and you can also delete them.
+        This is your history page, you can see all your links here, and you can also delete them.
       </p>
     </div>
 
     <div class="bg-gray-800 relative sm:rounded-lg overflow-hidden">
+      
       <div class="overflow-x-auto">
         <table class="w-full text-sm text-left text-gray-400">
           <thead class="text-xs uppercase bg-gray-700 text-gray-400">
@@ -30,13 +29,13 @@
           </thead>
           <tbody>
             <tr class="border-b border-gray-700">
-              <th scope="row" class="px-4 py-3 font-medium whitespace-nowrap text-white">{ minimize("https://google.com", 17) }</th>
+              <th scope="row" class="px-4 py-3 font-medium whitespace-nowrap text-white">{ minimize("https://google.com", 18) }</th>
               <td class="px-4 py-3">x1aAz</td>
-              <td class="px-4 py-3">Apple</td>
               <td class="px-4 py-3">03/02/2021 23:16</td>
+              <td class="px-4 py-3">0</td>
               <td class="px-4 py-3">26/02/2023 14:18</td>
               <td class="px-4 py-3 flex gap-1">
-                <a href="/" class="hover:text-white p-2">
+                <a href="/" class="hover:text-white p-2 transition-colors duration-200">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M11 7h-5a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-5"></path>
@@ -45,7 +44,7 @@
                   </svg>
                 </a>
 
-                <a href="/" class="hover:text-white p-2">
+                <a href="/" class="hover:text-white p-2  transition-colors duration-200">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
@@ -55,7 +54,18 @@
                   </svg>
                 </a>
 
-                <a href="/" class="hover:text-white p-2">
+                <a href="/" class="hover:text-red-400 p-2 transition-colors duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M4 7l16 0"></path>
+                    <path d="M10 11l0 6"></path>
+                    <path d="M14 11l0 6"></path>
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                 </svg>
+                </a>
+
+                <a href="/" class="hover:text-white p-2 transition-colors duration-200">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
