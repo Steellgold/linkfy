@@ -34,7 +34,7 @@
               <td class="px-4 py-3">03/02/2021 23:16</td>
               <td class="px-4 py-3">0</td>
               <td class="px-4 py-3">26/02/2023 14:18</td>
-              <td class="px-4 py-3 flex gap-1">
+              <td class="px-4 py-3 flex">
                 <a href="/" class="hover:text-white p-2 transition-colors duration-200">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -82,14 +82,16 @@
   </div>
 
   <div class="mt-2">
-    <a href="/" class="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left-line-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <a href="/" class="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
+      Ride to the home
+      <!-- Put the icon in the other direction (mirror) -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-45 group-hover:-translate-x-[9.5rem] transition-transform duration-1000 ease-in-out translate-x-0 -scale-x-100">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <path d="M9.586 4l-6.586 6.586a2 2 0 0 0 0 2.828l6.586 6.586a2 2 0 0 0 2.18 .434l.145 -.068a2 2 0 0 0 1.089 -1.78v-2.586h5a1 1 0 0 0 1 -1v-6l-.007 -.117a1 1 0 0 0 -.993 -.883l-5 -.001v-2.585a2 2 0 0 0 -3.414 -1.414z" stroke-width="0" fill="currentColor"></path>
-        <path d="M4.415 12l6.585 -6.586v3.586l.007 .117a1 1 0 0 0 .993 .883l5 -.001v4l-5 .001a1 1 0 0 0 -1 1v3.586l-6.585 -6.586z" stroke-width="0" fill="currentColor"></path>
-        <path d="M21 8a1 1 0 0 1 .993 .883l.007 .117v6a1 1 0 0 1 -1.993 .117l-.007 -.117v-6a1 1 0 0 1 1 -1z" stroke-width="0" fill="currentColor"></path>
+        <path d="M5 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+        <path d="M19 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+        <path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"></path>
+        <path d="M13 6h2l1.5 3l2 4"></path>
      </svg>
-      Ride to the home page
     </a>
   </div>
 </div>
