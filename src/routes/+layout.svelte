@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Navbar } from "$lib/components/layout/navbar";
+  import { Toasts } from "$lib/components/layout/toasts";
   import "../app.css"
 </script>
 
@@ -8,7 +9,11 @@
 
   <div class="relative">
     <Navbar />
-    
+
+    <div class="flex flex-col items-center mx-auto px-3 py-4 lg:py-0 absolute top-5 left-0 right-0">  
+      <Toasts />
+    </div>
+      
     <slot />
   </div>
 </section>
