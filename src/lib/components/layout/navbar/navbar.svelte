@@ -10,7 +10,7 @@
   };
 </script>
 
-<nav class="mb-6">
+<nav>
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <ButtonLink props={{ href: "/sign-in", size: "md", variant: "blue" }}>
+      <ButtonLink props={{ href: "#", size: "md", variant: "blue", disabled: true }}>
         <!-- ICON --> Sign in
       </ButtonLink>
     </div>
@@ -46,7 +46,7 @@
 
 <!-- Mobile menu, show/hide based on menu state. -->
 <div class="sm:hidden" id="mobile-menu">
-  <div class="space-y-1 bg-gray-900 px-2 pb-1" in:fly={{ x: 20, duration: 350 }}>
+  <div class="space-y-1 px-2 pb-1" in:fly={{ x: 20, duration: 350 }}>
     {#if mobileMenuOpen}
       <a href="/" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white hover:bg-gray-800"
         in:fly={{ x: 5, duration: 200 }}>Shortener</a>
