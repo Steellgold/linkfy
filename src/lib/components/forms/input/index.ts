@@ -5,7 +5,6 @@ export type InputProps = {
   id?: string;
   name?: string;
   type?: string;
-  value?: string;
   label?: string;
   indicator?: string;
   placeholder?: string;
