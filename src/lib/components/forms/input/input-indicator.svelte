@@ -2,7 +2,7 @@
   import { SizeClasses, type InputProps } from ".";
 
   export let props: InputProps;
-  export let value: string;
+  export let value: string = "";
 
   function handleInput(event: Event) {
     const target = event.target as HTMLInputElement;
