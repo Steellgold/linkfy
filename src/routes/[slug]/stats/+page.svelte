@@ -1,55 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { StatGraph, StatRow } from "$lib/components/layout/stats";
   import Chart from "chart.js/auto";
-
-  let chart: Chart;
-
-  onMount(() => {
-    const ctx = (document.getElementById("myChart") as HTMLCanvasElement).getContext("2d") as CanvasRenderingContext2D;
-
-    chart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: ["01/01", "02/01", "03/01", "04/01", "05/01", "06/01", "07/01"],
-        datasets: [
-          {
-            label: "Nombre de clics ce jour-là",
-            data: [12, 19, 2, 5, 2, 3, 8],
-            fill: {
-              target: "origin",
-              above: "rgba(48, 82, 161, 0.2)"
-            },
-            borderColor: "#3052a1",
-            borderWidth: 4,
-            tension: 0.1
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            ticks: {
-              font: {
-                family: "Poppins",
-              }
-            },
-            beginAtZero: true
-          },
-        },
-        elements: {
-          point: {
-            radius: 3
-          }
-        }
-      },
-    });
-  });
 </script>
 
 <div class="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
@@ -65,55 +17,58 @@
             <path d="M15 17a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="currentColor"></path>
           </svg>
         </h5>
-        <p class="font-normal flex gap-2 text-gray-400">
-          27,000
-          <span class="text-green-400">+ 2,000 (this day)</span>
-        </p>
+        <p class="font-normal flex gap-2 text-gray-400">27,000 <span class="text-green-400">+ 2,000 (this day)</span></p>
       </div>
-      <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-800 animate-pulse">
-      </div>
-      <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-800 animate-pulse">
-      </div>
+      <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-800 animate-pulse"></div>
+      <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-800 animate-pulse"></div>
     </div>
-    <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-800">
-      <canvas class="m-2" id="myChart" />
+    <div class="flex items-center justify-center h-46 sm:h-72 mb-4 rounded bg-gray-800">
+      <!-- StartGraph { label: string; count: number }[]; -->
+      <StatGraph data={[
+        { label: "01/01", count: 291, country: "FR" },
+        // To the 29th
+        { label: "02/01", count: 291, country: "FR" },
+        { label: "03/01", count: 547, country: "FR" },
+        { label: "04/01", count: 778, country: "FR" },
+        { label: "05/01", count: 876, country: "FR" },
+        { label: "06/01", count: 789, country: "FR" },
+        { label: "07/01", count: 544, country: "FR" },
+        { label: "08/01", count: 658, country: "FR" },
+        { label: "09/01", count: 166, country: "FR" },
+        { label: "10/01", count: 389, country: "FR" },
+        { label: "11/01", count: 547, country: "FR" },
+        { label: "12/01", count: 544, country: "FR" },
+        { label: "13/01", count: 102, country: "FR" },
+        { label: "14/01", count: 451, country: "FR" },
+        { label: "15/01", count: 545, country: "FR" },
+        { label: "16/01", count: 156, country: "FR" },
+        { label: "17/01", count: 663, country: "FR" },
+        { label: "18/01", count: 778, country: "FR" },
+        { label: "19/01", count: 184, country: "FR" },
+        { label: "20/01", count: 968, country: "FR" },
+        { label: "21/01", count: 133, country: "FR" },
+        { label: "22/01", count: 145, country: "FR" },
+        { label: "23/01", count: 988, country: "FR" },
+        { label: "24/01", count: 233, country: "FR" },
+        { label: "25/01", count: 154, country: "FR" },
+        { label: "26/01", count: 489, country: "FR" },
+        { label: "27/01", count: 121, country: "FR" },
+        { label: "28/01", count: 84, country: "FR" },
+        { label: "29/01", count: 110, country: "FR" },
+        { label: "30/01", count: 889, country: "FR" },
+        { label: "31/01", count: 125, country: "FR" },
+      ]} />
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
       <div class="flex flex-col rounded bg-gray-800">
-        <div class="flex flex-col px-4 pt-2 pb-2">
+        <div class="flex flex-col px-4 pt-3 pb-2">
           <span class="text-2xl font-bold text-white">Sources</span>
           <span class="text-sm text-gray-400">Les sources ou votre lien a été le plus accédé</span>
         </div>
 
         <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
-          <div class="flex items-center justify-between my-1 text-sm">
-            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
-              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[100%]"></div>
-              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
-                <a class="md:truncate block hover:underline" href="/">
-                  <img src="https://linkfy.fr/pv07" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
-                  Direct / None
-                </a>
-              </span>
-            </div>
-            <span class="font-medium text-gray-200 w-20 text-right">
-              3k <span class="font-normal text-gray-500">(80%)</span>
-            </span>
-          </div>
-          <div class="flex items-center justify-between my-1 text-sm">
-            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
-              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[58%]"></div>
-              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
-                <a class="md:truncate block hover:underline" href="/">
-                  <img src="https://linkfy.fr/pv07" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
-                  Google
-                </a>
-              </span>
-            </div>
-            <span class="font-medium text-gray-200 w-20 text-right">
-              965 <span class="font-normal text-gray-500">(20%)</span>
-            </span>
-          </div>
+          <StatRow count={3000} iconUrl="https://linkfy.fr/pv07" name="Direct / None" percentage={80} />
+          <StatRow count={965} iconUrl="https://linkfy.fr/pv07" name="Google" percentage={20} />
 
           <div class="absolute bottom-0 left-0 w-full h-8">
             <div class="flex items-center justify-between px-4 h-full pb-3">
@@ -122,55 +77,17 @@
           </div>
         </div>
       </div>
+
       <div class="flex flex-col rounded bg-gray-800">
-        <div class="flex flex-col px-4 pt-2 pb-2">
+        <div class="flex flex-col px-4 pt-3 pb-2">
           <span class="text-2xl font-bold text-white">Locations</span>
           <span class="text-sm text-gray-400">Voici les locations ou votre liens à été le plus cliqué</span>
         </div>
 
         <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
-          <div class="flex items-center justify-between my-1 text-sm">
-            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
-              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[57%]"></div>
-              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
-                <a class="md:truncate block hover:underline" href="/">
-                  <img src="https://linkfy.fr/4yfa" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
-                  France
-                </a>
-              </span>
-            </div>
-            <span class="font-medium text-gray-200 w-20 text-right">
-              987m <span class="font-normal text-gray-500">(57%)</span>
-            </span>
-          </div>
-          <div class="flex items-center justify-between my-1 text-sm">
-            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
-              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[26%]"></div>
-              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
-                <a class="md:truncate block hover:underline" href="/">
-                  <img src="https://linkfy.fr/pqcc" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
-                  États-Unis
-                </a>
-              </span>
-            </div>
-            <span class="font-medium text-gray-200 w-20 text-right">
-              259m <span class="font-normal text-gray-500">(26%)</span>
-            </span>
-          </div>
-          <div class="flex items-center justify-between my-1 text-sm">
-            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
-              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[17%]"></div>
-              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
-                <a class="md:truncate block hover:underline" href="/">
-                  <img src="https://linkfy.fr/hj30" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
-                  Canada
-                </a>
-              </span>
-            </div>
-            <span class="font-medium text-gray-200 w-20 text-right">
-              175m <span class="font-normal text-gray-500">(17%)</span>
-            </span>
-          </div>
+          <StatRow count={987000000} iconUrl="https://linkfy.fr/4yfa" name="France" percentage={57} />
+          <StatRow count={259000000} iconUrl="https://linkfy.fr/pqcc" name="États-Unis" percentage={26} />
+          <StatRow count={175000000} iconUrl="https://linkfy.fr/hj30" name="Canada" percentage={17} />
 
           <div class="absolute bottom-0 left-0 w-full h-8">
             <div class="flex items-center justify-between px-4 h-full pb-3">
