@@ -79,17 +79,105 @@
       <canvas class="m-2" id="myChart" />
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
-        <p class="text-2xl text-gray-500">+</p>
+      <div class="flex flex-col rounded bg-gray-800">
+        <div class="flex flex-col px-4 pt-2 pb-2">
+          <span class="text-2xl font-bold text-white">Sources</span>
+          <span class="text-sm text-gray-400">Les sources ou votre lien a été le plus accédé</span>
+        </div>
+
+        <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
+          <div class="flex items-center justify-between my-1 text-sm">
+            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
+              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[100%]"></div>
+              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
+                <a class="md:truncate block hover:underline" href="/">
+                  <img src="https://linkfy.fr/pv07" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
+                  Direct / None
+                </a>
+              </span>
+            </div>
+            <span class="font-medium text-gray-200 w-20 text-right">
+              3k <span class="font-normal text-gray-500">(80%)</span>
+            </span>
+          </div>
+          <div class="flex items-center justify-between my-1 text-sm">
+            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
+              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[58%]"></div>
+              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
+                <a class="md:truncate block hover:underline" href="/">
+                  <img src="https://linkfy.fr/pv07" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
+                  Google
+                </a>
+              </span>
+            </div>
+            <span class="font-medium text-gray-200 w-20 text-right">
+              965 <span class="font-normal text-gray-500">(20%)</span>
+            </span>
+          </div>
+
+          <div class="absolute bottom-0 left-0 w-full h-8">
+            <div class="flex items-center justify-between px-4 h-full pb-3">
+              <span class="text-sm text-gray-400 sr-only">Afficher un graphique</span> <!-- For later -->
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
-        <p class="text-2xl text-gray-500">+</p>
-      </div>
-      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
-        <p class="text-2xl text-gray-500">+</p>
-      </div>
-      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
-        <p class="text-2xl text-gray-500">+</p>
+      <div class="flex flex-col rounded bg-gray-800">
+        <div class="flex flex-col px-4 pt-2 pb-2">
+          <span class="text-2xl font-bold text-white">Locations</span>
+          <span class="text-sm text-gray-400">Voici les locations ou votre liens à été le plus cliqué</span>
+        </div>
+
+        <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
+          <div class="flex items-center justify-between my-1 text-sm">
+            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
+              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[57%]"></div>
+              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
+                <a class="md:truncate block hover:underline" href="/">
+                  <img src="https://linkfy.fr/4yfa" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
+                  France
+                </a>
+              </span>
+            </div>
+            <span class="font-medium text-gray-200 w-20 text-right">
+              987m <span class="font-normal text-gray-500">(57%)</span>
+            </span>
+          </div>
+          <div class="flex items-center justify-between my-1 text-sm">
+            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
+              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[26%]"></div>
+              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
+                <a class="md:truncate block hover:underline" href="/">
+                  <img src="https://linkfy.fr/pqcc" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
+                  États-Unis
+                </a>
+              </span>
+            </div>
+            <span class="font-medium text-gray-200 w-20 text-right">
+              259m <span class="font-normal text-gray-500">(26%)</span>
+            </span>
+          </div>
+          <div class="flex items-center justify-between my-1 text-sm">
+            <div class="w-full relative" style="max-width: calc(100% - 5rem);">
+              <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15 w-[17%]"></div>
+              <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
+                <a class="md:truncate block hover:underline" href="/">
+                  <img src="https://linkfy.fr/hj30" class="inline w-4 h-4 mr-2 -mt-px align-middle" alt="Direct / None" />
+                  Canada
+                </a>
+              </span>
+            </div>
+            <span class="font-medium text-gray-200 w-20 text-right">
+              175m <span class="font-normal text-gray-500">(17%)</span>
+            </span>
+          </div>
+
+          <div class="absolute bottom-0 left-0 w-full h-8">
+            <div class="flex items-center justify-between px-4 h-full pb-3">
+              <span class="text-sm text-gray-400 sr-only">Afficher un graphique</span> <!-- For later -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
