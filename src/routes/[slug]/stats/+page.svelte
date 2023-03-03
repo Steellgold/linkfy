@@ -1,8 +1,62 @@
+<script lang="ts">
+  import { onMount } from "svelte";
+  import Chart from "chart.js/auto";
+
+  let chart: Chart;
+
+  onMount(() => {
+    const ctx = (document.getElementById("myChart") as HTMLCanvasElement).getContext("2d") as CanvasRenderingContext2D;
+
+    chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["01/01", "02/01", "03/01", "04/01", "05/01", "06/01", "07/01"],
+        datasets: [
+          {
+            label: "Nombre de clics ce jour-là",
+            data: [12, 19, 2, 5, 2, 3, 8],
+            fill: {
+              target: "origin",
+              above: "rgba(48, 82, 161, 0.2)"
+            },
+            borderColor: "#3052a1",
+            borderWidth: 4,
+            tension: 0.1
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            ticks: {
+              font: {
+                family: "Poppins",
+              }
+            },
+            beginAtZero: true
+          },
+        },
+        elements: {
+          point: {
+            radius: 3
+          }
+        }
+      },
+    });
+  });
+</script>
+
 <div class="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
   <div class="w-full rounded-lg p-4 md:mt-0 max-w-5xl">
     <div class="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-3">
       <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-800">
-        <h5 class="flex items-center gap-2 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 class="flex items-center gap-2 mb-2 text-2xl font-bold tracking-tight text-white">
           Total clicks
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 animate-pulse mt-1">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -21,20 +75,21 @@
       <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-800 animate-pulse">
       </div>
     </div>
-    <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+    <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-800">
+      <canvas class="m-2" id="myChart" />
     </div>
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
+        <p class="text-2xl text-gray-500">+</p>
       </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
+        <p class="text-2xl text-gray-500">+</p>
       </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
+        <p class="text-2xl text-gray-500">+</p>
       </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
+        <p class="text-2xl text-gray-500">+</p>
       </div>
     </div>
   </div>
