@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Toggle } from "$lib/components/forms/toggle";
+
   let yearly = false;
 </script>
 
@@ -7,11 +9,7 @@
 <hr class="border-gray-800 mt-8 mb-8 mx-auto max-w-screen-xl w-1/5 border-2 border-dotted" />
 
 <div class="grid grid-cols-1 px-4">
-  <label class="relative inline-flex items-center cursor-pointer mx-auto max-w-screen-xl mb-8">
-    <input type="checkbox" value="" class="sr-only peer" bind:checked={yearly}>
-    <div class="w-11 h-6 peer-focus:outline-none peer-focus:ring-[#F4D562] rounded-full peer bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all border-gray-600 peer-checked:bg-[#F4D562]"></div>
-    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{yearly ? 'Yearly' : 'Monthly'} subscription</span>
-  </label>
+  <Toggle name="{yearly ? 'Yearly' : 'Monthly'} subscription" bind:yearly />
 
   <div class="flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 bg-gray-800 text-white">
     <h3 class="mb-0 text-2xl font-extrabold pro">Plus</h3>
