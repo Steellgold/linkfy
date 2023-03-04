@@ -1,7 +1,7 @@
 <script lang="ts">
   import { formatNumber } from "$lib/utils/NumberUtils";
 
-  export let iconUrl: string;
+  export let iconUrl: string = "";
   export let name: string;
   export let count: number;
   export let percentage: number;
@@ -12,7 +12,9 @@
     <div class="absolute top-0 left-0 h-full bg-behind bg-opacity-15" style="width: {percentage}%"></div>
     <span class="flex px-2 py-1.5 text-gray-300 relative z-9 break-all">
       <a class="md:truncate block hover:underline" href="/">
-        <img src={iconUrl} class="inline w-4 h-4 mr-2 -mt-px align-middle" alt={name} />
+        {#if iconUrl !== ""}
+          <img src={iconUrl} class="inline w-4 h-4 mr-2 -mt-px align-middle" alt={name} />
+        {/if}
         {name}
       </a>
     </span>

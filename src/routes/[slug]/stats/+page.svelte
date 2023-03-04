@@ -55,7 +55,7 @@
 
         <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
           <StatRow count={3000} iconUrl="https://linkfy.fr/pv07" name="Direct / None" percentage={80} />
-          <StatRow count={965} iconUrl="https://linkfy.fr/pv07" name="Google" percentage={20} />
+          <StatRow count={965} iconUrl="https://linkfy.fr/y6nn" name="Google" percentage={20} />
 
           <div class="absolute bottom-0 left-0 w-full h-8">
             <div class="flex items-center justify-between px-4 h-full pb-3">
@@ -75,6 +75,51 @@
           <StatRow count={987000000} iconUrl="https://linkfy.fr/4yfa" name="France" percentage={57} />
           <StatRow count={259000000} iconUrl="https://linkfy.fr/pqcc" name="États-Unis" percentage={26} />
           <StatRow count={175000000} iconUrl="https://linkfy.fr/hj30" name="Canada" percentage={17} />
+
+          <div class="absolute bottom-0 left-0 w-full h-8">
+            <div class="flex items-center justify-between px-4 h-full pb-3">
+              <span class="text-sm text-gray-400 sr-only">Afficher un graphique</span> <!-- For later -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col rounded bg-gray-800">
+        <div class="flex flex-col px-4 pt-3 pb-2">
+          <span class="text-2xl font-bold text-white">Appareils</span>
+          <span class="text-sm text-gray-400">Voici les appareils ou votre liens à été le plus cliqué</span>
+        </div>
+
+        <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
+          <StatRow count={987000000} name="Ordinateur" percentage={38} />
+          <StatRow count={14300} name="Autre" percentage={29} />
+          <StatRow count={25600} name="Téléphone" percentage={21} />
+          <StatRow count={6980} name="Tablette" percentage={12} />
+
+          <div class="absolute bottom-0 left-0 w-full h-8">
+            <div class="flex items-center justify-between px-4 h-full pb-3">
+              <span class="text-sm text-gray-400 sr-only">Afficher un graphique</span> <!-- For later -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col rounded bg-gray-800">
+        <div class="flex flex-col px-4 pt-3 pb-2">
+          <span class="text-2xl font-bold text-white">Navigateurs</span>
+          <span class="text-sm text-gray-400">Voici les navigateurs ou votre liens à été le plus cliqué</span>
+        </div>
+
+        <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
+          <StatRow count={14300} name="Autre" percentage={42} />
+          <StatRow count={987000000} name="Chrome" percentage={12} />
+          <StatRow count={25600} name="Firefox" percentage={10} />
+          <StatRow count={6980} name="Safari" percentage={8} />
+          <StatRow count={14300} name="Microsoft Edge" percentage={7} />
+          <StatRow count={14300} name="Mobile App" percentage={6} />
+          <StatRow count={14300} name="Opera" percentage={5} />
+          <StatRow count={14300} name="DuckDuckGo" percentage={4} />
+          <StatRow count={14300} name="Samsung Browser" percentage={3} />
 
           <div class="absolute bottom-0 left-0 w-full h-8">
             <div class="flex items-center justify-between px-4 h-full pb-3">
