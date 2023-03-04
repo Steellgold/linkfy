@@ -17,3 +17,5 @@
     <slot />
   </div>
 </section>
+
+<p class="text-center text-gray-500 text-sm mt-4 mb-8 mx-auto max-w-screen-xl">© 2023 - Linkfy</p>

@@ -2,9 +2,9 @@
   import { onMount } from "svelte";
   import Chart from "chart.js/auto";
 
-  let chart: Chart;
-
   export let data: { label: string; count: number, country: string }[];
+
+  let chart: Chart;
 
   onMount(() => {
     const ctx = (document.getElementById("myChart") as HTMLCanvasElement).getContext("2d") as CanvasRenderingContext2D;
@@ -36,6 +36,7 @@
       },
     });
   });
+
 </script>
 
 <canvas class="m-2" id="myChart" />
