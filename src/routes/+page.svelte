@@ -17,11 +17,7 @@
     <div class="mb-2 p-0">
       <div class="mt-1 relative rounded-md shadow-sm">
         <div class="mb-3">
-          <Input props={{
-            type: "text",
-            placeholder: "https://example.com",
-            size: "large"
-          }} />
+          <Input props={{ type: "text", placeholder: "https://example.com", size: "large" }} />
         </div>
       </div>
     </div>

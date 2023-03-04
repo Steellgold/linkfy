@@ -17,7 +17,7 @@
 
   <SimpleCard>
     <CardTitle>Display your signature</CardTitle>
-    <CardText>Display as a subdomain your name, nickname, or whatever. (https://org.linkfy.fr/x8a2d)</CardText>
+    <CardText>Show who you are, a subdomain is offered to differentiate and increase linkability<span class="text-gray-400 text-base">*</span></CardText>
   </SimpleCard>
 
   <SimpleCard>
@@ -27,6 +27,10 @@
   
   <LinkCard link="/plus/options">
     <CardTitle>Gain of options</CardTitle>
-    <CardText>With the pro account, you have access to additional options, like choosing the expiration time of your links, or the number of limited redirects.</CardText>
+    <CardText>Additional options, like choosing the expiration time of your links, or the number of limited redirects.</CardText>
   </LinkCard>
 </CardContainer>
+
+<div class="mx-auto max-w-screen-xl text-center lg:px-12 px-3">
+  <p class="text-center text-gray-400 text-sm mt-4">* "increase linkability" means, if a link with slug "john" is already taken, nobody can take it without having subdomains because it is not the same URL.</p>
+</div>
