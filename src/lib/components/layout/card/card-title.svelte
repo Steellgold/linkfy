@@ -1,0 +1,1 @@
+<h5 class="mb-0 text-2xl font-bold tracking-tight text-white flex items-center gap-2"><slot /></h5>

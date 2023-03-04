@@ -1,0 +1,1 @@
+<p class="mb-2 font-normal text-gray-400"><slot /></p>
