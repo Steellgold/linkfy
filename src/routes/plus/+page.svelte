@@ -15,15 +15,15 @@
     <CardText>Change the redirection URL of your links to make them more attractive and easier to remember.</CardText>
   </LinkCard>
 
-  <SimpleCard>
+  <LinkCard link="/plus/style">
     <CardTitle>Display your signature</CardTitle>
     <CardText>Show who you are, a subdomain is offered to differentiate and increase linkability<span class="text-gray-400 text-base">*</span></CardText>
-  </SimpleCard>
+  </LinkCard>
 
-  <SimpleCard>
+  <LinkCard link="/plus/stats">
     <CardTitle>Track your links</CardTitle>
     <CardText>Track the number of clicks, as well as the countries and browsers used to access your links.</CardText>
-  </SimpleCard>
+  </LinkCard>
   
   <LinkCard link="/plus/options">
     <CardTitle>Gain of options</CardTitle>
