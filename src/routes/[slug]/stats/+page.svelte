@@ -72,9 +72,9 @@
         </div>
 
         <div class="flex-grow relative px-4 sm:h-[400px] pb-2">
-          <StatRow count={987000000} iconUrl="https://linkfy.fr/4yfa" name="France" percentage={57} />
-          <StatRow count={259000000} iconUrl="https://linkfy.fr/pqcc" name="États-Unis" percentage={26} />
-          <StatRow count={175000000} iconUrl="https://linkfy.fr/hj30" name="Canada" percentage={17} />
+          <StatRow count={987000000} iconUrl="https://countryflagsapi.com/png/fr" name="France" percentage={57} isFlag={true} />
+          <StatRow count={259000000} iconUrl="https://countryflagsapi.com/png/us" name="États-Unis" percentage={26} isFlag={true} />
+          <StatRow count={175000000} iconUrl="https://countryflagsapi.com/png/ca" name="Canada" percentage={17} isFlag={true} />
 
           <div class="absolute bottom-0 left-0 w-full h-8">
             <div class="flex items-center justify-between px-4 h-full pb-3">
