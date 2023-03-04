@@ -1,23 +1,28 @@
 <script lang="ts">
   import { StatCard, StatGraph, StatRow } from "$lib/components/layout/stats";
+  import { onMount } from "svelte";
+
+  let loading: boolean = true;
+
+  onMount(() => {
+    loading = false;
+  });
 </script>
 
 <div class="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
   <div class="w-full rounded-lg p-4 md:mt-0 max-w-5xl">
     <div class="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-3">
-      <StatCard title="Total clicks" count={291} up={true} upSubtitle="+103 (this day)" />
-      <StatCard title="Total clicks" count={291} up={false} upSubtitle="-4 (this day)" />
-      <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-800 animate-pulse"></div>
+      <StatCard title="Total clicks" count={291} up={true} upSubtitle="(+103 this day)" loading={loading} />
+      <StatCard title="Unique clicks" count={184} up={false} upSubtitle="(-4 this day)" loading={loading} />
+      <StatCard title="Most visit" count={547} up={true} subtitleType="country" upSubtitle="France" loading={loading} />
     </div>
     <div class="flex items-center justify-center h-46 sm:h-72 mb-4 rounded bg-gray-800">
-      <!-- StartGraph { label: string; count: number }[]; -->
       <StatGraph data={[
-        { label: "01/01", count: 291, country: "FR" },
-        // To the 29th
+        { label: "01/01", count: 291, country: "CA" },
         { label: "02/01", count: 291, country: "FR" },
         { label: "03/01", count: 547, country: "FR" },
         { label: "04/01", count: 778, country: "FR" },
-        { label: "05/01", count: 876, country: "FR" },
+        { label: "05/01", count: 876, country: "US" },
         { label: "06/01", count: 789, country: "FR" },
         { label: "07/01", count: 544, country: "FR" },
         { label: "08/01", count: 658, country: "FR" },
@@ -43,8 +48,7 @@
         { label: "28/01", count: 84, country: "FR" },
         { label: "29/01", count: 110, country: "FR" },
         { label: "30/01", count: 889, country: "FR" },
-        { label: "31/01", count: 125, country: "FR" },
-      ]} />
+        { label: "31/01", count: 125, country: "FR" } ]} />
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
       <div class="flex flex-col rounded bg-gray-800">
