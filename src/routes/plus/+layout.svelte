@@ -19,9 +19,9 @@
         <div class="flex flex-col items-center">
           <div class="flex items-baseline">
             <span class="mr-2 text-5xl font-extrabold">€79.99</span>
-            <span class="text-gray-400">/yearly</span>
+            <span class="text-gray-400">/year</span>
           </div>
-          <span class="mt-3 text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-[#F4D562] text-gray-800"> -20%</span>
+          <span class="mt-3 text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-[#F4D562] text-gray-800">-20%</span>
         </div>
       {:else}
         <span class="mr-2 text-5xl font-extrabold">€9.99</span>
