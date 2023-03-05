@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Chart from "chart.js/auto";
+  import { hexToRgbInstring } from "$lib/utils/StringUtils";
 
-  export let data: { label: string; count: number, country: string }[];
+  export let datasets: { label: string; data: number[], borderColor: string }[]
+  export let labels: string[]
 
   let chart: Chart;
 
@@ -12,16 +14,12 @@
     chart = new Chart(ctx, {
       type: "line",
       data: {
-        labels: data.map((d) => d.label),
-        datasets: [{
-            label: "Clicks this day",
-            data: data.map((d) => d.count),
-            fill: { target: "origin", above: "rgba(48, 82, 161, 0.2)" },
-            borderColor: "#3052a1",
-            borderWidth: 4,
-            tension: 0.4
-          }
-        ],
+        labels: labels,
+        datasets: datasets.map((dataset) => ({
+          ...dataset,
+          fill: { target: "origin", above: `rgba(${hexToRgbInstring(dataset.borderColor, false)}, 0.2)` },
+          tension: 0.4,
+        })),
       },
       options: {
         plugins: { legend: { display: false } },
@@ -36,7 +34,6 @@
       },
     });
   });
-
 </script>
 
 <canvas class="m-2" id="myChart" />

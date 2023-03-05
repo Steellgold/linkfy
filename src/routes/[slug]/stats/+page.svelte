@@ -1,6 +1,6 @@
 <script lang="ts">
   import { StatCard, StatGraph, StatRow } from "$lib/components/layout/stats";
-    import { IconMotorbike } from "@tabler/icons-svelte";
+  import { IconMotorbike } from "@tabler/icons-svelte";
   import { onMount } from "svelte";
 
   let loading: boolean = true;
@@ -13,43 +13,16 @@
 <div class="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
   <div class="w-full rounded-lg p-4 md:mt-0 max-w-5xl">
     <div class="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-3">
-      <StatCard title="Total clicks" count={291} up={true} upSubtitle="(+103 this day)" loading={loading} />
-      <StatCard title="Unique clicks" count={184} up={false} upSubtitle="(-4 this day)" loading={loading} />
-      <StatCard title="Most visit" count={547} up={true} subtitleType="country" upSubtitle="France" loading={loading} />
+      <StatCard title="Total clicks" count={291} up={true} subtitle="(+103 this day)" loading={loading} />
+      <StatCard title="Unique clicks" count={184} up={false} subtitle="(-4 this day)" loading={loading} />
+      <StatCard title="Most visit" count={547} up={true} subtitleType="country" subtitle="France" loading={loading} />
     </div>
     <div class="flex items-center justify-center h-46 sm:h-72 mb-4 rounded bg-gray-800">
-      <StatGraph data={[
-        { label: "01/01", count: 291, country: "CA" },
-        { label: "02/01", count: 291, country: "FR" },
-        { label: "03/01", count: 547, country: "FR" },
-        { label: "04/01", count: 778, country: "FR" },
-        { label: "05/01", count: 876, country: "US" },
-        { label: "06/01", count: 789, country: "FR" },
-        { label: "07/01", count: 544, country: "FR" },
-        { label: "08/01", count: 658, country: "FR" },
-        { label: "09/01", count: 166, country: "FR" },
-        { label: "10/01", count: 389, country: "FR" },
-        { label: "11/01", count: 547, country: "FR" },
-        { label: "12/01", count: 544, country: "FR" },
-        { label: "13/01", count: 102, country: "FR" },
-        { label: "14/01", count: 451, country: "FR" },
-        { label: "15/01", count: 545, country: "FR" },
-        { label: "16/01", count: 156, country: "FR" },
-        { label: "17/01", count: 663, country: "FR" },
-        { label: "18/01", count: 778, country: "FR" },
-        { label: "19/01", count: 184, country: "FR" },
-        { label: "20/01", count: 968, country: "FR" },
-        { label: "21/01", count: 133, country: "FR" },
-        { label: "22/01", count: 145, country: "FR" },
-        { label: "23/01", count: 988, country: "FR" },
-        { label: "24/01", count: 233, country: "FR" },
-        { label: "25/01", count: 154, country: "FR" },
-        { label: "26/01", count: 489, country: "FR" },
-        { label: "27/01", count: 121, country: "FR" },
-        { label: "28/01", count: 84, country: "FR" },
-        { label: "29/01", count: 110, country: "FR" },
-        { label: "30/01", count: 889, country: "FR" },
-        { label: "31/01", count: 125, country: "FR" } ]} />
+      <StatGraph
+        datasets={[{ label: "Total clicks", data: [291, 291, 547, 778, 876, 789, 544, 658, 166, 389, 547, 544, 102, 451, 545, 156, 663, 778, 184, 968, 133, 145, 988, 233, 154, 489, 121, 84, 110, 889, 125], borderColor: "#495b73" }]}
+        labels={["01/01", "02/01", "03/01", "04/01", "05/01", "06/01", "07/01", "08/01", "09/01", "10/01", "11/01", "12/01", "13/01", "14/01", "15/01", "16/01", "17/01", "18/01", "19/01", "20/01", "21/01", "22/01", "23/01", "24/01", "25/01", "26/01", "27/01", "28/01", "29/01", "30/01", "31/01"]
+        }
+      />
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
       <div class="flex flex-col rounded bg-gray-800">
