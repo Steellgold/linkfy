@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <ButtonLink props={{ href: "#", size: "md", variant: "blue", disabled: false }}>
+      <ButtonLink props={{ href: "/login", size: "md", variant: "blue", disabled: false }}>
         <IconUserCircle /> Sign in
       </ButtonLink>
     </div>
