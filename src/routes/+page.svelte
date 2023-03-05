@@ -34,12 +34,12 @@
         </Button>
   
         <Button props={{ type: "button", variant: "blue", size: "lg", disabled: true, full: false }}>
-          <IconExternalLink size={20} />
+          <IconExternalLink size={24} />
         </Button>
   
-        <Button props={{ type: "button", variant: "blue", size: "lg", disabled: true, full: false }}>
+        <!-- <Button props={{ type: "button", variant: "blue", size: "lg", disabled: true, full: false }}>
           <IconQrcode size={24} />
-        </Button>
+        </Button> -->
       </div>
     </div>
   </div>

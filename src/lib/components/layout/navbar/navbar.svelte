@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { enhance, type SubmitFunction } from "$app/forms";
-  import { page } from "$app/stores";
-    import { ButtonLink } from "$lib/components/forms/button";
+  import { ButtonLink } from "$lib/components/forms/button";
+  import { IconUserCircle } from "@tabler/icons-svelte";
   import { fly } from "svelte/transition";
+
   let mobileMenuOpen = false;
 
   const toggleMobileMenu = () => {
@@ -20,9 +20,7 @@
             <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-          {/if}
-          
-          {#if mobileMenuOpen}
+          {:else}
             <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -37,30 +35,24 @@
         </div>
       </div>
 
-      <ButtonLink props={{ href: "#", size: "md", variant: "blue", disabled: true }}>
-        <!-- ICON --> Sign in
+      <ButtonLink props={{ href: "#", size: "md", variant: "blue", disabled: false }}>
+        <IconUserCircle /> Sign in
       </ButtonLink>
     </div>
   </div>
 </nav>
 
-<!-- Mobile menu, show/hide based on menu state. -->
 <div class="sm:hidden" id="mobile-menu">
   <div class="space-y-1 px-2 pb-1" in:fly={{ x: 20, duration: 350 }}>
     {#if mobileMenuOpen}
-      <a href="/" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white hover:bg-gray-800"
-        in:fly={{ x: 5, duration: 200 }}>Shortener</a>
-      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-        in:fly={{ x: 6, duration: 400 }}>Pricing</a>
-      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-        in:fly={{ x: 7, duration: 600 }}>FAQ</a>
-      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-        in:fly={{ x: 8, duration: 800 }}>About</a>
+      <a href="/" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white hover:bg-gray-800" in:fly={{ x: 5, duration: 200 }}>Shortener</a>
+      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" in:fly={{ x: 6, duration: 400 }}>Pricing</a>
+      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" in:fly={{ x: 7, duration: 600 }}>FAQ</a>
+      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" in:fly={{ x: 8, duration: 800 }}>About</a>
 
       <hr class="border-gray-700" />
 
-      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-        in:fly={{ x: 5, duration: 1000 }}>Support</a>
+      <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" in:fly={{ x: 5, duration: 1000 }}>Support</a>
     {/if}
   </div>
 </div>
