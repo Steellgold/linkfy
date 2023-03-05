@@ -8,7 +8,15 @@
     const target = event.target as HTMLInputElement;
     value = target.value;
   }
+
+  const id = Math.random().toString(36).substr(2, 9);
 </script>
+
+{#if props.label}
+  <label class="block text-sm font-medium leading-5 text-gray-300 mb-2" for="{id}">
+    {props.label}
+  </label>
+{/if}
 
 <div class="flex">
   {#if props.indicator !== ""}
@@ -23,6 +31,7 @@
     placeholder={props.placeholder}
     disabled={props.disabled}
     value={value}
+    id={id}
     on:change={handleInput}
   />
 </div>
