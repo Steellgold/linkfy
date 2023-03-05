@@ -1,5 +1,6 @@
 <script lang="ts">
   import { StatCard, StatGraph, StatRow } from "$lib/components/layout/stats";
+    import { IconMotorbike } from "@tabler/icons-svelte";
   import { onMount } from "svelte";
 
   let loading: boolean = true;
@@ -134,4 +135,9 @@
       </div>
     </div>
   </div>
+
+  <a href="/history" class="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
+    Ride to the history
+    <IconMotorbike size={20} class="group-hover:rotate-45 group-hover:-translate-x-[9.9rem] transition-transform duration-1000 ease-in-out translate-x-0 -scale-x-100" />
+  </a>
 </div>

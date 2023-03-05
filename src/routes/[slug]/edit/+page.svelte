@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Button } from "$lib/components/forms/button";
   import { Input, InputIndicator } from "$lib/components/forms/input";
+    import { IconMotorbike } from "@tabler/icons-svelte";
 
   let slug = "x1aAz";
   let url = "https://example.com";
@@ -52,13 +53,7 @@
   <div class="mt-2">
     <a href="/history" class="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
       Ride to the history
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-45 group-hover:-translate-x-[10rem] transition-transform duration-1000 ease-in-out translate-x-0 -scale-x-100">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <path d="M5 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-        <path d="M19 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-        <path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"></path>
-        <path d="M13 6h2l1.5 3l2 4"></path>
-     </svg>
+     <IconMotorbike size={20} class="group-hover:rotate-45 group-hover:-translate-x-[9.9rem] transition-transform duration-1000 ease-in-out translate-x-0 -scale-x-100" />
     </a>
   </div>
 </div>
