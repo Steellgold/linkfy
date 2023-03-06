@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button } from "$lib/components/forms/button";
   import { Input } from "$lib/components/forms/input";
-  import { IconCopy, IconExternalLink, IconMotorbike, IconQrcode, IconUnlink } from "@tabler/icons-svelte";
+  import { IconCopy, IconExternalLink, IconMotorbike, IconUnlink } from "@tabler/icons-svelte";
 </script>
 
 <div class="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
@@ -46,7 +46,6 @@
 
   <div class="mt-2">
     <a href="/history" class="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
-      <!-- Put it at -45° and translate it to the right by 50% --> 
       <IconMotorbike size={20} class="group-hover:-rotate-45 group-hover:translate-x-40 transition-transform duration-1000 ease-in-out" />
       Ride to the history
     </a>

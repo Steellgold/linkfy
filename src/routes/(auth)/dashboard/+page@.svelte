@@ -1,6 +1,6 @@
 <script lang="ts">
   import { HeadCard, StatCard, StatGraph, StatRow } from "$lib/components/layout/stats";
-    import { IconLayoutBoard } from "@tabler/icons-svelte";
+  import { IconLayoutBoard } from "@tabler/icons-svelte";
   import { onMount } from "svelte";
 
   let loading: boolean = true;
@@ -19,16 +19,15 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-      <div class="sm:col-span-2 flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+      <div class="sm:col-span-2 flex items-center justify-center rounded h-28 bg-gray-800">
+        <p class="text-2xl text-gray-500">+</p>
       </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+      <div class="flex items-center justify-center rounded h-28 bg-gray-800">
+        <p class="text-2xl text-gray-500">+</p>
       </div>
     </div>
 
     <div class="flex items-center justify-center h-46 sm:h-72 mb-4 rounded bg-gray-800">
-      <!-- export let datasets: { label: string; data: number[] }[]; -->
       <StatGraph datasets={[
         { label: "test", data: [1, 2, 3, 4, 5, 6, 7, 8, 45, 10], borderColor: "#4368a8" },
         { label: "test2", data: [2, 3, 4, 65, 6, 7, 8, 9, 10, 11], borderColor: "#286939" },
