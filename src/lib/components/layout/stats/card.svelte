@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { formatNumber } from "$lib/utils/NumberUtils";
+  import { formatNumber } from "$lib/utils/NumberUtils";
   import { IconArrowBigDownLinesFilled, IconArrowBigUpLinesFilled, IconLoader } from "@tabler/icons-svelte";
 
   export let title: string;
