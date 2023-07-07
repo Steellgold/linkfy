@@ -9,7 +9,7 @@ const UserLayout: Component<PropsWithChildren> = ({ children }) => {
       {children}
 
       <a href="/" className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
-          Ride to the home
+        Ride to the home
 
         <RiMotorbikeFill
           size={20}

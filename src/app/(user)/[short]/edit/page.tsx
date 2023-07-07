@@ -57,6 +57,23 @@ const EditPage = (): ReactElement => {
         </div>
 
         <div className="flex gap-2 mt-2">
+          <Input
+            type="date"
+            name="expirationDate"
+            placeholder="Expiration date"
+            disabled={!isPremium}
+            premiumIndicator={!isPremium}
+          />
+
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            disabled={!isPremium}
+            className="w-full"
+            defaultValue="abcdefgh"
+            premiumIndicator={!isPremium}
+          />
         </div>
       </Card>
     </>
