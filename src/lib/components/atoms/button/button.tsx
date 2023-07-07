@@ -1,6 +1,6 @@
 import type { Component } from "#/lib/utils/component";
-import clsx from "clsx";
 import type { ButtonProps } from "./button.type";
+import clsx from "clsx";
 
 export const Button: Component<ButtonProps> = ({ children, variant, className, fulled, disabled, ...props }) => {
   return (

@@ -1,6 +1,6 @@
 import type { Component } from "#/lib/utils/component";
-import clsx from "clsx";
 import type { InputProps } from "./input.type";
+import clsx from "clsx";
 
 export const Input: Component<InputProps> = ({ type, name, placeholder, disabled, className, ...props }) => {
   return (
