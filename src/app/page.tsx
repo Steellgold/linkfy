@@ -1,9 +1,10 @@
+import type { ReactElement } from "react";
 import { Card } from "#/lib/components/atoms/card";
 import { Input } from "#/lib/components/atoms/input";
 import { Button } from "#/lib/components/atoms/button";
-import { BiLink, BiLinkExternal, BiCopy, BiHistory } from "react-icons/bi";
+import { BiLink, BiLinkExternal, BiCopy, BiHistory, BiPencil } from "react-icons/bi";
 import { Text } from "#/lib/components/atoms/text";
-import type { ReactElement } from "react";
+import { LinkButton } from "#/lib/components/atoms/link-button";
 
 const HomePage = (): ReactElement => {
   return (
@@ -16,18 +17,24 @@ const HomePage = (): ReactElement => {
           </Text>
 
           <div className="flex flex-col mt-2">
-            <Input
-              type="text"
-              name="url"
-              autoFocus={true}
-              placeholder="Paste your link here"
-              disabled={false}
-              className="w-full"
-            />
+            <div className="flex gap-2">
+              <Input
+                type="text"
+                name="url"
+                autoFocus={true}
+                placeholder="Paste your link here"
+                disabled={false}
+                className="w-full"
+              />
+            </div>
 
             <div className="flex gap-2 mt-2.5">
               <Button fulled>
                 <BiLink className="h-5 w-5 mr-2" /> Shorten
+              </Button>
+
+              <Button>
+                <BiPencil className="h-5 w-5" />
               </Button>
 
               <Button disabled>
@@ -38,9 +45,9 @@ const HomePage = (): ReactElement => {
                 <BiLinkExternal className="h-5 w-5" />
               </Button>
 
-              <Button disabled>
+              <LinkButton href="/history">
                 <BiHistory className="h-5 w-5" />
-              </Button>
+              </LinkButton>
             </div>
           </div>
         </div>

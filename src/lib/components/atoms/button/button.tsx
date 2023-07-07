@@ -14,6 +14,7 @@ export const Button: Component<ButtonProps> = ({ children, variant, className, f
           "text-black bg-yellow-400 hover:bg-yellow-300 focus:bg-yellow-300": variant == "pro",
           "text-white bg-red-600 hover:bg-red-500 focus:bg-red-500": variant == "danger",
           "text-white bg-green-800 hover:bg-green-700 focus:bg-green-700": variant == "success",
+          "bg-transparent": variant == "transparent",
           "w-full": fulled,
           "opacity-50 cursor-not-allowed": disabled
         },
