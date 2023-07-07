@@ -5,10 +5,8 @@ import { Text } from "#/lib/components/atoms/text";
 import { dayJS } from "#/lib/utils/day-js";
 import { useState, type ReactElement } from "react";
 import { BiBarChartSquare, BiLinkExternal, BiTrash } from "react-icons/bi";
-import { RiMotorbikeFill } from "react-icons/ri";
 import { HiPencilAlt } from "react-icons/hi";
 import Link from "next/link";
-import clsx from "clsx";
 
 const HistoryPage = (): ReactElement => {
   type HistoryItem = {
@@ -16,7 +14,7 @@ const HistoryPage = (): ReactElement => {
     shortUrl: string;
     createdDate: string;
     clicks: number;
-    lastClick: string;
+    lastClick?: string;
   };
 
   const [history] = useState<HistoryItem[]>([
@@ -24,15 +22,13 @@ const HistoryPage = (): ReactElement => {
       url: "https://google.com",
       shortUrl: "eA3d",
       createdDate: "2021-07-17 20:00:00",
-      clicks: 0,
-      lastClick: ""
+      clicks: 0
     },
     {
       url: "https://twitter.com",
       shortUrl: "aB2c",
       createdDate: "2021-07-17 20:00:00",
-      clicks: 0,
-      lastClick: ""
+      clicks: 0
     }
   ]);
 
@@ -51,28 +47,30 @@ const HistoryPage = (): ReactElement => {
             <div className="relative overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-400">
                 <thead className="text-xs uppercase bg-gray-700 text-gray-400">
-                  <th scope="col" className="px-6 py-3">
-                    URL
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Short URL
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Created Date
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Clicks
-                  </th>
-                  <th scope="col" className="px-6 py-3 sr-only">
-                    Actions
-                  </th>
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      URL
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Short URL
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Created Date
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Clicks
+                    </th>
+                    <th scope="col" className="px-6 py-3 sr-only">
+                      Actions
+                    </th>
+                  </tr>
                 </thead>
                 <tbody>
                   {history.map((item, index) => (
                     <tr key={index} className="border-b bg-gray-800 border-gray-600">
-                      <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
+                      <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
                         {item.url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").substring(0, 10)}...
-                      </th>
+                      </td>
                       <td className="px-6 py-4">
                         {item.shortUrl}
                       </td>
@@ -89,7 +87,9 @@ const HistoryPage = (): ReactElement => {
                           </Link>
                           <BiBarChartSquare className="h-5 w-5 hover:text-white transition-colors duration-200" />
                           <BiTrash className="h-5 w-5 hover:text-white transition-colors duration-200" />
-                          <HiPencilAlt className="h-5 w-5 hover:text-white transition-colors duration-200" />
+                          <Link href={`/${item.shortUrl}/edit`}>
+                            <HiPencilAlt className="h-5 w-5 hover:text-white transition-colors duration-200" />
+                          </Link>
                         </div>
                       </td>
                     </tr>
@@ -106,20 +106,6 @@ const HistoryPage = (): ReactElement => {
           )}
         </div>
       </Card>
-
-      <div className="mt-2">
-        <a href="/" className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
-          Ride to the home
-
-          <RiMotorbikeFill
-            size={20}
-            className={clsx(
-              "group-hover:rotate-45 group-hover:-translate-x-[9.7rem] transition-transform",
-              "duration-1000 ease-in-out translate-x-0 -scale-x-100"
-            )}
-          />
-        </a>
-      </div>
     </>
   );
 };

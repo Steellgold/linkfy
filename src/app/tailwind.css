@@ -4,6 +4,7 @@
 @layer utilities {
   .pro {
     @apply bg-clip-text bg-gradient-to-br from-yellow-100 to-yellow-500 text-transparent;
+    @apply font-bold cursor-pointer;
   }
 }
 
