@@ -4,6 +4,7 @@ import type { ReactElement } from "react";
 import { Card } from "#/lib/components/atoms/card";
 import { Input } from "#/lib/components/atoms/input";
 import { Text } from "#/lib/components/atoms/text";
+import { Button } from "#/lib/components/atoms/button";
 
 const EditPage = (): ReactElement => {
   const isPremium = false;
@@ -74,6 +75,12 @@ const EditPage = (): ReactElement => {
             defaultValue="abcdefgh"
             premiumIndicator={!isPremium}
           />
+        </div>
+
+        <div className="flex gap-2 mt-2">
+          <Button className="w-full">
+            Save
+          </Button>
         </div>
       </Card>
     </>
