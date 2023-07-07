@@ -6,6 +6,7 @@ import { dayJS } from "#/lib/utils/day-js";
 import { useState, type ReactElement } from "react";
 import { BiBarChartSquare, BiLinkExternal, BiTrash } from "react-icons/bi";
 import { HiPencilAlt } from "react-icons/hi";
+import Link from "next/link";
 
 const HistoryPage = (): ReactElement => {
   type HistoryItem = {
@@ -81,7 +82,9 @@ const HistoryPage = (): ReactElement => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex gap-2 text-gray-400">
-                          <BiLinkExternal className="h-5 w-5 hover:text-white transition-colors duration-200" />
+                          <Link href={item.url}>
+                            <BiLinkExternal className="h-5 w-5 hover:text-white transition-colors duration-200" />
+                          </Link>
                           <BiBarChartSquare className="h-5 w-5 hover:text-white transition-colors duration-200" />
                           <BiTrash className="h-5 w-5 hover:text-white transition-colors duration-200" />
                           <HiPencilAlt className="h-5 w-5 hover:text-white transition-colors duration-200" />
