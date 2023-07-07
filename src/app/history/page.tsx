@@ -5,8 +5,10 @@ import { Text } from "#/lib/components/atoms/text";
 import { dayJS } from "#/lib/utils/day-js";
 import { useState, type ReactElement } from "react";
 import { BiBarChartSquare, BiLinkExternal, BiTrash } from "react-icons/bi";
+import { RiMotorbikeFill } from "react-icons/ri";
 import { HiPencilAlt } from "react-icons/hi";
 import Link from "next/link";
+import clsx from "clsx";
 
 const HistoryPage = (): ReactElement => {
   type HistoryItem = {
@@ -104,6 +106,20 @@ const HistoryPage = (): ReactElement => {
           )}
         </div>
       </Card>
+
+      <div className="mt-2">
+        <a href="/" className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
+          Ride to the home
+
+          <RiMotorbikeFill
+            size={20}
+            className={clsx(
+              "group-hover:rotate-45 group-hover:-translate-x-[9.7rem] transition-transform",
+              "duration-1000 ease-in-out translate-x-0 -scale-x-100"
+            )}
+          />
+        </a>
+      </div>
     </>
   );
 };
