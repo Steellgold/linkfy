@@ -1,9 +1,9 @@
-import type { ReactElement } from "react";
 import { Card } from "#/lib/components/atoms/card";
 import { Input } from "#/lib/components/atoms/input";
 import { Button } from "#/lib/components/atoms/button";
-import { BiLink, BiLinkExternal, BiCopy } from "react-icons/bi";
+import { BiLink, BiLinkExternal, BiCopy, BiHistory } from "react-icons/bi";
 import { Text } from "#/lib/components/atoms/text";
+import type { ReactElement } from "react";
 
 const HomePage = (): ReactElement => {
   return (
@@ -19,22 +19,27 @@ const HomePage = (): ReactElement => {
             <Input
               type="text"
               name="url"
+              autoFocus={true}
               placeholder="Paste your link here"
               disabled={false}
               className="w-full"
             />
 
-            <div className="flex gap-2">
-              <Button className="mt-2.5" fulled>
+            <div className="flex gap-2 mt-2.5">
+              <Button fulled>
                 <BiLink className="h-5 w-5 mr-2" /> Shorten
               </Button>
 
-              <Button className="mt-2.5" disabled>
+              <Button disabled>
                 <BiCopy className="h-5 w-5" />
               </Button>
 
-              <Button className="mt-2.5" disabled>
+              <Button disabled>
                 <BiLinkExternal className="h-5 w-5" />
+              </Button>
+
+              <Button disabled>
+                <BiHistory className="h-5 w-5" />
               </Button>
             </div>
           </div>
