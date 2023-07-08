@@ -5,6 +5,7 @@ import { Card } from "#/lib/components/atoms/card";
 import { Input } from "#/lib/components/atoms/input";
 import { Text } from "#/lib/components/atoms/text";
 import { Button } from "#/lib/components/atoms/button";
+import { RiVipDiamondLine } from "react-icons/ri";
 
 const EditPage = (): ReactElement => {
   const isPremium = false;
@@ -31,6 +32,11 @@ const EditPage = (): ReactElement => {
           <Text>
             Modify the destination URL of your shortcut link or add access security to it.
             If you want other options like this.
+          </Text>
+          <Text className="mt-1 flex items-center gap-1">
+            Input fields marked with
+            <RiVipDiamondLine className="text-yellow-500" />
+            are only available to <span className="pro">Linkfy Plus</span> users.
           </Text>
         </div>
 

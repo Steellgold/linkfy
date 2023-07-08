@@ -15,9 +15,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   onChange, ...props
 }, ref) => {
   const [value, setValue] = useState(valueProps);
+  const randomId = Math.random().toString(36).substring(7);
 
   const containerClass = clsx(
-    "group flex border rounded-lg block p-2.5",
+    "group flex border rounded-lg p-2.5",
     "border-gray-600 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
     "border-gray-600 bg-gray-700 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
     {
@@ -43,9 +44,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   return (
     <div className={containerClass}>
       {text && <span className="text-gray-400">{text}</span>}
+
       <input
         ref={ref}
         type={props.type}
+        id={randomId}
         placeholder={props.placeholder}
         disabled={disabled}
         className={inputClass}
