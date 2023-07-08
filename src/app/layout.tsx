@@ -4,6 +4,7 @@ import type { Component } from "#/lib/utils/component";
 import type { PropsWithChildren } from "react";
 import { Outfit } from "next/font/google";
 import clsx from "clsx";
+import { Navbar } from "#/lib/components/molecules/navbar";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -17,6 +18,10 @@ const RootLayout: Component<PropsWithChildren> = ({ children }) => {
           "absolute top-[-30%] bottom-0 right-0 left-0 w-full h-[75%]",
           "bg-gradient-to-b from-gray-800 to-transparent skew-y-[-10deg] transform-origin-top-left overflow-hidden -z-1"
         )}></div>
+
+        <div className="relative mt-5">
+          <Navbar />
+        </div>
 
         <div className="relative mt-10">
           {children}
