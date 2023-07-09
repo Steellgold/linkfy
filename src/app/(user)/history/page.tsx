@@ -38,7 +38,7 @@ const HistoryPage = (): ReactElement => {
         <div className="mb-2 p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">See your links</h1>
           <Text>
-            This is your history of shortened links.
+            This is your history page, you can see all your links here, and you can also delete them.
           </Text>
         </div>
 

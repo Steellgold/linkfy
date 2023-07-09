@@ -17,7 +17,7 @@ export const Navbar: Component<NavbarProps> = () => {
           Pricing
         </Link>
 
-        <LinkButton variant="primary" href="/">
+        <LinkButton variant="primary" href="/sign-in">
           <BiUserCircle className="mr-2" />
           Sign in
         </LinkButton>

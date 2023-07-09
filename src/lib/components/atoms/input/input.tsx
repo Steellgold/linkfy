@@ -11,6 +11,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   text,
   premiumIndicator,
   disabled,
+  label,
   value: valueProps,
   onChange, ...props
 }, ref) => {
@@ -42,27 +43,35 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   };
 
   return (
-    <div className={containerClass}>
-      {text && <span className="text-gray-400">{text}</span>}
-
-      <input
-        ref={ref}
-        type={props.type}
-        id={randomId}
-        placeholder={props.placeholder}
-        disabled={disabled}
-        className={inputClass}
-        value={value}
-        onChange={handleChange}
-        {...props}
-      />
-
-      {premiumIndicator && (
-        <div className="flex items-center justify-center rounded-lg ml-2">
-          <RiVipDiamondLine className="group-hover:text-yellow-500 transition-colors duration-300 ease-in-out" />
-        </div>
+    <>
+      {label && (
+        <label htmlFor={randomId} className="mb-1 text-sm text-gray-400">
+          {label}
+        </label>
       )}
-    </div>
+
+      <div className={containerClass}>
+        {text && <span className="text-gray-400">{text}</span>}
+
+        <input
+          ref={ref}
+          type={props.type}
+          id={randomId}
+          placeholder={props.placeholder}
+          disabled={disabled}
+          className={inputClass}
+          value={value}
+          onChange={handleChange}
+          {...props}
+        />
+
+        {premiumIndicator && (
+          <div className="flex items-center justify-center rounded-lg ml-2">
+            <RiVipDiamondLine className="group-hover:text-yellow-500 transition-colors duration-300 ease-in-out" />
+          </div>
+        )}
+      </div>
+    </>
   );
 });
 
