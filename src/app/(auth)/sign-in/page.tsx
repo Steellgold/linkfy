@@ -38,7 +38,7 @@ const SignInPage = (): ReactElement => {
             </Text>
 
             <Text className="text-gray-400">
-              Forgot your password? <Link className="text-blue-600 hover:text-blue-500" href="/forgot-password">Reset it</Link>
+              Forgot your password? <Link className="text-blue-600 hover:text-blue-500" href="/reset-password">Reset it</Link>
             </Text>
           </div>
         </div>
