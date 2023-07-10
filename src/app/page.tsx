@@ -7,12 +7,28 @@ import { Button } from "#/lib/components/atoms/button";
 import { BiLink, BiLinkExternal, BiCopy } from "react-icons/bi";
 import { BsFillGearFill } from "react-icons/bs";
 import { RiMotorbikeFill } from "react-icons/ri";
+import { MdRestartAlt } from "react-icons/md";
 import { Text } from "#/lib/components/atoms/text";
 import clsx from "clsx";
 
 const HomePage = (): ReactElement => {
   const isPremium = false;
-  const [premiumSettingsOpen, setPremiumSettingsOpen] = useState(false);
+  const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
+  const [shortUrlChars, setShortUrlChars] = useState<number>(4);
+
+  const generateShortLink = () : string => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+
+    for (let i = 0; i < ((shortUrlChars < 4 ? 4 : shortUrlChars) || (shortUrlChars > 100 ? 100 : shortUrlChars)); i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return result;
+  };
+
+
+  const [shortLink, setShortLink] = useState<string>(generateShortLink());
 
   return (
     <>
@@ -28,7 +44,6 @@ const HomePage = (): ReactElement => {
                 name="url"
                 autoFocus={true}
                 placeholder="Paste your link here"
-                disabled={false}
                 className="w-full"
               />
 
@@ -51,37 +66,49 @@ const HomePage = (): ReactElement => {
               )}
             </div>
 
-            <div className={clsx(
-              {
-                "block gap-2": premiumSettingsOpen && isPremium,
-                "hidden": !premiumSettingsOpen || !isPremium
-              }
-            )}>
+            <div className={clsx({ "block gap-2": premiumSettingsOpen && isPremium, "hidden": !premiumSettingsOpen || !isPremium })}>
               <div className="flex gap-2 mt-2.5">
                 <Input
                   type="text"
                   name="shortUrl"
                   placeholder="your-custom-url"
-                  disabled={false}
                   className="w-full"
                   text="linkfy.fr/"
+                  value={shortLink}
                 />
 
                 <Input
-                  type="text"
-                  name="password"
-                  placeholder="Password (optional)"
-                  disabled={false}
-                  className="w-full"
+                  type="number"
+                  name="maxLength"
+                  placeholder="4"
+                  value={shortUrlChars}
+                  min={4}
+                  max={100}
+                  onChange={(e) => {
+                    setShortUrlChars(parseInt(e.target.value));
+                    setShortLink(generateShortLink());
+                  }}
                 />
+
+                <Button onClick={() => {
+                  setShortLink(generateShortLink());
+                }}>
+                  <MdRestartAlt className="h-5 w-5" />
+                </Button>
               </div>
 
               <div className="flex gap-2 mt-2.5">
                 <Input
+                  type="text"
+                  name="password"
+                  placeholder="Password (optional)"
+                  className="w-full"
+                />
+
+                <Input
                   type="date"
                   name="expire"
                   placeholder="Expiration date (optional)"
-                  disabled={false}
                   className="w-full"
                 />
               </div>

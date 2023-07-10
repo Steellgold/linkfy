@@ -2,7 +2,7 @@
 
 import type { InputProps } from "./input.type";
 import type { ChangeEvent } from "react";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { RiVipDiamondLine } from "react-icons/ri";
 import clsx from "clsx";
 
@@ -41,6 +41,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     setValue(event.target.value);
     if (onChange) onChange(event);
   };
+
+  useEffect(() => {
+    setValue(valueProps);
+  }, [valueProps]);
 
   return (
     <>
