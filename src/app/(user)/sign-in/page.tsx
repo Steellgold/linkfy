@@ -34,11 +34,11 @@ const SignInPage = (): ReactElement => {
 
           <div className="flex flex-col mt-4">
             <Text className="text-gray-400">
-              Don&apos;t have an account? <Link className="text-blue-700" href="/sign-up">Sign up</Link>
+              Don&apos;t have an account? <Link className="text-blue-600 hover:text-blue-500" href="/sign-up">Sign up</Link>
             </Text>
 
             <Text className="text-gray-400">
-              Forgot your password? <Link className="text-blue-700" href="/forgot-password">Reset it</Link>
+              Forgot your password? <Link className="text-blue-600 hover:text-blue-500" href="/forgot-password">Reset it</Link>
             </Text>
           </div>
         </div>

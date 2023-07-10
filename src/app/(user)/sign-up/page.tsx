@@ -39,14 +39,14 @@ const SignInPage = (): ReactElement => {
           />
 
           <Checkbox>
-            I agree to the <Link className="text-blue-700" href="/terms-of-service">Terms of Service</Link>
+            I agree to the <Link className="text-blue-600 hover:text-blue-500" href="/terms-of-service">Terms of Service</Link>
           </Checkbox>
 
           <Button className="mt-2">Let&apos;s go</Button>
 
           <div className="flex flex-col mt-4">
             <Text className="text-gray-400">
-            Already have an account ? <Link className="text-blue-700" href="/sign-in">Sign in</Link>
+            Already have an account ? <Link className="text-blue-600 hover:text-blue-500" href="/sign-in">Sign in</Link>
             </Text>
           </div>
         </div>
