@@ -25,7 +25,7 @@ const SignInPage = (): ReactElement => {
 
           <Input
             label="Password"
-            placeholder="********"
+            placeholder="••••••••"
             type="password"
             className="mb-2.5"
           />
