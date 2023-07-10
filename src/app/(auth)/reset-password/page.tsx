@@ -38,7 +38,7 @@ const ResetPassPage = (): ReactElement => {
           {submitted && (
             <Text className="text-green-500">
               <BsCheckLg className="inline-block mr-1" />
-              The secret super secure email has been sent ! Check your inbox.
+              The super secret secure email has been sent !
             </Text>
           )}
 
