@@ -4,11 +4,16 @@ import { Card } from "#/lib/components/atoms/card";
 import { Text } from "#/lib/components/atoms/text";
 import { dayJS } from "#/lib/utils/day-js";
 import { useState, type ReactElement } from "react";
-import { BiBarChartSquare, BiLinkExternal, BiTrash } from "react-icons/bi";
+import { BiBarChartSquare, BiCopy, BiLinkExternal, BiTrash } from "react-icons/bi";
 import { HiPencilAlt } from "react-icons/hi";
 import Link from "next/link";
+import { useCopyToClipboard } from "usehooks-ts";
+import { Toaster, toast } from "sonner";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 const HistoryPage = (): ReactElement => {
+  const [value, copy] = useCopyToClipboard();
+
   type HistoryItem = {
     url: string;
     shortUrl: string;
@@ -20,7 +25,7 @@ const HistoryPage = (): ReactElement => {
   const [history] = useState<HistoryItem[]>([
     {
       url: "https://google.com",
-      shortUrl: "eA3d",
+      shortUrl: "az45a6e65azr4aqzr",
       createdDate: "2021-07-17 20:00:00",
       clicks: 0
     },
@@ -34,6 +39,13 @@ const HistoryPage = (): ReactElement => {
 
   return (
     <>
+      <Toaster position="top-right" expand duration={1200} toastOptions={{
+        style: {
+          backgroundColor: "#1F2937",
+          color: "#fff",
+          border: "1px solid #4B5563"
+        }
+      }} />
       <Card size="xl">
         <div className="mb-2 p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">See your links</h1>
@@ -72,7 +84,7 @@ const HistoryPage = (): ReactElement => {
                         {item.url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").substring(0, 10)}...
                       </td>
                       <td className="px-6 py-4">
-                        {item.shortUrl}
+                        {item.shortUrl.substring(0, 4)}{item.shortUrl.length > 4 ? "..." : ""}
                       </td>
                       <td className="px-6 py-4">
                         {dayJS(item.createdDate).format("DD/MM/YYYY HH:mm")}
@@ -90,6 +102,18 @@ const HistoryPage = (): ReactElement => {
                           <Link href={`/${item.shortUrl}/edit`}>
                             <HiPencilAlt className="h-5 w-5 hover:text-white transition-colors duration-200" />
                           </Link>
+                          <BiCopy
+                            className="h-5 w-5 hover:text-white transition-colors duration-200"
+                            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                            onClick={async() => {
+                              await copy(item.shortUrl);
+                              if (value) {
+                                toast("Copied to clipboard!", {
+                                  icon: <BsFillCheckCircleFill />
+                                });
+                              }
+                            }}
+                          />
                         </div>
                       </td>
                     </tr>
