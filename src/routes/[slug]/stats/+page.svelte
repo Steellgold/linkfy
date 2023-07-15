@@ -37,7 +37,7 @@
 
           <div class="absolute bottom-0 left-0 w-full h-8">
             <div class="flex items-center justify-between px-4 h-full pb-3">
-              <span class="text-sm text-gray-400 sr-only">Afficher un graphique</span> <!-- For later -->
+              <span class="text-sm text-gray-400">Afficher un graphique</span> <!-- For later -->
             </div>
           </div>
         </div>
