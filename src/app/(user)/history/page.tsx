@@ -1,15 +1,15 @@
 "use client";
 
+import { BiBarChartSquare, BiCopy, BiLinkExternal, BiTrash } from "react-icons/bi";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { useState, type ReactElement } from "react";
 import { Card } from "#/lib/components/atoms/card";
 import { Text } from "#/lib/components/atoms/text";
-import { dayJS } from "#/lib/utils/day-js";
-import { useState, type ReactElement } from "react";
-import { BiBarChartSquare, BiCopy, BiLinkExternal, BiTrash } from "react-icons/bi";
-import { HiPencilAlt } from "react-icons/hi";
-import Link from "next/link";
 import { useCopyToClipboard } from "usehooks-ts";
-import { Toaster, toast } from "sonner";
-import { BsFillCheckCircleFill } from "react-icons/bs";
+import { HiPencilAlt } from "react-icons/hi";
+import { dayJS } from "#/lib/utils/day-js";
+import { toast } from "sonner";
+import Link from "next/link";
 
 const HistoryPage = (): ReactElement => {
   const [value, copy] = useCopyToClipboard();
@@ -25,7 +25,7 @@ const HistoryPage = (): ReactElement => {
   const [history] = useState<HistoryItem[]>([
     {
       url: "https://google.com",
-      shortUrl: "az45a6e65azr4aqzr",
+      shortUrl: "az45",
       createdDate: "2021-07-17 20:00:00",
       clicks: 0
     },
@@ -39,13 +39,6 @@ const HistoryPage = (): ReactElement => {
 
   return (
     <>
-      <Toaster position="top-right" expand duration={1200} toastOptions={{
-        style: {
-          backgroundColor: "#1F2937",
-          color: "#fff",
-          border: "1px solid #4B5563"
-        }
-      }} />
       <Card size="xl">
         <div className="mb-2 p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">See your links</h1>
@@ -97,7 +90,9 @@ const HistoryPage = (): ReactElement => {
                           <Link href={item.url}>
                             <BiLinkExternal className="h-5 w-5 hover:text-white transition-colors duration-200" />
                           </Link>
-                          <BiBarChartSquare className="h-5 w-5 hover:text-white transition-colors duration-200" />
+                          <Link href={`/${item.shortUrl}/stats`}>
+                            <BiBarChartSquare className="h-5 w-5 hover:text-white transition-colors duration-200" />
+                          </Link>
                           <BiTrash className="h-5 w-5 hover:text-white transition-colors duration-200" />
                           <Link href={`/${item.shortUrl}/edit`}>
                             <HiPencilAlt className="h-5 w-5 hover:text-white transition-colors duration-200" />

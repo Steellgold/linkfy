@@ -27,7 +27,7 @@ const EditPage = (): ReactElement => {
   return (
     <>
       <Card size="md">
-        <div className="mb-2 p-0">
+        <div className="p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Edit your link</h1>
           <Text>
             Modify the destination URL of your shortcut link or add access security to it.

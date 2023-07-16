@@ -33,7 +33,7 @@ const HomePage = (): ReactElement => {
   return (
     <>
       <Card>
-        <div className="mb-2 p-0">
+        <div className="p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Shorten your links</h1>
           <Text>Generate your short link with a single click and share it with your friends, customers, or social media.</Text>
 
