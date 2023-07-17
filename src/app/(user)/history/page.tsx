@@ -8,7 +8,7 @@ import { Text } from "#/lib/components/atoms/text";
 import { useCopyToClipboard } from "usehooks-ts";
 import { HiPencilAlt } from "react-icons/hi";
 import { dayJS } from "#/lib/utils/day-js";
-import { toast } from "sonner";
+import { Toaster, toast } from "sonner";
 import Link from "next/link";
 
 const HistoryPage = (): ReactElement => {
@@ -39,6 +39,14 @@ const HistoryPage = (): ReactElement => {
 
   return (
     <>
+      <Toaster position="top-right" expand toastOptions={{
+        style: {
+          backgroundColor: "#1F2937",
+          color: "#fff",
+          border: "1px solid #4B5563"
+        }
+      }} />
+
       <Card size="xl">
         <div className="mb-2 p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">See your links</h1>

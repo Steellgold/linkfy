@@ -5,7 +5,6 @@ import type { PropsWithChildren } from "react";
 import { Outfit } from "next/font/google";
 import clsx from "clsx";
 import { Navbar } from "#/lib/components/molecules/navbar";
-import { Toaster } from "sonner";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -21,14 +20,6 @@ const RootLayout: Component<PropsWithChildren> = ({ children }) => {
         )}></div>
 
         <div className="relative mt-5">
-          <Toaster position="top-right" expand toastOptions={{
-            style: {
-              backgroundColor: "#1F2937",
-              color: "#fff",
-              border: "1px solid #4B5563"
-            }
-          }} />
-
           <Navbar />
         </div>
 
