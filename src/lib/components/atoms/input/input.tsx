@@ -36,8 +36,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     if (password.match(/[0-9]/g)) strength.numbers = 1;
     if (password.match(/[^a-zA-Z0-9]/g)) strength.symbols = 1;
 
-    console.log(strength);
-
     return Object.values(strength).reduce((a, b) => a + b);
   };
 

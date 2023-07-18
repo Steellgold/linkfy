@@ -1,5 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { LinkButton } from "../../atoms/link-button";
+import { LogoutButton } from "../auth/logout-button";
 import { BiUserCircle } from "react-icons/bi";
 import type { ReactElement } from "react";
 import { cookies } from "next/headers";
@@ -22,9 +23,13 @@ export async function Navbar(): Promise<ReactElement> {
         </Link>
 
         {user ? (
-          <Link href={"/dashboard"} className="text-gray-300 text-base p-3 hover:text-gray-500 transition-colors duration-200">
+          <>
+            <Link href={"/dashboard"} className="text-gray-300 text-base p-3 hover:text-gray-500 transition-colors duration-200">
             Dashboard
-          </Link>
+            </Link>
+
+            <LogoutButton />
+          </>
         ) : (
           <LinkButton variant="primary" href="/sign-in">
             <BiUserCircle className="mr-2" />
