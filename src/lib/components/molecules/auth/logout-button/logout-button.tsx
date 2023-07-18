@@ -12,7 +12,6 @@ export const LogoutButton = (): ReactElement => {
   const supabase = createClientComponentClient();
 
   const signOut = async(): Promise<void> => {
-    console.log("signing out");
     await supabase.auth.signOut();
     router.refresh();
   };
