@@ -11,7 +11,7 @@ import { MdRestartAlt } from "react-icons/md";
 import { Text } from "#/lib/components/atoms/text";
 import clsx from "clsx";
 
-export const HomePage = (): ReactElement => {
+const HomePage = (): ReactElement => {
   const isPremium = false;
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
   const [shortUrlChars, setShortUrlChars] = useState<number>(4);
