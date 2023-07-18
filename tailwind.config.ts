@@ -4,6 +4,15 @@ export default {
   content: [
     "./src/**/*.{tsx,ts}"
   ],
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        discord: {
+          DEFAULT: "#5865F2",
+          hover: "#4f5bd5"
+        }
+      }
+    }
+  },
   plugins: []
 } satisfies Config;

@@ -1,13 +1,21 @@
 "use client";
 
-import { Button } from "#/lib/components/atoms/button";
-import { Card } from "#/lib/components/atoms/card";
-import { Input } from "#/lib/components/atoms/input";
-import { Text } from "#/lib/components/atoms/text";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { AuthProvidersButtons } from "../_components/auth-providers-buttons";
+import { Button } from "#/lib/components/atoms/button";
+import { Input } from "#/lib/components/atoms/input";
+import type { SubmitHandler } from "react-hook-form";
 import { useState, type ReactElement } from "react";
+import { Text } from "#/lib/components/atoms/text";
+import { Card } from "#/lib/components/atoms/card";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import Link from "next/link";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 const SignInPage = (): ReactElement => {
   const [email, setEmail] = useState("");
@@ -15,8 +23,9 @@ const SignInPage = (): ReactElement => {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
-  const handleSignIn = async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+
+  const onSubmit: SubmitHandler<FormValues> = async(): Promise<void> => {
     await supabase.auth.signInWithPassword({
       email,
       password
@@ -34,13 +43,16 @@ const SignInPage = (): ReactElement => {
         </div>
 
         <div className="flex flex-col mt-2">
-          <form onSubmit={handleSignIn} className="flex flex-col gap-0.5">
+          <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col gap-0.5">
             <Input
               id="email"
               label="Email address"
               placeholder="john@company.com"
               type="email"
               className="mb-1.5"
+              required
+              error={errors.email?.message}
+              {...register("email", { required: "This field is required" })}
               onChange={e => setEmail(e.target.value)}
             />
 
@@ -50,11 +62,19 @@ const SignInPage = (): ReactElement => {
               placeholder="••••••••"
               type="password"
               className="mb-3.5"
+              required
+              error={errors.password?.message}
+              {...register("password", { required: "This field is required", minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters long"
+              } })}
               onChange={e => setPassword(e.target.value)}
             />
 
             <Button className="">Sign in</Button>
           </form>
+
+          <AuthProvidersButtons withSeparator textSeparator="OR" />
 
           <div className="flex flex-col mt-4">
             <Text className="text-gray-400">
