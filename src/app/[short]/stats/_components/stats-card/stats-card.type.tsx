@@ -6,6 +6,8 @@ export type StatsCardProps = ComponentPropsWithoutRef<"div"> & PropsWithChildren
   description: string;
 };
 
+export type StatsCardGraphProps = ComponentPropsWithoutRef<"div">;
+
 export type StatsCardRowProps = ComponentPropsWithoutRef<"div"> & {
   stats: {
     count: number;

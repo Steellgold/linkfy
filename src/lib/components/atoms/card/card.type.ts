@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef } from "react";
 
 export type CardProps = ComponentPropsWithoutRef<"div"> & {
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "sm2" | "md" | "lg" | "xl";
 };

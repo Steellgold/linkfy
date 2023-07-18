@@ -1,5 +1,5 @@
 import { BsBrowserChrome, BsBrowserEdge, BsBrowserFirefox, BsBrowserSafari, BsWindows, BsApple } from "react-icons/bs";
-import { StatsCard, StatsCardRow } from "./_components/stats-card";
+import { StatsCard, StatsCardRow, StatsCardGraph } from "./_components/stats-card";
 import { Select } from "#/lib/components/atoms/select";
 import { Text } from "#/lib/components/atoms/text";
 import { BiLogoOpera } from "react-icons/bi";
@@ -115,21 +115,22 @@ const StatsPage = (): ReactElement => {
         ]} />
       </nav>
 
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 whitespace-nowrap">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 whitespace-nowrap mb-2">
         <div className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-md">
-          <Text className="font-bold text-2xl">25k</Text>
+          <Text className="font-bold text-3xl">25k</Text>
           <Text className="text-gray-500">Total clicks</Text>
         </div>
         <div className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-md">
-          <Text className="font-bold text-2xl">France</Text>
+          <Text className="font-bold text-3xl">France</Text>
           <Text className="text-gray-500">Top country</Text>
         </div>
         <div className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-md">
-          <Text className="font-bold text-2xl">{link.stats?.browsers[0].browser}</Text>
+          <Text className="font-bold text-3xl">{link.stats?.browsers[4].browser}</Text>
           <Text className="text-gray-500">Top browser</Text>
         </div>
       </div>
+
+      <StatsCardGraph />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
         <StatsCard title="Operating Systems" description="The top operating systems of your link has been clicked.">
@@ -181,5 +182,4 @@ const StatsPage = (): ReactElement => {
 };
 
 
-{ /* style={{ maxWidth: "calc(100%)", width: percentageToWidth(percentage(link.clicks, clicks)) }} */ }
 export default StatsPage;
