@@ -4,10 +4,28 @@ import { Button } from "#/lib/components/atoms/button";
 import { Card } from "#/lib/components/atoms/card";
 import { Input } from "#/lib/components/atoms/input";
 import { Text } from "#/lib/components/atoms/text";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
-import type { ReactElement } from "react";
+import { useRouter } from "next/navigation";
+import { useState, type ReactElement } from "react";
 
 const SignInPage = (): ReactElement => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+
+  const handleSignIn = async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    router.push("/");
+    router.refresh();
+  };
+
   return (
     <>
       <Card size="sm">
@@ -16,21 +34,27 @@ const SignInPage = (): ReactElement => {
         </div>
 
         <div className="flex flex-col mt-2">
-          <Input
-            label="Email address"
-            placeholder="john@company.com"
-            type="email"
-            className="mb-2"
-          />
+          <form onSubmit={handleSignIn} className="flex flex-col gap-0.5">
+            <Input
+              id="email"
+              label="Email address"
+              placeholder="john@company.com"
+              type="email"
+              className="mb-1.5"
+              onChange={e => setEmail(e.target.value)}
+            />
 
-          <Input
-            label="Password"
-            placeholder="••••••••"
-            type="password"
-            className="mb-2.5"
-          />
+            <Input
+              id="password"
+              label="Password"
+              placeholder="••••••••"
+              type="password"
+              className="mb-3.5"
+              onChange={e => setPassword(e.target.value)}
+            />
 
-          <Button className="mt-2">Sign in</Button>
+            <Button className="">Sign in</Button>
+          </form>
 
           <div className="flex flex-col mt-4">
             <Text className="text-gray-400">

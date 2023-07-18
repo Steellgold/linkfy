@@ -42,6 +42,7 @@ const EditPage = (): ReactElement => {
 
         <div className="flex gap-2">
           <Input
+            id="url"
             type="text"
             name="url"
             autoFocus={true}
@@ -52,6 +53,7 @@ const EditPage = (): ReactElement => {
           />
 
           <Input
+            id="shortUrl"
             type="text"
             name="shortUrl"
             placeholder="Short URL"
@@ -65,6 +67,7 @@ const EditPage = (): ReactElement => {
 
         <div className="flex gap-2 mt-2">
           <Input
+            id="expirationDate"
             type="date"
             name="expirationDate"
             placeholder="Expiration date"
@@ -73,6 +76,7 @@ const EditPage = (): ReactElement => {
           />
 
           <Input
+            id="password"
             type="password"
             name="password"
             placeholder="Password"

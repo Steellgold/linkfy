@@ -11,7 +11,7 @@ import { MdRestartAlt } from "react-icons/md";
 import { Text } from "#/lib/components/atoms/text";
 import clsx from "clsx";
 
-const HomePage = (): ReactElement => {
+export const HomePage = (): ReactElement => {
   const isPremium = false;
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
   const [shortUrlChars, setShortUrlChars] = useState<number>(4);
@@ -40,6 +40,7 @@ const HomePage = (): ReactElement => {
           <div className="flex flex-col mt-2">
             <div className="flex relative gap-2">
               <Input
+                id="url"
                 type="text"
                 name="url"
                 autoFocus={true}
@@ -69,6 +70,7 @@ const HomePage = (): ReactElement => {
             <div className={clsx({ "block gap-2": premiumSettingsOpen && isPremium, "hidden": !premiumSettingsOpen || !isPremium })}>
               <div className="flex gap-2 mt-2.5">
                 <Input
+                  id="shortUrl"
                   type="text"
                   name="shortUrl"
                   placeholder="your-custom-url"
@@ -78,6 +80,7 @@ const HomePage = (): ReactElement => {
                 />
 
                 <Input
+                  id="maxLength"
                   type="number"
                   name="maxLength"
                   placeholder="4"
@@ -99,6 +102,7 @@ const HomePage = (): ReactElement => {
 
               <div className="flex gap-2 mt-2.5">
                 <Input
+                  id="password"
                   type="text"
                   name="password"
                   placeholder="Password (optional)"
@@ -106,6 +110,7 @@ const HomePage = (): ReactElement => {
                 />
 
                 <Input
+                  id="expire"
                   type="date"
                   name="expire"
                   placeholder="Expiration date (optional)"

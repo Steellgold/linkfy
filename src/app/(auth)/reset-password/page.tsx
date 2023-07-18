@@ -22,6 +22,7 @@ const ResetPassPage = (): ReactElement => {
 
         <div className="flex flex-col mt-2">
           <Input
+            id="email"
             label="Email address"
             placeholder="john@company.com"
             type="email"
