@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
-import type { Component } from "#/lib/utils/component";
 import type { AuthProvidersButtonProps } from "./auth-providers-buttons.type";
-import { Button } from "#/lib/components/atoms/button";
-import { BsDiscord, BsGithub } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
-import { Text } from "#/lib/components/atoms/text";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Button } from "#/lib/components/atoms/button";
+import type { Component } from "#/lib/utils/component";
+import { BsDiscord, BsGithub } from "react-icons/bs";
+import { Text } from "#/lib/components/atoms/text";
+import { FcGoogle } from "react-icons/fc";
 
 export const AuthProvidersButtons: Component<AuthProvidersButtonProps> = ({ textSeparator, withSeparator }) => {
   const supabase = createClientComponentClient();
