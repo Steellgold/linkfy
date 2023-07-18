@@ -46,7 +46,9 @@ const SignUpPage = (): ReactElement => {
       return;
     }
 
-    await supabase.auth.signUp({ email, password });
+    await supabase.auth.signUp({ email, password, options: {
+      emailRedirectTo: `${location.origin}/auth/callback`
+    } });
     router.push("/");
     router.refresh();
   };

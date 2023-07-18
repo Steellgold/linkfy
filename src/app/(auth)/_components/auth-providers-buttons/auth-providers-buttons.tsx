@@ -22,15 +22,30 @@ export const AuthProvidersButtons: Component<AuthProvidersButtonProps> = ({ text
       )}
 
       <div className="flex justify-center gap-2 mt-2">
-        <Button fulled variant="white" onClick={() => supabase.auth.signInWithOAuth({ provider: "google" })}>
+        <Button fulled variant="white" onClick={() => supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: `${location.origin}/auth/callback`
+          }
+        })}>
           <FcGoogle className="w-6 h-6" />
         </Button>
 
-        <Button fulled variant="black" onClick={() => supabase.auth.signInWithOAuth({ provider: "github" })}>
+        <Button fulled variant="black" onClick={() => supabase.auth.signInWithOAuth({
+          provider: "github",
+          options: {
+            redirectTo: `${location.origin}/auth/callback`
+          }
+        })}>
           <BsGithub className="w-6 h-6" />
         </Button>
 
-        <Button fulled variant="discord" onClick={() => supabase.auth.signInWithOAuth({ provider: "discord" })}>
+        <Button fulled variant="discord" onClick={() => supabase.auth.signInWithOAuth({
+          provider: "discord",
+          options: {
+            redirectTo: `${location.origin}/auth/callback`
+          }
+        })}>
           <BsDiscord className="w-6 h-6" />
         </Button>
       </div>
