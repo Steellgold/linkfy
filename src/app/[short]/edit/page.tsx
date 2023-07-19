@@ -33,7 +33,7 @@ const EditPage = (): ReactElement => {
             Modify the destination URL of your shortcut link or add access security to it.
             If you want other options like this.
           </Text>
-          <Text className="mt-1 flex items-center gap-1">
+          <Text className="mt-1 mb-1 flex items-center gap-1">
             Input fields marked with
             <RiVipDiamondLine className="text-yellow-500" />
             are only available to <span className="pro">Linkfy Plus</span> users.

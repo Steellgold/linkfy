@@ -24,7 +24,7 @@ model Link {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
   url       String
-  shortUrl  String
+  shortUrl  String    @unique
   subdomain String
   password  String?
   expiresAt DateTime?
