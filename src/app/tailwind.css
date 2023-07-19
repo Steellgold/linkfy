@@ -7,6 +7,11 @@
     @apply font-bold cursor-pointer;
   }
 
+  .pro-sm {
+    @apply bg-clip-text bg-gradient-to-br from-yellow-100 to-yellow-500 text-transparent;
+    @apply text-base cursor-pointer;
+  }
+
   .pro-button {
     @apply bg-gradient-to-br from-yellow-100 to-yellow-500 text-transparent;
     @apply hover:from-yellow-200 hover:to-yellow-600;

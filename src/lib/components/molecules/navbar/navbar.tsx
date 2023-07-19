@@ -3,6 +3,7 @@ import { LinkButton } from "../../atoms/link-button";
 import { LogoutButton } from "../auth/logout-button";
 import { BiUserCircle } from "react-icons/bi";
 import type { ReactElement } from "react";
+import { Text } from "../../atoms/text";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,13 +20,21 @@ export async function Navbar(): Promise<ReactElement> {
 
       <div className="flex items-center">
         <Link href={"/pricing"} className="text-gray-300 text-base p-3 hover:text-gray-500 transition-colors duration-200">
-          Pricing
+          {user ? (
+            <>
+              <Text className="pro-sm flex items-center gap-2">
+                Upgrade
+              </Text>
+            </>
+          ) : (
+            "Pricing"
+          )}
         </Link>
 
         {user ? (
           <>
             <Link href={"/dashboard"} className="text-gray-300 text-base p-3 hover:text-gray-500 transition-colors duration-200">
-            Dashboard
+              Dashboard
             </Link>
 
             <LogoutButton />

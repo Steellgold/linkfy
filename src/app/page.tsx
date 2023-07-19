@@ -4,19 +4,23 @@ import { useState, type ReactElement } from "react";
 import { Card } from "#/lib/components/atoms/card";
 import { Input } from "#/lib/components/atoms/input";
 import { Button } from "#/lib/components/atoms/button";
-import { BiLink, BiLinkExternal, BiCopy } from "react-icons/bi";
+import { BiLink, BiLinkExternal, BiCopy, BiQr } from "react-icons/bi";
 import { BsFillGearFill } from "react-icons/bs";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { MdRestartAlt } from "react-icons/md";
 import { Text } from "#/lib/components/atoms/text";
 import clsx from "clsx";
+import { Toaster } from "sonner";
+import { checkIfUrl } from "#/lib/utils/url";
 
 const HomePage = (): ReactElement => {
   const isPremium = false;
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
   const [shortUrlChars, setShortUrlChars] = useState<number>(4);
+  const [link, setLink] = useState<string>("");
+  const [shortLink, setShortLink] = useState<string>("");
 
-  const generateShortLink = () : string => {
+  const generateShortLink = () : void => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
 
@@ -24,14 +28,19 @@ const HomePage = (): ReactElement => {
       result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
 
-    return result;
+    setShortLink(result);
   };
-
-
-  const [shortLink, setShortLink] = useState<string>(generateShortLink());
 
   return (
     <>
+      <Toaster position="top-right" expand toastOptions={{
+        style: {
+          backgroundColor: "#1F2937",
+          color: "#fff",
+          border: "1px solid #4B5563"
+        }
+      }} />
+
       <Card>
         <div className="p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Shorten your links</h1>
@@ -46,7 +55,21 @@ const HomePage = (): ReactElement => {
                 autoFocus={true}
                 placeholder="Paste your link here"
                 className="w-full"
+                onChange={(e) => setLink(e.target.value)}
               />
+
+              {!isPremium && shortLink !== "" && (
+                <Input
+                  id="generated"
+                  type="text"
+                  name="generated"
+                  placeholder="Generated link"
+                  className="w-full"
+                  text="linkfy.fr/"
+                  disabled
+                  value={shortLink}
+                />
+              )}
 
               {isPremium && (
                 <div className={clsx(
@@ -77,6 +100,9 @@ const HomePage = (): ReactElement => {
                   className="w-full"
                   text="linkfy.fr/"
                   value={shortLink}
+                  onInput={(e) => {
+                    setShortLink(e.currentTarget.value = e.currentTarget.value.replace(/ /g, "-").replace(/[^a-zA-Z0-9-]/g, ""));
+                  }}
                 />
 
                 <Input
@@ -89,13 +115,11 @@ const HomePage = (): ReactElement => {
                   max={100}
                   onChange={(e) => {
                     setShortUrlChars(parseInt(e.target.value));
-                    setShortLink(generateShortLink());
+                    generateShortLink();
                   }}
                 />
 
-                <Button onClick={() => {
-                  setShortLink(generateShortLink());
-                }}>
+                <Button onClick={() => generateShortLink()}>
                   <MdRestartAlt className="h-5 w-5" />
                 </Button>
               </div>
@@ -120,15 +144,31 @@ const HomePage = (): ReactElement => {
             </div>
 
             <div className="flex gap-2 mt-2.5">
-              <Button fulled>
-                <BiLink className="h-5 w-5 mr-2" /> Shorten
+              <Button fulled disabled={!checkIfUrl(link)} onClick={() => {
+                generateShortLink();
+              }}>
+                <BiLink className="h-5 w-5" />&nbsp;
+                {isPremium && premiumSettingsOpen && (
+                  <>
+                    Generate
+                  </>
+                )}
+                {!premiumSettingsOpen && (
+                  <>
+                    Shorten
+                  </>
+                )}
               </Button>
 
-              <Button disabled>
+              <Button disabled={!checkIfUrl(link)}>
+                <BiQr className="h-5 w-5" />
+              </Button>
+
+              <Button disabled={shortLink === ""}>
                 <BiCopy className="h-5 w-5" />
               </Button>
 
-              <Button disabled>
+              <Button disabled={!checkIfUrl(link)}>
                 <BiLinkExternal className="h-5 w-5" />
               </Button>
             </div>
