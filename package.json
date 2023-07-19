@@ -24,7 +24,7 @@
     "eslint-config-next": "13.4.8",
     "next": "13.4.8",
     "postcss": "8.4.24",
-    "prisma": "^4.16.2",
+    "prisma": "^5.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",

@@ -51,7 +51,7 @@ export const PricingCard: Component<{ maxFeatures?: number }> = ({ maxFeatures }
   return (
     <>
       <Card variant="premium" className="mt-4">
-        <div className="p-0 grid grid-cols-2 gap-2 items-center">
+        <div className="grid grid-cols-2 gap-2 items-center">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Linkfy <span className="pro">Plus</span></h1>
           <Text className="text-gray-400 text-right">
             <span className="pro">4.99$</span>/month

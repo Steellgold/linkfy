@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 export const Card: Component<CardProps> = ({ children, variant, size, className }) => {
   return (
-    <div className="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
+    <div className="flex flex-col items-center mx-auto px-3">
       <div className={clsx(
         "w-full rounded-lg border-2 p-4 shadow sm:p-5",
         {

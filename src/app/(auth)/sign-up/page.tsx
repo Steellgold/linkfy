@@ -45,10 +45,12 @@ const SignUpPage = (): ReactElement => {
 
     await supabase.auth.signUp({ email, password, options: {
       emailRedirectTo: `${location.origin}/auth/callback`
-    } });
-
-    toast.success("Account created successfully, please check your email to verify your account");
-    router.refresh();
+    } }).then(() => {
+      toast.success("Account created successfully, please check your email to verify your account");
+      router.refresh();
+    }).catch(() => {
+      toast.error("An error occurred while creating your account");
+    });
   };
 
   return (
