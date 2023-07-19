@@ -3,15 +3,15 @@
 import { AuthProvidersButtons } from "../_components/auth-providers-buttons";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Checkbox } from "#/lib/components/atoms/checkbox/checkbox";
-import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
-import { Button } from "#/lib/components/atoms/button";
-import { Input } from "#/lib/components/atoms/input";
 import { useState, type ReactElement, useEffect } from "react";
+import { Button } from "#/lib/components/atoms/button";
+import type { SubmitHandler } from "react-hook-form";
+import { Input } from "#/lib/components/atoms/input";
 import { Card } from "#/lib/components/atoms/card";
 import { Text } from "#/lib/components/atoms/text";
 import { useRouter } from "next/navigation";
-import { Toaster } from "sonner";
+import { useForm } from "react-hook-form";
+import { Toaster, toast } from "sonner";
 import Link from "next/link";
 
 type FormValues = {
@@ -31,11 +31,8 @@ const SignUpPage = (): ReactElement => {
   const router = useRouter();
 
   useEffect(() => {
-    if (confirmPassword !== "" && password !== "" && confirmPassword !== password) {
-      setConfirmPasswordError("Passwords do not match");
-    } else {
-      setConfirmPasswordError("");
-    }
+    if (confirmPassword !== "" && password !== "" && confirmPassword !== password) setConfirmPasswordError("Passwords do not match");
+    else setConfirmPasswordError("");
   }, [password, confirmPassword]);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
@@ -49,20 +46,29 @@ const SignUpPage = (): ReactElement => {
     await supabase.auth.signUp({ email, password, options: {
       emailRedirectTo: `${location.origin}/auth/callback`
     } });
-    router.push("/");
+
+    toast.success("Account created successfully, please check your email to verify your account");
     router.refresh();
   };
 
   return (
     <>
-      <Toaster />
+      <Toaster position="top-right" expand toastOptions={{
+        style: {
+          backgroundColor: "#1F2937",
+          color: "#fff",
+          border: "1px solid #4B5563"
+        }
+      }} />
+
       <Card size="sm2">
         <div className="p-0">
           <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Create your account</h1>
         </div>
 
         <div className="flex flex-col mt-2">
-          <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col gap-0.5">
+          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-0.5">
             <Input
               id="email"
               label="Email address"

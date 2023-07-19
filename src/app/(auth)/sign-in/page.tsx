@@ -43,7 +43,8 @@ const SignInPage = (): ReactElement => {
         </div>
 
         <div className="flex flex-col mt-2">
-          <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col gap-0.5">
+          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-0.5">
             <Input
               id="email"
               label="Email address"
