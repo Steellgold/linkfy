@@ -4,14 +4,15 @@ import { useState, type ReactElement } from "react";
 import { Card } from "#/lib/components/atoms/card";
 import { Input } from "#/lib/components/atoms/input";
 import { Button } from "#/lib/components/atoms/button";
-import { BiLink, BiLinkExternal, BiCopy, BiQr } from "react-icons/bi";
+import { BiLink, BiCopy, BiQr } from "react-icons/bi";
 import { BsFillGearFill } from "react-icons/bs";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { MdRestartAlt } from "react-icons/md";
 import { Text } from "#/lib/components/atoms/text";
 import clsx from "clsx";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 import { checkIfUrl } from "#/lib/utils/url";
+import { useCopyToClipboard } from "usehooks-ts";
 
 const HomePage = (): ReactElement => {
   const isPremium = false;
@@ -19,6 +20,8 @@ const HomePage = (): ReactElement => {
   const [shortUrlChars, setShortUrlChars] = useState<number>(4);
   const [link, setLink] = useState<string>("");
   const [shortLink, setShortLink] = useState<string>("");
+  const [littleHistory, setLittleHistory] = useState<string[]>([]);
+  const [_, copy] = useCopyToClipboard();
 
   const generateShortLink = () : void => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -28,12 +31,13 @@ const HomePage = (): ReactElement => {
       result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
 
+    setLittleHistory([...littleHistory, result]);
     setShortLink(result);
   };
 
   return (
     <>
-      <Toaster position="top-right" expand toastOptions={{
+      <Toaster position="top-right" toastOptions={{
         style: {
           backgroundColor: "#1F2937",
           color: "#fff",
@@ -144,8 +148,12 @@ const HomePage = (): ReactElement => {
             </div>
 
             <div className="flex gap-2 mt-2.5">
-              <Button fulled disabled={!checkIfUrl(link)} onClick={() => {
-                generateShortLink();
+              <Button fulled disabled={!checkIfUrl(link, littleHistory)} onClick={() => {
+                if (!littleHistory.includes(shortLink)) {
+                  generateShortLink();
+                } else {
+                  toast.error("You have already generated this link recently");
+                }
               }}>
                 <BiLink className="h-5 w-5" />&nbsp;
                 {isPremium && premiumSettingsOpen && (
@@ -160,16 +168,18 @@ const HomePage = (): ReactElement => {
                 )}
               </Button>
 
-              <Button disabled={!checkIfUrl(link)}>
+              <Button disabled>
                 <BiQr className="h-5 w-5" />
               </Button>
 
-              <Button disabled={shortLink === ""}>
+              <Button disabled={shortLink === ""} onClick={() => {
+                copy(`linkfy.fr/${shortLink}`).then(() => {
+                  toast.success("Copied to clipboard");
+                }).catch(() => {
+                  toast.error("Failed to copy to clipboard");
+                });
+              }}>
                 <BiCopy className="h-5 w-5" />
-              </Button>
-
-              <Button disabled={!checkIfUrl(link)}>
-                <BiLinkExternal className="h-5 w-5" />
               </Button>
             </div>
           </div>
