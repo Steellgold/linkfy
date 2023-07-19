@@ -190,11 +190,20 @@ const HomePage = (): ReactElement => {
 
       <Card variant="premium" className="mt-4">
         <div className="p-0">
-          <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Premium</h1>
+          <div className="grid grid-cols-2 gap-2 items-center">
+            <div>
+              <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Linkfy <span className="pro">Plus</span></h1>
+            </div>
+            <div>
+              <Text className="text-gray-400 text-right">
+                <span className="pro">4.99$</span>/month
+              </Text>
+            </div>
+          </div>
           <Text>Upgrade your account to access premium features</Text>
           <List className="mt-2" items={[
             {
-              name: "Have your own subdomain",
+              name: "Have your own subdomain*",
               icon: <TbSignature className="h-5 w-5" />
             }, {
               name: "Customize your link",
@@ -221,6 +230,13 @@ const HomePage = (): ReactElement => {
             }}>
               Upgrade
             </Button>
+          </div>
+
+          <div className="flex flex-col mt-2">
+            <Text className="text-gray-400 text-xs">* The first subdomain is free, then it will be 1.99$ per subdomain</Text>
+            <Text className="text-gray-400 text-xs flex whitespace-nowrap gap-1 items-center mt-0.5">
+              Payments secured by <span className="text-[#635bff]">Stripe</span> and you can cancel your subscription at any time
+            </Text>
           </div>
         </div>
       </Card>
