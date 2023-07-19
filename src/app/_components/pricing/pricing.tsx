@@ -1,12 +1,53 @@
-import { TbAbc, TbCalendarTime, TbChartPie, TbLock, TbQrcode, TbSignature } from "react-icons/tb";
+import { TbAbc, TbCalendarTime, TbChartPie, TbClick, TbHeadset, TbLanguage, TbLock, TbQrcode, TbSignature } from "react-icons/tb";
+import type { ListProps } from "#/lib/components/molecules/list/list.type";
 import { Button } from "#/lib/components/atoms/button";
 import { List } from "#/lib/components/molecules/list";
+import type { Component } from "#/lib/utils/component";
 import { Card } from "#/lib/components/atoms/card";
 import { Text } from "#/lib/components/atoms/text";
-import type { ReactElement } from "react";
 import { BiRocket } from "react-icons/bi";
+import type { ReactElement } from "react";
 
-export const PricingCard = (): ReactElement => {
+export const PricingCard: Component<{ maxFeatures?: number }> = ({ maxFeatures }): ReactElement => {
+
+  const list: ListProps = ({
+    items: [
+      {
+        name: "Have your own subdomain*",
+        icon: <TbSignature className="h-5 w-5" />
+      }, {
+        name: "Customize your link",
+        icon: <TbAbc className="h-5 w-5" />
+      }, {
+        name: "Password protection",
+        icon: <TbLock className="h-5 w-5" />
+      }, {
+        name: "Customize your QR code",
+        icon: <TbQrcode className="h-5 w-5" />
+      }, {
+        name: "Expiration date",
+        icon: <TbCalendarTime className="h-5 w-5" />
+      }, {
+        name: "Analytics",
+        icon: <TbChartPie className="h-5 w-5" />
+      }, {
+        name: "Priority support",
+        icon: <TbHeadset className="h-5 w-5" />
+      }, {
+        name: "Target country",
+        icon: <TbLanguage className="h-5 w-5" />
+      }, {
+        name: "Limit the number of clicks",
+        icon: <TbClick className="h-5 w-5" />
+      }
+    ]
+  });
+
+  if (maxFeatures) {
+    const newList = list.items.slice(0, maxFeatures);
+    list.items = newList;
+  }
+
   return (
     <>
       <Card variant="premium" className="mt-4">
@@ -17,27 +58,8 @@ export const PricingCard = (): ReactElement => {
           </Text>
         </div>
         <Text>Upgrade your account to access premium features</Text>
-        <List className="mt-2" items={[
-          {
-            name: "Have your own subdomain*",
-            icon: <TbSignature className="h-5 w-5" />
-          }, {
-            name: "Customize your link",
-            icon: <TbAbc className="h-5 w-5" />
-          }, {
-            name: "Password protection",
-            icon: <TbLock className="h-5 w-5" />
-          }, {
-            name: "Customize your QR code",
-            icon: <TbQrcode className="h-5 w-5" />
-          }, {
-            name: "Expiration date",
-            icon: <TbCalendarTime className="h-5 w-5" />
-          }, {
-            name: "Analytics",
-            icon: <TbChartPie className="h-5 w-5" />
-          }
-        ]} />
+
+        <List className="mt-2" {...list} />
 
         <div className="flex flex-col mt-2">
           <Button fulled variant="pro" className="mt-2" icon={{
