@@ -12,7 +12,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, va
       "text-black pro-button": variant == "pro",
       "text-white bg-red-600 hover:bg-red-500 focus:bg-red-500": variant == "danger",
       "text-white bg-green-800 hover:bg-green-700 focus:bg-green-700": variant == "success",
-      "text-white bg-discord hover:bg-discord-hover": variant == "discord",
+      "text-white bg-discord hover:bg-discord-100": variant == "discord",
       "bg-transparent": variant == "transparent",
       "w-full": fulled,
       "opacity-50 cursor-not-allowed": disabled
@@ -22,9 +22,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, va
 
   return (
     <button ref={ref} className={styles} disabled={disabled} {...props}>
-      {props.icon?.position == "left" && (
+      {props.icon?.position == "left" || !props.icon?.position && (
         <>
-          {props.icon.icon}
+          {props.icon?.icon}
           &nbsp;
         </>
       )}

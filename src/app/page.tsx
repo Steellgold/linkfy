@@ -1,9 +1,6 @@
 "use client";
 
-import { TbSignature, TbLock, TbCalendarTime, TbChartPie, TbAbc } from "react-icons/tb";
-import { BiLink, BiCopy, BiQr, BiRocket } from "react-icons/bi";
 import { Button } from "#/lib/components/atoms/button";
-import { List } from "#/lib/components/molecules/list";
 import { Input } from "#/lib/components/atoms/input";
 import { useState, type ReactElement } from "react";
 import { Text } from "#/lib/components/atoms/text";
@@ -11,10 +8,13 @@ import { Card } from "#/lib/components/atoms/card";
 import { useCopyToClipboard } from "usehooks-ts";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { BsFillGearFill } from "react-icons/bs";
+import { BiLink, BiCopy } from "react-icons/bi";
 import { MdRestartAlt } from "react-icons/md";
 import { checkIfUrl } from "#/lib/utils/url";
+import { TbQrcode } from "react-icons/tb";
 import { Toaster, toast } from "sonner";
 import clsx from "clsx";
+import { PricingCard } from "./_components/pricing";
 
 const HomePage = (): ReactElement => {
   const isPremium = false;
@@ -150,14 +150,18 @@ const HomePage = (): ReactElement => {
             </div>
 
             <div className="flex gap-2 mt-2.5">
-              <Button fulled disabled={!checkIfUrl(link, littleHistory)} onClick={() => {
-                if (!littleHistory.includes(shortLink)) {
-                  generateShortLink();
-                } else {
-                  toast.error("You have already generated this link recently");
-                }
-              }}>
-                <BiLink className="h-5 w-5" />&nbsp;
+              <Button
+                fulled
+                disabled={!checkIfUrl(link, littleHistory)}
+                onClick={() => {
+                  if (!littleHistory.includes(shortLink)) {
+                    generateShortLink();
+                  } else {
+                    toast.error("You have already generated this link recently");
+                  }
+                }}
+                icon={{ icon: <BiLink className="h-5 w-5" /> }}
+              >
                 {isPremium && premiumSettingsOpen && (
                   <>
                     Generate
@@ -170,76 +174,25 @@ const HomePage = (): ReactElement => {
                 )}
               </Button>
 
-              <Button disabled>
-                <BiQr className="h-5 w-5" />
-              </Button>
+              <Button disabled icon={{ icon: <TbQrcode className="h-5 w-5" /> }} />
 
-              <Button disabled={shortLink === ""} onClick={() => {
-                copy(`linkfy.fr/${shortLink}`).then(() => {
-                  toast.success("Copied to clipboard");
-                }).catch(() => {
-                  toast.error("Failed to copy to clipboard");
-                });
-              }}>
-                <BiCopy className="h-5 w-5" />
-              </Button>
+              <Button
+                disabled={shortLink === ""}
+                onClick={() => {
+                  copy(`linkfy.fr/${shortLink}`).then(() => {
+                    toast.success("Copied to clipboard");
+                  }).catch(() => {
+                    toast.error("Failed to copy to clipboard");
+                  });
+                }}
+                icon={{ icon: <BiCopy className="h-5 w-5" /> }}
+              />
             </div>
           </div>
         </div>
       </Card>
 
-      <Card variant="premium" className="mt-4">
-        <div className="p-0">
-          <div className="grid grid-cols-2 gap-2 items-center">
-            <div>
-              <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Linkfy <span className="pro">Plus</span></h1>
-            </div>
-            <div>
-              <Text className="text-gray-400 text-right">
-                <span className="pro">4.99$</span>/month
-              </Text>
-            </div>
-          </div>
-          <Text>Upgrade your account to access premium features</Text>
-          <List className="mt-2" items={[
-            {
-              name: "Have your own subdomain*",
-              icon: <TbSignature className="h-5 w-5" />
-            }, {
-              name: "Customize your link",
-              icon: <TbAbc className="h-5 w-5" />
-            }, {
-              name: "Password protection",
-              icon: <TbLock className="h-5 w-5" />
-            }, {
-              name: "Customize your QR code",
-              icon: <BiQr className="h-5 w-5" />
-            }, {
-              name: "Expiration date",
-              icon: <TbCalendarTime className="h-5 w-5" />
-            }, {
-              name: "Analytics",
-              icon: <TbChartPie className="h-5 w-5" />
-            }
-          ]} />
-
-          <div className="flex flex-col mt-2">
-            <Button fulled variant="pro" className="mt-2" icon={{
-              icon: <BiRocket className="h-5 w-5" />,
-              position: "left"
-            }}>
-              Upgrade
-            </Button>
-          </div>
-
-          <div className="flex flex-col mt-2">
-            <Text className="text-gray-400 text-xs">* The first subdomain is free, then it will be 1.99$ per subdomain</Text>
-            <Text className="text-gray-400 text-xs flex whitespace-nowrap gap-1 items-center mt-0.5">
-              Payments secured by <span className="text-[#635bff]">Stripe</span> and you can cancel your subscription at any time
-            </Text>
-          </div>
-        </div>
-      </Card>
+      <PricingCard />
 
       <div className="mt-2">
         <a href="/history" className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">

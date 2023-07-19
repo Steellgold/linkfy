@@ -9,7 +9,11 @@ export default {
       colors: {
         discord: {
           DEFAULT: "#5865F2",
-          hover: "#4f5bd5"
+          100: "#4f5bd5"
+        },
+        stripe: {
+          DEFAULT: "#635bff",
+          100: "#4f5bd5"
         },
         gold: {
           DEFAULT: "#FFD700",
