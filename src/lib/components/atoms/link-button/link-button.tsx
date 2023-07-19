@@ -1,7 +1,7 @@
 import type { LinkButtonProps } from "./link-button.type";
 import { forwardRef } from "react";
-import clsx from "clsx";
 import Link from "next/link";
+import clsx from "clsx";
 
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({ className, children, fulled, variant, disabled, ...props }, ref) => {
   return <Link
@@ -22,7 +22,19 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({ clas
     )}
     {...props}
   >
+    {props.icon?.position == "left" && (
+      <>
+        {props.icon.icon}
+          &nbsp;
+      </>
+    )}
     {children}
+    {props.icon?.position == "right" && (
+      <>
+          &nbsp;
+        {props.icon.icon}
+      </>
+    )}
   </Link>;
 });
 

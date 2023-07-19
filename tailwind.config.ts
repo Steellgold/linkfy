@@ -10,6 +10,10 @@ export default {
         discord: {
           DEFAULT: "#5865F2",
           hover: "#4f5bd5"
+        },
+        gold: {
+          DEFAULT: "#FFD700",
+          100: "#FFC400"
         }
       }
     }

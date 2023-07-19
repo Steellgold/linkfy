@@ -9,13 +9,18 @@ import Image from "next/image";
 import Link from "next/link";
 
 export async function Navbar(): Promise<ReactElement> {
+  const isPremium = false;
   const supabase = createServerComponentClient({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
     <nav className="bg-transparent flex justify-between items-center px-4 max-w-screen-xl mx-auto">
       <Link href={"/"} className="flex items-center">
-        <Image src="/link.png" alt="logo" width={35} height={35} />
+        {isPremium ? (
+          <Image src="/linkplus.png" alt="logo" width={35} height={35} />
+        ) : (
+          <Image src="/link.png" alt="logo" width={35} height={35} />
+        )}
       </Link>
 
       <div className="flex items-center">

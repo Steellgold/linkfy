@@ -2,18 +2,24 @@ import type { Component } from "#/lib/utils/component";
 import type { CardProps } from "./card.type";
 import clsx from "clsx";
 
-export const Card: Component<CardProps> = ({ children, size }) => {
+export const Card: Component<CardProps> = ({ children, variant, size, className }) => {
   return (
     <div className="flex flex-col items-center mx-auto px-3 py-4 lg:py-0">
       <div className={clsx(
-        "w-full rounded-lg border-2 p-4 shadow md:mt-0 border-gray-700 bg-gray-800 sm:p-5",
+        "w-full rounded-lg border-2 p-4 shadow sm:p-5",
         {
+          // SIZES
           "sm:max-w-md": size == "sm" || !size,
           "sm:max-w-[29rem]": size == "sm2",
           "sm:max-w-xl": size == "md",
           "sm:max-w-2xl": size == "lg",
-          "sm:max-w-3xl": size == "xl"
-        }
+          "sm:max-w-3xl": size == "xl",
+          // VARIANTS
+          "border-gray-700 bg-gray-800": variant == "default" || !variant,
+          "border-dashed bg-origin-border bg-clip-border border-gold hover:border-gold-100": variant == "premium"
+        },
+        "transition-colors duration-200",
+        className
       )}>
         {children}
       </div>

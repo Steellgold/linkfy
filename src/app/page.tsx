@@ -1,18 +1,20 @@
 "use client";
 
-import { useState, type ReactElement } from "react";
-import { Card } from "#/lib/components/atoms/card";
-import { Input } from "#/lib/components/atoms/input";
+import { TbSignature, TbLock, TbCalendarTime, TbChartPie, TbAbc } from "react-icons/tb";
+import { BiLink, BiCopy, BiQr, BiRocket } from "react-icons/bi";
 import { Button } from "#/lib/components/atoms/button";
-import { BiLink, BiCopy, BiQr } from "react-icons/bi";
-import { BsFillGearFill } from "react-icons/bs";
-import { RiMotorbikeFill } from "react-icons/ri";
-import { MdRestartAlt } from "react-icons/md";
+import { List } from "#/lib/components/molecules/list";
+import { Input } from "#/lib/components/atoms/input";
+import { useState, type ReactElement } from "react";
 import { Text } from "#/lib/components/atoms/text";
-import clsx from "clsx";
-import { Toaster, toast } from "sonner";
-import { checkIfUrl } from "#/lib/utils/url";
+import { Card } from "#/lib/components/atoms/card";
 import { useCopyToClipboard } from "usehooks-ts";
+import { RiMotorbikeFill } from "react-icons/ri";
+import { BsFillGearFill } from "react-icons/bs";
+import { MdRestartAlt } from "react-icons/md";
+import { checkIfUrl } from "#/lib/utils/url";
+import { Toaster, toast } from "sonner";
+import clsx from "clsx";
 
 const HomePage = (): ReactElement => {
   const isPremium = false;
@@ -182,6 +184,43 @@ const HomePage = (): ReactElement => {
                 <BiCopy className="h-5 w-5" />
               </Button>
             </div>
+          </div>
+        </div>
+      </Card>
+
+      <Card variant="premium" className="mt-4">
+        <div className="p-0">
+          <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Premium</h1>
+          <Text>Upgrade your account to access premium features</Text>
+          <List className="mt-2" items={[
+            {
+              name: "Have your own subdomain",
+              icon: <TbSignature className="h-5 w-5" />
+            }, {
+              name: "Customize your link",
+              icon: <TbAbc className="h-5 w-5" />
+            }, {
+              name: "Password protection",
+              icon: <TbLock className="h-5 w-5" />
+            }, {
+              name: "Customize your QR code",
+              icon: <BiQr className="h-5 w-5" />
+            }, {
+              name: "Expiration date",
+              icon: <TbCalendarTime className="h-5 w-5" />
+            }, {
+              name: "Analytics",
+              icon: <TbChartPie className="h-5 w-5" />
+            }
+          ]} />
+
+          <div className="flex flex-col mt-2">
+            <Button fulled variant="pro" className="mt-2" icon={{
+              icon: <BiRocket className="h-5 w-5" />,
+              position: "left"
+            }}>
+              Upgrade
+            </Button>
           </div>
         </div>
       </Card>

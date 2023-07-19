@@ -27,7 +27,7 @@ model Link {
   deletedAt DateTime?
   url       String
   shortUrl  String
-  subdomain String?
+  subdomain String
   password  String?
   expiresAt DateTime?
   user      User      @relation(fields: [userId], references: [id])

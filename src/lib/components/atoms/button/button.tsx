@@ -20,7 +20,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, va
     className
   );
 
-  return <button ref={ref} className={styles} disabled={disabled} {...props}>{children}</button>;
+  return (
+    <button ref={ref} className={styles} disabled={disabled} {...props}>
+      {props.icon?.position == "left" && (
+        <>
+          {props.icon.icon}
+          &nbsp;
+        </>
+      )}
+      {children}
+      {props.icon?.position == "right" && (
+        <>
+          &nbsp;
+          {props.icon.icon}
+        </>
+      )}
+    </button>
+  );
 });
 
 Button.displayName = "Button";
