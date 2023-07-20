@@ -4,12 +4,12 @@
 @layer utilities {
   .pro {
     @apply bg-clip-text bg-gradient-to-br from-yellow-100 to-yellow-500 text-transparent;
-    @apply font-bold cursor-pointer;
+    @apply font-bold;
   }
 
   .pro-sm {
     @apply bg-clip-text bg-gradient-to-br from-yellow-100 to-yellow-500 text-transparent;
-    @apply text-base cursor-pointer;
+    @apply text-base;
   }
 
   .pro-button {
@@ -20,12 +20,12 @@
 
   .free {
     @apply bg-clip-text bg-gradient-to-br from-blue-100 to-blue-500 text-transparent;
-    @apply font-bold cursor-pointer;
+    @apply font-bold;
   }
 
   .free-sm {
     @apply bg-clip-text bg-gradient-to-br from-blue-100 to-blue-500 text-transparent;
-    @apply text-base cursor-pointer;
+    @apply text-base;
   }
 
   .free-button {

@@ -17,20 +17,20 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
         name: "Have your own subdomain*",
         icon: <TbSignature className="h-5 w-5" />
       }, {
+        name: "Customize your QR code",
+        icon: <TbQrcode className="h-5 w-5" />
+      }, {
+        name: "Analytics",
+        icon: <TbChartPie className="h-5 w-5" />
+      }, {
         name: "Customize your link",
         icon: <TbAbc className="h-5 w-5" />
       }, {
         name: "Password protection",
         icon: <TbLock className="h-5 w-5" />
       }, {
-        name: "Customize your QR code",
-        icon: <TbQrcode className="h-5 w-5" />
-      }, {
         name: "Expiration date",
         icon: <TbCalendarTime className="h-5 w-5" />
-      }, {
-        name: "Analytics",
-        icon: <TbChartPie className="h-5 w-5" />
       }, {
         name: "Priority support",
         icon: <TbHeadset className="h-5 w-5" />
@@ -67,6 +67,23 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
 
   return (
     <>
+      {showFree && (
+        <div className="flex flex-col">
+          <div className="flex items-center justify-center text-6xl font-bold text-white gap-2">
+            <h1>Need</h1>
+            <span className="pro">+</span>
+            <h1>to do</h1>
+            <span className="pro">+</span>
+            <h1>?</h1>
+          </div>
+
+          <Text className="text-gray-400 text-center text-1xl mt-2">
+            Shrink and customize your links, track the performance of your campaigns,
+            and manage your URLs easily with our professional link shrinking tool.
+          </Text>
+        </div>
+      )}
+
       <div className={clsx({
         "grid grid-cols-1 md:grid-cols-2 mx-auto w-full max-w-4xl gap-4": showFree
       })}>
