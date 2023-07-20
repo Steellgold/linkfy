@@ -12,11 +12,11 @@ datasource db {
 }
 
 model User {
-  id      String  @id @default(uuid())
-  email   String  @unique
-  isPaid  Boolean @default(false)
-  apiKeys String
-  links   Link[]
+  id     String  @id @default(uuid())
+  email  String  @unique
+  isPaid Boolean @default(false)
+  apiKey String
+  links  Link[]
 }
 
 model Link {
@@ -25,7 +25,7 @@ model Link {
   updatedAt      DateTime? @updatedAt
   deletedAt      DateTime?
   url            String
-  shortUrl       String    @unique
+  slug           String    @unique
   subdomain      String?
   password       String?
   clicksLimit    Int?      @default(0)
