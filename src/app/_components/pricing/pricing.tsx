@@ -1,4 +1,4 @@
-import { TbAbc, TbApi, TbCalendarTime, TbChartArcs, TbChartPie, TbClick, TbHeadset, TbLanguage, TbLock, TbQrcode, TbSignature } from "react-icons/tb";
+import { TbAbc, TbApi, TbCalendarTime, TbChartArcs, TbChartPie, TbClick, TbHeadset, TbLanguage, TbLock, TbQrcode, TbSignature, TbUser } from "react-icons/tb";
 import type { ListProps } from "#/lib/components/molecules/list/list.type";
 import { Button } from "#/lib/components/atoms/button";
 import { List } from "#/lib/components/molecules/list";
@@ -83,10 +83,7 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
             <List className="mt-2" {...list} />
 
             <div className="flex flex-col mt-2">
-              <LinkButton href={"/sign-up"} fulled variant="free" className="mt-2" icon={{
-                icon: <BiRocket className="h-5 w-5" />,
-                position: "left"
-              }}>
+              <LinkButton href={"/sign-up"} fulled variant="free" className="mt-2">
                 Create account
               </LinkButton>
             </div>
