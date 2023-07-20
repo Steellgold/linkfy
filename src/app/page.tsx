@@ -18,6 +18,7 @@ import { Toaster, toast } from "sonner";
 import Link from "next/link";
 import clsx from "clsx";
 import type { Database } from "#/lib/db/database.types";
+import { uuid } from "#/lib/math";
 
 const HomePage = (): ReactElement => {
   const supabase = createClientComponentClient<Database>();
@@ -30,7 +31,7 @@ const HomePage = (): ReactElement => {
   const [littleHistory, setLittleHistory] = useState<string[]>([]);
   const [_, copy] = useCopyToClipboard();
 
-  const generateShortLink = () : void => {
+  const generateShortLink = () : string => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
 
@@ -40,18 +41,23 @@ const HomePage = (): ReactElement => {
 
     setLittleHistory([...littleHistory, result]);
     setShortLink(result);
+    return result;
   };
 
-  const handleLink = async() : Promise<void> => {
-    generateShortLink();
-
-    const { data, error } = await supabase.from("Link").insert({
+  const handleLink = async() : Promise<boolean> => {
+    const { error } = await supabase.from("Link").insert({
       url: link,
-      slug: shortLink
+      slug: generateShortLink(),
+      id: uuid()
     });
 
-    if (!data) throw new Error("No data returned");
-    if (error) throw error;
+    if (error) {
+      toast.error("An error has occurred while generating the link");
+      return false;
+    }
+
+    toast.success("Link generated successfully");
+    return true;
   };
 
   return (
@@ -79,6 +85,7 @@ const HomePage = (): ReactElement => {
                 placeholder="Paste your link here"
                 className="w-full"
                 onChange={(e) => setLink(e.target.value)}
+                onPaste={(e) => setLink(e.currentTarget.value)}
               />
 
               {!isPremium && shortLink !== "" && (
@@ -172,11 +179,7 @@ const HomePage = (): ReactElement => {
                 disabled={!checkIfUrl(link, littleHistory)}
                 onClick={() => {
                   if (!littleHistory.includes(link)) {
-                    handleLink().then(() => {
-                      toast.success("Your link has been created");
-                    }).catch(() => {
-                      toast.error("An error occured while saving your link");
-                    });
+                    void handleLink();
                   } else {
                     toast.error("You have already generated this link recently");
                   }
@@ -215,7 +218,7 @@ const HomePage = (): ReactElement => {
 
       <PricingCard showFree={false} />
 
-      <div className="mt-2">
+      <div className="mt-4">
         <Link href={"/history"} className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
           <RiMotorbikeFill
             size={20}

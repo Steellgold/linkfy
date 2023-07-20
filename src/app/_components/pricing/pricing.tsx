@@ -77,7 +77,7 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
             <h1>?</h1>
           </div>
 
-          <Text className="text-gray-400 text-center text-1xl mt-2">
+          <Text className="text-gray-400 text-center text-xl mt-2 w-full max-w-4xl mx-auto">
             Shrink and customize your links, track the performance of your campaigns,
             and manage your URLs easily with our professional link shrinking tool.
           </Text>
@@ -85,7 +85,7 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
       )}
 
       <div className={clsx({
-        "grid grid-cols-1 md:grid-cols-2 mx-auto w-full max-w-4xl": showFree
+        "grid grid-cols-1 md:grid-cols-2 mx-auto w-full max-w-4xl mt-4": showFree
       })}>
         {showFree && (
           <Card variant="free" className="mt-4">
