@@ -43,16 +43,8 @@ const HomePage = (): ReactElement => {
 
   const handleLink = async() : Promise<void> => {
     generateShortLink();
-    const { data, error } = await supabase.from("Link").insert({
-      url: link,
-      shortUrl: shortLink
-    });
-
+    const { data, error } = await supabase.from("User").select("apiKey");
     console.log(data, error);
-
-    if (error) {
-      throw error;
-    }
   };
 
   return (
