@@ -16,7 +16,8 @@ export const Card: Component<CardProps> = ({ children, variant, size, className 
           "sm:max-w-3xl": size == "xl",
           // VARIANTS
           "border-gray-700 bg-gray-800": variant == "default" || !variant,
-          "border-dashed bg-origin-border bg-clip-border border-gold hover:border-gold-100": variant == "premium"
+          "border-dashed bg-origin-border bg-clip-border border-gold hover:border-gold-100": variant == "premium",
+          "border-dashed bg-origin-border bg-clip-border border-blue-200 hover:border-blue-300": variant == "free"
         },
         "transition-colors duration-200",
         className

@@ -1,10 +1,10 @@
 import "./tailwind.css";
 
+import { Navbar } from "#/lib/components/molecules/navbar";
 import type { Component } from "#/lib/utils/component";
 import type { PropsWithChildren } from "react";
 import { Outfit } from "next/font/google";
 import clsx from "clsx";
-import { Navbar } from "#/lib/components/molecules/navbar";
 
 const outfit = Outfit({ subsets: ["latin"] });
 

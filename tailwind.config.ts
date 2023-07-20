@@ -17,7 +17,7 @@ export default {
         },
         gold: {
           DEFAULT: "#FFD700",
-          100: "#FFC400"
+          100: "#c9ab0a"
         }
       }
     }

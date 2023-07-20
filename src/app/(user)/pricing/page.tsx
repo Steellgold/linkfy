@@ -15,7 +15,7 @@ const Pricing = (): ReactElement => {
         }
       }} />
 
-      <PricingCard />
+      <PricingCard showFree />
     </>
   );
 };

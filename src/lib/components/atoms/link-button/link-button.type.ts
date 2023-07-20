@@ -3,7 +3,7 @@ import type { IconType } from "react-icons";
 import type { LinkProps } from "next/link";
 
 export type LinkButtonProps = LinkProps & ComponentPropsWithoutRef<"a"> & {
-  variant?: "primary" | "danger" | "success" | "pro" | "white" | "black";
+  variant?: "primary" | "danger" | "success" | "premium" | "free" | "white" | "black";
   fulled?: boolean;
   disabled?: boolean;
   icon?: {

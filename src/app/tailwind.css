@@ -17,6 +17,22 @@
     @apply hover:from-yellow-200 hover:to-yellow-600;
     @apply text-[#151d2c];
   }
+
+  .free {
+    @apply bg-clip-text bg-gradient-to-br from-blue-100 to-blue-500 text-transparent;
+    @apply font-bold cursor-pointer;
+  }
+
+  .free-sm {
+    @apply bg-clip-text bg-gradient-to-br from-blue-100 to-blue-500 text-transparent;
+    @apply text-base cursor-pointer;
+  }
+
+  .free-button {
+    @apply bg-gradient-to-br from-blue-100 to-blue-500 text-transparent;
+    @apply hover:from-blue-200 hover:to-blue-600;
+    @apply text-[#151d2c];
+  }
 }
 
 @tailwind utilities;

@@ -1,8 +1,10 @@
 "use client";
 
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "#/lib/components/atoms/button";
 import { Input } from "#/lib/components/atoms/input";
 import { useState, type ReactElement } from "react";
+import { PricingCard } from "./_components/pricing";
 import { Text } from "#/lib/components/atoms/text";
 import { Card } from "#/lib/components/atoms/card";
 import { useCopyToClipboard } from "usehooks-ts";
@@ -13,10 +15,12 @@ import { MdRestartAlt } from "react-icons/md";
 import { checkIfUrl } from "#/lib/utils/url";
 import { TbQrcode } from "react-icons/tb";
 import { Toaster, toast } from "sonner";
+import Link from "next/link";
 import clsx from "clsx";
-import { PricingCard } from "./_components/pricing";
 
 const HomePage = (): ReactElement => {
+  const supabase = createClientComponentClient();
+
   const isPremium = false;
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
   const [shortUrlChars, setShortUrlChars] = useState<number>(4);
@@ -35,6 +39,20 @@ const HomePage = (): ReactElement => {
 
     setLittleHistory([...littleHistory, result]);
     setShortLink(result);
+  };
+
+  const handleLink = async() : Promise<void> => {
+    generateShortLink();
+    const { data, error } = await supabase.from("Link").insert({
+      url: link,
+      shortUrl: shortLink
+    });
+
+    console.log(data, error);
+
+    if (error) {
+      throw error;
+    }
   };
 
   return (
@@ -155,7 +173,11 @@ const HomePage = (): ReactElement => {
                 disabled={!checkIfUrl(link, littleHistory)}
                 onClick={() => {
                   if (!littleHistory.includes(shortLink)) {
-                    generateShortLink();
+                    handleLink().then(() => {
+                      toast.success("Your link has been created");
+                    }).catch(() => {
+                      toast.error("An error occured while saving your link");
+                    });
                   } else {
                     toast.error("You have already generated this link recently");
                   }
@@ -192,16 +214,16 @@ const HomePage = (): ReactElement => {
         </div>
       </Card>
 
-      <PricingCard />
+      <PricingCard showFree={false} />
 
       <div className="mt-2">
-        <a href="/history" className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
+        <Link href={"/history"} className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
           <RiMotorbikeFill
             size={20}
             className="group-hover:-rotate-45 group-hover:translate-x-40 transition-transform duration-1000 ease-in-out"
           />
           Ride to the history
-        </a>
+        </Link>
       </div>
     </>
   );
