@@ -1,5 +1,6 @@
-import { TbAbc, TbApi, TbCalendarTime, TbChartArcs, TbChartPie, TbClick, TbHeadset, TbLanguage, TbLock, TbQrcode, TbSignature, TbUser } from "react-icons/tb";
+import { TbAbc, TbApi, TbCalendarTime, TbChartArcs, TbChartPie, TbClick, TbHeadset, TbLanguage, TbLock, TbQrcode, TbSignature } from "react-icons/tb";
 import type { ListProps } from "#/lib/components/molecules/list/list.type";
+import { LinkButton } from "#/lib/components/atoms/link-button";
 import { Button } from "#/lib/components/atoms/button";
 import { List } from "#/lib/components/molecules/list";
 import type { Component } from "#/lib/utils/component";
@@ -7,7 +8,6 @@ import { Card } from "#/lib/components/atoms/card";
 import { Text } from "#/lib/components/atoms/text";
 import { BiRocket } from "react-icons/bi";
 import clsx from "clsx";
-import { LinkButton } from "#/lib/components/atoms/link-button";
 
 export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
 
