@@ -17,9 +17,10 @@ import { TbQrcode } from "react-icons/tb";
 import { Toaster, toast } from "sonner";
 import Link from "next/link";
 import clsx from "clsx";
+import type { Database } from "#/lib/db/database.types";
 
 const HomePage = (): ReactElement => {
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient<Database>();
 
   const isPremium = false;
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
@@ -43,8 +44,14 @@ const HomePage = (): ReactElement => {
 
   const handleLink = async() : Promise<void> => {
     generateShortLink();
-    const { data, error } = await supabase.from("User").select("apiKey");
-    console.log(data, error);
+
+    const { data, error } = await supabase.from("Link").insert({
+      url: link,
+      slug: shortLink
+    });
+
+    if (!data) throw new Error("No data returned");
+    if (error) throw error;
   };
 
   return (
@@ -164,7 +171,7 @@ const HomePage = (): ReactElement => {
                 fulled
                 disabled={!checkIfUrl(link, littleHistory)}
                 onClick={() => {
-                  if (!littleHistory.includes(shortLink)) {
+                  if (!littleHistory.includes(link)) {
                     handleLink().then(() => {
                       toast.success("Your link has been created");
                     }).catch(() => {

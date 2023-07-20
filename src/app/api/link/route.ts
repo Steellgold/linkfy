@@ -1,7 +1,6 @@
-import { Database } from "#/lib/db/database.types";
-import { prisma } from "#/lib/db/prisma";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { prisma } from "#/lib/db/prisma";
 import * as z from "zod";
 
 const VALID_API_KEY = "lkfy-p11d1SOLYIk5D6vGDqjpRGHKVbjWp5RHMrdYvwBdqVp7360776fmXVrJ5hn";
