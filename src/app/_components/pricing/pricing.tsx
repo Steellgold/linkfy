@@ -85,7 +85,7 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
       )}
 
       <div className={clsx({
-        "grid grid-cols-1 md:grid-cols-2 mx-auto w-full max-w-4xl gap-4": showFree
+        "grid grid-cols-1 md:grid-cols-2 mx-auto w-full max-w-4xl": showFree
       })}>
         {showFree && (
           <Card variant="free" className="mt-4">

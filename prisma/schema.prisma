@@ -24,8 +24,8 @@ model Link {
   createdAt DateTime? @default(now())
   url       String
   slug      String    @unique
-  clicks    Int       @default(0)
-  disabled  Boolean   @default(false)
+  clicks    Int?      @default(0)
+  disabled  Boolean?  @default(false)
   user      User?     @relation(fields: [userId], references: [id])
   userId    String?
 }
