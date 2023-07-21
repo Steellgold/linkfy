@@ -1,6 +1,8 @@
 "use client";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { PremiumContext } from "#/lib/contexts/is-premium";
+import type { Database } from "#/lib/db/database.types";
 import { Button } from "#/lib/components/atoms/button";
 import { Input } from "#/lib/components/atoms/input";
 import { useState, type ReactElement } from "react";
@@ -15,15 +17,14 @@ import { MdRestartAlt } from "react-icons/md";
 import { checkIfUrl } from "#/lib/utils/url";
 import { TbQrcode } from "react-icons/tb";
 import { Toaster, toast } from "sonner";
+import { uuid } from "#/lib/math";
 import Link from "next/link";
 import clsx from "clsx";
-import type { Database } from "#/lib/db/database.types";
-import { uuid } from "#/lib/math";
 
-const HomePage = (): ReactElement => {
+export const Home = (): ReactElement => {
   const supabase = createClientComponentClient<Database>();
 
-  const isPremium = false;
+  const [isPremium, setPremium] = useState<boolean>(false);
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
   const [shortUrlChars, setShortUrlChars] = useState<number>(4);
   const [link, setLink] = useState<string>("");
@@ -61,7 +62,7 @@ const HomePage = (): ReactElement => {
   };
 
   return (
-    <>
+    <PremiumContext.Provider value={{ isPremium, setPremium }}>
       <Toaster position="top-right" toastOptions={{
         style: {
           backgroundColor: "#1F2937",
@@ -186,16 +187,8 @@ const HomePage = (): ReactElement => {
                 }}
                 icon={{ icon: <BiLink className="h-5 w-5" /> }}
               >
-                {isPremium && premiumSettingsOpen && (
-                  <>
-                    Generate
-                  </>
-                )}
-                {!premiumSettingsOpen && (
-                  <>
-                    Shorten
-                  </>
-                )}
+                {isPremium && premiumSettingsOpen && (<>Generate</>)}
+                {!premiumSettingsOpen && (<>Shorten</>)}
               </Button>
 
               <Button disabled icon={{ icon: <TbQrcode className="h-5 w-5" /> }} />
@@ -216,7 +209,8 @@ const HomePage = (): ReactElement => {
         </div>
       </Card>
 
-      <PricingCard showFree={false} />
+      {/* TODO: Check if users has > 10 links and show this card (can be hidden by user) */}
+      {!isPremium && (<PricingCard showFree={false} />)}
 
       <div className="mt-4">
         <Link href={"/history"} className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
@@ -227,8 +221,8 @@ const HomePage = (): ReactElement => {
           Ride to the history
         </Link>
       </div>
-    </>
+    </PremiumContext.Provider>
   );
 };
 
-export default HomePage;
+export default Home;
