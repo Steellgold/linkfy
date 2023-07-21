@@ -9,20 +9,33 @@ datasource db {
 }
 
 model User {
-  id     String  @id @default(uuid())
-  email  String  @unique
-  isPaid Boolean @default(false)
-  apiKey String
-  links  Link[]
+  id         String      @id @default(cuid())
+  createdAt  DateTime?   @default(now())
+  email      String      @unique
+  isPaid     Boolean     @default(false)
+  apiKey     String      @unique
+  links      Link[]
+  subdomains Subdomain[]
+}
+
+model Subdomain {
+  name      String    @id @unique
+  createdAt DateTime? @default(now())
+  isPaid    Boolean   @default(true)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Link {
-  id        String    @id @default(uuid()) @db.Uuid
   createdAt DateTime? @default(now())
   url       String
-  userId    String?
-  slug      String    @unique
+  slug      String    @id @unique
   clicks    Int?      @default(0)
   disabled  Boolean?  @default(false)
-  user      User?     @relation(fields: [userId], references: [id])
+  password  String?
+  expiresAt Int?
+  maxUses   Int?
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  domain    String?
 }

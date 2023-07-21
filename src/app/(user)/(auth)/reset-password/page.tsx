@@ -62,7 +62,6 @@ const ResetPassPage = (): ReactElement => {
               label="Email address"
               placeholder="john@company.com"
               type="email"
-              className="mb-2"
               required
               error={errors.email?.message}
               {...register("email", { required: "This field is required" })}
@@ -73,7 +72,7 @@ const ResetPassPage = (): ReactElement => {
             {submiting && (
               <Text className="text-gray-400">
                 <FaRobot className="inline-block animate-spin mr-1" />
-              Sending the secret super secure email...
+                Sending the secret super secure email...
               </Text>
             )}
 

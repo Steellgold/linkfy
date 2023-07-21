@@ -1,15 +1,18 @@
+import { linkSchema, userSchema } from "#/lib/utils/api/schema.user";
+import { checkIfUrl, generateSlug } from "#/lib/utils/url";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { prisma } from "#/lib/db/prisma";
-import * as z from "zod";
 
-const VALID_API_KEY = "lkfy-p11d1SOLYIk5D6vGDqjpRGHKVbjWp5RHMrdYvwBdqVp7360776fmXVrJ5hn";
+const checkApiKey = async(apiKey: string | null): Promise<boolean | { id: string; isPaid: boolean }> => {
+  if (!apiKey) return false;
 
-const getKeyInfos = (): { email: string; isPaid: boolean; id: string } => {
+  const data = await prisma.user.findUnique({ where: { apiKey } });
+  if (!data) return false;
+
   return {
-    email: "john@company.com",
-    isPaid: false,
-    id: "d16d074e-e3d8-484b-a191-ccdb43098806"
+    id: data.id,
+    isPaid: data.isPaid
   };
 };
 
@@ -19,12 +22,14 @@ const getKeyInfos = (): { email: string; isPaid: boolean; id: string } => {
  * @returns A NextResponse object containing the retrieved link or an error message.
  */
 export const GET = async(request: NextRequest): Promise<NextResponse> => {
-  if (request.headers.get("api-key") !== VALID_API_KEY) return NextResponse.json({ message: "Invalid API Key" }, { status: 401 });
+  if (!userSchema.safeParse(
+    await checkApiKey(request.headers.get("api-key"))
+  ).success) return NextResponse.json({ message: "Invalid API Key" }, { status: 401 });
 
   const url = new URL(request.url);
   const slug = url.searchParams.get("slug");
 
-  if (!slug) return NextResponse.json({ message: "Invalid Slug" }, { status: 400 });
+  if (!slug) return NextResponse.json({ message: "Parameter `slug` is required" }, { status: 400 });
 
   const link = await prisma.link.findUnique({ where: { slug } });
   if (!link) return NextResponse.json({ message: "Invalid Slug" }, { status: 400 });
@@ -36,28 +41,67 @@ export const GET = async(request: NextRequest): Promise<NextResponse> => {
  * POST request handler for creating a new link.
  * @param request - The incoming request object.
  * @returns A NextResponse object containing the created link or an error message.
- * @todo Add validation for the body.
- * @todo Add validation for the API key.
- * @todo Add validation for the user.
- * @todo Add validation for the user's plan.
  */
 export const POST = async(request: NextRequest): Promise<NextResponse> => {
-  if (request.headers.get("api-key") !== VALID_API_KEY) return NextResponse.json({ message: "Invalid API Key" }, { status: 401 });
+  const data = userSchema.safeParse(await checkApiKey(request.headers.get("api-key")));
+  if (!data.success) return NextResponse.json({ message: "Invalid API Key" }, { status: 401 });
 
-  const schema = z.object({
-    slug: z.string().min(1).max(32),
-    url: z.string().url(),
-    clicks: z.number().int().min(0).default(0).optional(),
-    isDisabled: z.boolean().default(false).optional()
-  }).safeParse(await request.json());
-
+  const schema = linkSchema.safeParse(await request.json());
   if (!schema.success) return NextResponse.json({ message: "Invalid Body" }, { status: 400 });
+  if (!checkIfUrl(schema.data.url)) return NextResponse.json({ message: "Invalid URL" }, { status: 400 });
 
-  const { slug, url } = schema.data;
+  const { slug, url, disabled, expiration, maxUses, password, subdomain } = schema.data;
 
-  const link = await prisma.link.create({ data: {
-    slug, url,
-    user: { connect: { id: getKeyInfos().id } }
-  } });
+  if (slug || expiration || maxUses || password || subdomain) {
+    if (!data.data.isPaid) return NextResponse.json({ message: "You must be a paid user to use this feature" }, { status: 402 });
+  }
+
+  let slugExists = false;
+  if (slug) {
+    const link = await prisma.link.findUnique({ where: { slug } });
+    if (link) slugExists = true;
+  }
+
+  let domainExists = false;
+  if (subdomain) {
+    const domain = await prisma.subdomain.findFirst({ where: { name: subdomain, userId: data.data.id } });
+    if (domain) domainExists = true;
+  }
+
+  const link = await prisma.link.create({
+    data: {
+      url,
+      slug: generateSlug(6),
+      disabled: disabled || false,
+      expiresAt: expiration || null,
+      maxUses: maxUses || null,
+      password: password || null,
+      domain: domainExists ? subdomain : null,
+      user: { connect: { id: data.data.id } }
+    }
+  });
+
+  if (slugExists) return NextResponse.json({ message: "The given slug already exists, so a new one was generated", link }, { status: 201 });
+  return NextResponse.json({ link });
+};
+
+/**
+ * DELETE request handler for deleting a link by slug.
+ * @param request - The incoming request object.
+ * @returns A NextResponse object containing the deleted link or an error message.
+*/
+export const DELETE = async(request: NextRequest): Promise<NextResponse> => {
+  const data = userSchema.safeParse(await checkApiKey(request.headers.get("api-key")));
+  if (!data.success) return NextResponse.json({ message: "Invalid API Key" }, { status: 401 });
+
+  const url = new URL(request.url);
+  const slug = url.searchParams.get("slug");
+
+  if (!slug) return NextResponse.json({ message: "Parameter `slug` is required" }, { status: 400 });
+
+  const link = await prisma.link.findUnique({ where: { slug } });
+  if (!link) return NextResponse.json({ message: "Invalid Slug" }, { status: 400 });
+
+  await prisma.link.delete({ where: { slug } });
   return NextResponse.json({ link });
 };

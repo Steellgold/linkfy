@@ -14,7 +14,7 @@ import { RiMotorbikeFill } from "react-icons/ri";
 import { BsFillGearFill } from "react-icons/bs";
 import { BiLink, BiCopy } from "react-icons/bi";
 import { MdRestartAlt } from "react-icons/md";
-import { checkIfUrl } from "#/lib/utils/url";
+import { checkIfUrl, generateSlug } from "#/lib/utils/url";
 import { TbQrcode } from "react-icons/tb";
 import { Toaster, toast } from "sonner";
 import { uuid } from "#/lib/math";
@@ -33,13 +33,7 @@ export const Home = (): ReactElement => {
   const [_, copy] = useCopyToClipboard();
 
   const generateShortLink = () : string => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-
-    for (let i = 0; i < ((shortUrlChars < 4 ? 4 : shortUrlChars) || (shortUrlChars > 100 ? 100 : shortUrlChars)); i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-
+    const result = generateSlug(shortUrlChars);
     setLittleHistory([...littleHistory, result]);
     setShortLink(result);
     return result;
