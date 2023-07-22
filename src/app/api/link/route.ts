@@ -1,8 +1,9 @@
+import type { LinkSchema } from "#/lib/utils/api/schema.user";
 import { linkSchema, userSchema } from "#/lib/utils/api/schema.user";
-import { checkIfUrl, generateSlug } from "#/lib/utils/url";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { prisma } from "#/lib/db/prisma";
+import { parseBody } from "#/lib/utils/api/parse";
 
 const checkApiKey = async(apiKey: string | null): Promise<boolean | { id: string; isPaid: boolean }> => {
   if (!apiKey) return false;
@@ -10,10 +11,8 @@ const checkApiKey = async(apiKey: string | null): Promise<boolean | { id: string
   const data = await prisma.user.findUnique({ where: { apiKey } });
   if (!data) return false;
 
-  return {
-    id: data.id,
-    isPaid: data.isPaid
-  };
+  const { id, isPaid } = data;
+  return { id, isPaid };
 };
 
 /**
@@ -43,46 +42,39 @@ export const GET = async(request: NextRequest): Promise<NextResponse> => {
  * @returns A NextResponse object containing the created link or an error message.
  */
 export const POST = async(request: NextRequest): Promise<NextResponse> => {
-  const data = userSchema.safeParse(await checkApiKey(request.headers.get("api-key")));
-  if (!data.success) return NextResponse.json({ message: "Invalid API Key" }, { status: 401 });
+  const body = parseBody<LinkSchema>(linkSchema, await request.json());
+  if (body instanceof NextResponse) return NextResponse.json({ message: "Invalid Body" }, { status: 400 });
 
-  const schema = linkSchema.safeParse(await request.json());
-  if (!schema.success) return NextResponse.json({ message: "Invalid Body" }, { status: 400 });
-  if (!checkIfUrl(schema.data.url)) return NextResponse.json({ message: "Invalid URL" }, { status: 400 });
+  const origin = request.headers.get("origin");
+  return NextResponse.json({ origin });
 
-  const { slug, url, disabled, expiration, maxUses, password, subdomain } = schema.data;
+  // const env = z.object({ NEXT_PUBLIC_LINKFY_URL: z.string().url() }).safeParse(process.env);
+  // if (!env.success) return NextResponse.json({ message: "Invalid Environment" }, { status: 500 });
 
-  if (slug || expiration || maxUses || password || subdomain) {
-    if (!data.data.isPaid) return NextResponse.json({ message: "You must be a paid user to use this feature" }, { status: 402 });
-  }
+  // const isSameDomain = request.headers.get("referer")?.includes(env.data.NEXT_PUBLIC_LINKFY_URL);
+  // const apiKey = request.headers.get("api-key");
+  // if (!isSameDomain && !apiKey) return NextResponse.json({ message: "Provide an API Key" }, { status: 401 });
 
-  let slugExists = false;
-  if (slug) {
-    const link = await prisma.link.findUnique({ where: { slug } });
-    if (link) slugExists = true;
-  }
+  // const user = await checkApiKey(apiKey);
+  // if (!user && !isSameDomain) return NextResponse.json({ message: "Invalid API Key" }, { status: 401 });
 
-  let domainExists = false;
-  if (subdomain) {
-    const domain = await prisma.subdomain.findFirst({ where: { name: subdomain, userId: data.data.id } });
-    if (domain) domainExists = true;
-  }
+  // const { slug, url, disabled, password, expiration, maxUses, subdomain } = body;
+  // if (!url) return NextResponse.json({ message: "Parameter `url` is required" }, { status: 400 });
+  // if (!checkIfUrl(url)) return NextResponse.json({ message: "Invalid URL" }, { status: 400 });
 
-  const link = await prisma.link.create({
-    data: {
-      url,
-      slug: generateSlug(6),
-      disabled: disabled || false,
-      expiresAt: expiration || null,
-      maxUses: maxUses || null,
-      password: password || null,
-      domain: domainExists ? subdomain : null,
-      user: { connect: { id: data.data.id } }
-    }
-  });
-
-  if (slugExists) return NextResponse.json({ message: "The given slug already exists, so a new one was generated", link }, { status: 201 });
-  return NextResponse.json({ link });
+  // const link = await prisma.link.create({
+  //   data: {
+  //     slug: slug || generateSlug(4),
+  //     url,
+  //     disabled: disabled || false,
+  //     password: password || undefined,
+  //     expiresAt: expiration || undefined,
+  //     maxUses: maxUses || undefined,
+  //     domain: subdomain || undefined,
+  //     clicks: 0,
+  //     user: (!isSameDomain && user) ? { connect: { id: "3db16185-c620-4aed-a9ca-2f49aa27a3ac" } } : undefined
+  //   }
+  // });
 };
 
 /**

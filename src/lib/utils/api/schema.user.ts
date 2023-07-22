@@ -14,3 +14,6 @@ export const linkSchema = z.object({
   maxUses: z.number().int().positive().optional(),
   subdomain: z.string().min(1).max(32).optional()
 });
+
+export type UserSchema = z.infer<typeof userSchema>;
+export type LinkSchema = z.infer<typeof linkSchema>;
