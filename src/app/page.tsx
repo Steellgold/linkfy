@@ -21,7 +21,7 @@ import { uuid } from "#/lib/math";
 import Link from "next/link";
 import clsx from "clsx";
 
-export const Home = (): ReactElement => {
+const Home = (): ReactElement => {
   const supabase = createClientComponentClient<Database>();
 
   const [isPremium, setPremium] = useState<boolean>(false);
