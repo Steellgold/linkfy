@@ -10,7 +10,7 @@ export const linkSchema = z.object({
   url: z.string().url(),
   disabled: z.boolean().default(false).optional(),
   password: z.string().min(1).max(32).optional(),
-  expiration: z.number().int().positive().optional(),
+  expireAt: z.number().int().positive().optional(),
   maxUses: z.number().int().positive().optional(),
   subdomain: z.string().min(1).max(32).optional()
 });

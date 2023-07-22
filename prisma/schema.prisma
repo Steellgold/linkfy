@@ -33,9 +33,9 @@ model Link {
   clicks    Int?      @default(0)
   disabled  Boolean?  @default(false)
   password  String?
-  expiresAt Int?
+  expireAt  Int?
   maxUses   Int?
   userId    String?
   user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  domain    String?
+  subdomain String?
 }

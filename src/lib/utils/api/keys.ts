@@ -39,3 +39,9 @@ export const isValidKey = async(apiKey: string): Promise<string | false> => {
   if (!result) return false;
   return result.id;
 };
+
+export const isPaidUser = async(userId: string): Promise<boolean> => {
+  const result = await prisma.user.findUnique({ where: { id: userId } });
+  if (!result) return false;
+  return result.isPaid;
+};
