@@ -1,4 +1,4 @@
-import { TbAbc, TbApi, TbCalendarTime, TbChartArcs, TbChartPie, TbClick, TbHeadset, TbLanguage, TbLock, TbQrcode, TbSignature } from "react-icons/tb";
+import { TbAbc, TbApi, TbCalendarTime, TbChartArcs, TbChartPie, TbClick, TbHeadset, TbLanguage, TbLock, TbSignature } from "react-icons/tb";
 import type { ListProps } from "#/lib/components/molecules/list/list.type";
 import { LinkButton } from "#/lib/components/atoms/link-button";
 import type { Component } from "#/lib/utils/component";
@@ -16,9 +16,9 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
       {
         name: "Have your own subdomain*",
         icon: <TbSignature className="h-5 w-5" />
-      }, {
-        name: "Customize your QR code",
-        icon: <TbQrcode className="h-5 w-5" />
+      // }, {
+        // name: "Customize your QR code",
+        // icon: <TbQrcode className="h-5 w-5" />
       }, {
         name: "Analytics",
         icon: <TbChartPie className="h-5 w-5" />
@@ -52,9 +52,9 @@ export const PricingCard: Component<{ showFree: boolean }> = ({ showFree }) => {
       {
         name: "Have your own subdomain*",
         icon: <TbSignature className="h-5 w-5" />
-      }, {
-        name: "Generate QR code",
-        icon: <TbQrcode className="h-5 w-5" />
+      // }, {
+        // name: "Generate QR code",
+        // icon: <TbQrcode className="h-5 w-5" />
       }, {
         name: "Basic Analytics",
         icon: <TbChartArcs className="h-5 w-5" />

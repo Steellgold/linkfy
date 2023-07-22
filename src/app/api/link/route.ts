@@ -1,29 +1,25 @@
+import { prisma } from "#/lib/db/prisma";
+import { authenticateRequest } from "#/lib/utils/api/keys";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
-export function GET(request: Request): NextResponse {
-  return NextResponse.json({ message: "GET/", origin: request.headers.get("origin") });
-}
+export async function GET(request: Request): Promise<NextResponse> {
+  const data = await authenticateRequest(request);
+  if (!data.success) return new NextResponse(JSON.stringify({ message: "Unauthorized", statusCode: 401 }), {
+    status: 401, statusText: "Unauthorized" });
 
-export function HEAD(request: Request): NextResponse {
-  return NextResponse.json({ message: "HEAD/", origin: request.headers.get("origin") });
-}
+  const schema = z.object({ userId: z.string().optional(), success: z.boolean() }).safeParse(data);
+  if (!schema.success) return new NextResponse(JSON.stringify({ message: "Unauthorized", statusCode: 401 }), {
+    status: 401, statusText: "Unauthorized" });
 
-export function POST(request: Request): NextResponse {
-  return NextResponse.json({ message: "POST/", origin: request.headers.get("origin") });
-}
+  const url = new URL(request.url);
+  const slug = url.searchParams.get("slug");
 
-export function PUT(request: Request): NextResponse {
-  return NextResponse.json({ message: "PUT/", origin: request.headers.get("origin") });
-}
+  if (!slug) return NextResponse.json({ message: "Parameter `slug` is required" }, { status: 400, statusText: "Bad Request" });
 
-export function PATCH(request: Request): NextResponse {
-  return NextResponse.json({ message: "PATCH/", origin: request.headers.get("origin") });
-}
+  const link = await prisma.link.findFirst({ where: { slug, userId: schema.data.userId || undefined } });
 
-export function DELETE(request: Request): NextResponse {
-  return NextResponse.json({ message: "DELETE/", origin: request.headers.get("origin") });
-}
+  if (!link) return NextResponse.json({ message: "Link not found" }, { status: 404, statusText: "Not Found" });
 
-export function OPTIONS(request: Request): NextResponse {
-  return NextResponse.json({ message: "OPTIONS/", origin: request.headers.get("origin") });
+  return NextResponse.json({ link });
 }
