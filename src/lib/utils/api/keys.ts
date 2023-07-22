@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import { z } from "zod";
 
 const DecodedJwtSchema = z.object({ linkfy: z.boolean() });
-const EnvirontmentSchema = z.object({ JWT_SECRET_KEY: z.string() });
 
 export const authenticateRequest = async(request: Request, withApiKey = true): Promise<{ userId: string | undefined; success: boolean}> => {
   if (withApiKey) {
@@ -23,12 +22,13 @@ export const authenticateRequest = async(request: Request, withApiKey = true): P
   const token = authHeader.replace("Bearer ", "");
 
   try {
-    const environtment = EnvirontmentSchema.safeParse(process.env);
-    if (!environtment.success) return { userId: undefined, success: false };
-    const decodedToken = DecodedJwtSchema.safeParse(jwt.verify(token, environtment.data.JWT_SECRET_KEY));
+    const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+    if (!JWT_SECRET_KEY) return { userId: undefined, success: false };
+
+    const decodedToken = DecodedJwtSchema.safeParse(jwt.verify(token, JWT_SECRET_KEY));
     if (!decodedToken.success) return { userId: undefined, success: false };
 
-    return { userId: undefined, success: false };
+    return { userId: undefined, success: true };
   } catch (error) {
     return { userId: undefined, success: false };
   }
