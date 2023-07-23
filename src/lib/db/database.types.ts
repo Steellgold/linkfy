@@ -7,219 +7,98 @@ export type Json =
   | Json[]
 
 export interface Database {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    };
-    Views: {
-      [_ in never]: never
-    };
-    Functions: {
-      graphql: {
-        Args: {
-          operationName?: string;
-          query?: string;
-          variables?: Json;
-          extensions?: Json;
-        };
-        Returns: Json;
-      };
-    };
-    Enums: {
-      [_ in never]: never
-    };
-    CompositeTypes: {
-      [_ in never]: never
-    };
-  };
   public: {
     Tables: {
-      [_ in never]: never
-    };
-    Views: {
-      [_ in never]: never
-    };
-    Functions: {
-      [_ in never]: never
-    };
-    Enums: {
-      [_ in never]: never
-    };
-    CompositeTypes: {
-      [_ in never]: never
-    };
-  };
-  storage: {
-    Tables: {
-      buckets: {
+      Link: {
         Row: {
-          allowed_mime_types: string[] | null;
-          avif_autodetection: boolean | null;
-          created_at: string | null;
-          file_size_limit: number | null;
-          id: string;
-          name: string;
-          owner: string | null;
-          public: boolean | null;
-          updated_at: string | null;
+          clicks: number | null;
+          createdAt: string | null;
+          disabled: boolean | null;
+          expireAt: number | null;
+          maxUses: number | null;
+          password: string | null;
+          slug: string;
+          subdomain: string | null;
+          url: string;
+          userId: string | null;
         };
         Insert: {
-          allowed_mime_types?: string[] | null;
-          avif_autodetection?: boolean | null;
-          created_at?: string | null;
-          file_size_limit?: number | null;
-          id: string;
-          name: string;
-          owner?: string | null;
-          public?: boolean | null;
-          updated_at?: string | null;
+          clicks?: number | null;
+          createdAt?: string | null;
+          disabled?: boolean | null;
+          expireAt?: number | null;
+          maxUses?: number | null;
+          password?: string | null;
+          slug: string;
+          subdomain?: string | null;
+          url: string;
+          userId?: string | null;
         };
         Update: {
-          allowed_mime_types?: string[] | null;
-          avif_autodetection?: boolean | null;
-          created_at?: string | null;
-          file_size_limit?: number | null;
-          id?: string;
-          name?: string;
-          owner?: string | null;
-          public?: boolean | null;
-          updated_at?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "buckets_owner_fkey";
-            columns: ["owner"];
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
-      };
-      migrations: {
-        Row: {
-          executed_at: string | null;
-          hash: string;
-          id: number;
-          name: string;
-        };
-        Insert: {
-          executed_at?: string | null;
-          hash: string;
-          id: number;
-          name: string;
-        };
-        Update: {
-          executed_at?: string | null;
-          hash?: string;
-          id?: number;
-          name?: string;
+          clicks?: number | null;
+          createdAt?: string | null;
+          disabled?: boolean | null;
+          expireAt?: number | null;
+          maxUses?: number | null;
+          password?: string | null;
+          slug?: string;
+          subdomain?: string | null;
+          url?: string;
+          userId?: string | null;
         };
         Relationships: [];
       };
-      objects: {
+      Subdomain: {
         Row: {
-          bucket_id: string | null;
-          created_at: string | null;
-          id: string;
-          last_accessed_at: string | null;
-          metadata: Json | null;
-          name: string | null;
-          owner: string | null;
-          path_tokens: string[] | null;
-          updated_at: string | null;
-          version: string | null;
+          createdAt: string | null;
+          isPaid: boolean;
+          name: string;
+          userId: string;
         };
         Insert: {
-          bucket_id?: string | null;
-          created_at?: string | null;
-          id?: string;
-          last_accessed_at?: string | null;
-          metadata?: Json | null;
-          name?: string | null;
-          owner?: string | null;
-          path_tokens?: string[] | null;
-          updated_at?: string | null;
-          version?: string | null;
+          createdAt?: string | null;
+          isPaid?: boolean;
+          name: string;
+          userId: string;
         };
         Update: {
-          bucket_id?: string | null;
-          created_at?: string | null;
-          id?: string;
-          last_accessed_at?: string | null;
-          metadata?: Json | null;
-          name?: string | null;
-          owner?: string | null;
-          path_tokens?: string[] | null;
-          updated_at?: string | null;
-          version?: string | null;
+          createdAt?: string | null;
+          isPaid?: boolean;
+          name?: string;
+          userId?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "objects_bucketId_fkey";
-            columns: ["bucket_id"];
-            referencedRelation: "buckets";
-            referencedColumns: ["id"];
-          }
-        ];
+        Relationships: [];
+      };
+      User: {
+        Row: {
+          apiKey: string;
+          createdAt: string | null;
+          email: string;
+          id: string;
+          isPaid: boolean;
+        };
+        Insert: {
+          apiKey: string;
+          createdAt?: string | null;
+          email: string;
+          id: string;
+          isPaid?: boolean;
+        };
+        Update: {
+          apiKey?: string;
+          createdAt?: string | null;
+          email?: string;
+          id?: string;
+          isPaid?: boolean;
+        };
+        Relationships: [];
       };
     };
     Views: {
       [_ in never]: never
     };
     Functions: {
-      can_insert_object: {
-        Args: {
-          bucketid: string;
-          name: string;
-          owner: string;
-          metadata: Json;
-        };
-        Returns: undefined;
-      };
-      extension: {
-        Args: {
-          name: string;
-        };
-        Returns: string;
-      };
-      filename: {
-        Args: {
-          name: string;
-        };
-        Returns: string;
-      };
-      foldername: {
-        Args: {
-          name: string;
-        };
-        Returns: unknown;
-      };
-      get_size_by_bucket: {
-        Args: Record<PropertyKey, never>;
-        Returns: {
-          size: number;
-          bucket_id: string;
-        }[];
-      };
-      search: {
-        Args: {
-          prefix: string;
-          bucketname: string;
-          limits?: number;
-          levels?: number;
-          offsets?: number;
-          search?: string;
-          sortcolumn?: string;
-          sortorder?: string;
-        };
-        Returns: {
-          name: string;
-          id: string;
-          updated_at: string;
-          created_at: string;
-          last_accessed_at: string;
-          metadata: Json;
-        }[];
-      };
+      [_ in never]: never
     };
     Enums: {
       [_ in never]: never

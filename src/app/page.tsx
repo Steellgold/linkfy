@@ -1,15 +1,14 @@
 "use client";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { PremiumContext } from "#/lib/contexts/is-premium";
 import type { Database } from "#/lib/db/database.types";
 import { Button } from "#/lib/components/atoms/button";
 import { Input } from "#/lib/components/atoms/input";
-import { useState, type ReactElement } from "react";
+import { useState, type ReactElement, useEffect } from "react";
 import { PricingCard } from "./_components/pricing";
 import { Text } from "#/lib/components/atoms/text";
 import { Card } from "#/lib/components/atoms/card";
-import { useCopyToClipboard } from "usehooks-ts";
+import { useCopyToClipboard, useFetch } from "usehooks-ts";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { BsFillGearFill } from "react-icons/bs";
 import { BiLink, BiCopy } from "react-icons/bi";
@@ -24,13 +23,18 @@ import clsx from "clsx";
 const Home = (): ReactElement => {
   const supabase = createClientComponentClient<Database>();
 
-  const [isPremium, setPremium] = useState<boolean>(false);
+  const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
   const [shortUrlChars, setShortUrlChars] = useState<number>(4);
   const [link, setLink] = useState<string>("");
   const [shortLink, setShortLink] = useState<string>("");
   const [littleHistory, setLittleHistory] = useState<string[]>([]);
   const [_, copy] = useCopyToClipboard();
+
+  const { data } = useFetch<{ isPaid: boolean; userId: string | null}>("/api/user/is-paid");
+  useEffect(() => {
+    if (data) setIsPremium(data.isPaid);
+  }, [data]);
 
   const generateShortLink = () : string => {
     const result = generateSlug(shortUrlChars);
@@ -56,7 +60,7 @@ const Home = (): ReactElement => {
   };
 
   return (
-    <PremiumContext.Provider value={{ isPremium, setPremium }}>
+    <>
       <Toaster position="top-right" toastOptions={{
         style: {
           backgroundColor: "#1F2937",
@@ -207,7 +211,9 @@ const Home = (): ReactElement => {
       {!isPremium && (<PricingCard showFree={false} />)}
 
       <div className="mt-4">
-        <Link href={"/history"} className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
+        <Link
+          href={data?.userId ? "/history" : "/sign-in"}
+          className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
           <RiMotorbikeFill
             size={20}
             className="group-hover:-rotate-45 group-hover:translate-x-40 transition-transform duration-1000 ease-in-out"
@@ -215,7 +221,7 @@ const Home = (): ReactElement => {
           Ride to the history
         </Link>
       </div>
-    </PremiumContext.Provider>
+    </>
   );
 };
 

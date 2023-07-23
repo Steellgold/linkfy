@@ -7,7 +7,7 @@ export const PREPARED_MESSAGES: Record<string, { message: string }> = {
   UNAUTHORIZED: { message: "Unauthorized" },
   INVALID_BODY: { message: "Invalid Body" },
   LINK_NOT_FOUND: { message: "Link not found" },
-  PARAMETER_URL_REQUIRED: { message: "Parameter `slug` is required" }
+  PARAMETER_URL_REQUIRED: { message: "Parameter `url` is required" }
 };
 
 export const parseBody = <T>(schema: ZodObject<any>, body: any): T | NextResponse => {
