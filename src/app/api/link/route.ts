@@ -7,7 +7,6 @@ import { linkSchema } from "#/lib/utils/api/schema.user";
 import { PREPARED_MESSAGES, checkSlugExists, parseBody } from "#/lib/utils/api/parse";
 import { generateSlug } from "#/lib/utils/url";
 
-
 /**
  * Retrieves a link with the specified slug, if it exists and the authenticated user has permission to access it.
  * @param request - The incoming request object.
@@ -18,6 +17,7 @@ export async function GET(request: Request): Promise<NextResponse> {
   if (!data.success) return NextResponse.json(PREPARED_MESSAGES.UNAUTHORIZED, { status: 401 });
 
   const schema = z.object({ userId: z.string().optional(), success: z.boolean() }).safeParse(data);
+
   if (!schema.success) return NextResponse.json(PREPARED_MESSAGES.UNAUTHORIZED, { status: 401 });
 
   const url = new URL(request.url);
@@ -25,8 +25,8 @@ export async function GET(request: Request): Promise<NextResponse> {
 
   if (!slug) return NextResponse.json({ message: "Parameter `slug` is required" }, { status: 400 });
 
-  const link = await prisma.link.findFirst({ where: { slug, userId: schema.data.userId || undefined } });
-  if (!link) return NextResponse.json(PREPARED_MESSAGES.LINK_NOT_FOUND_OR_NO_PERMISSION, { status: 404 });
+  const link = await prisma.link.findFirst({ where: { slug, userId: schema.data.userId } });
+  if (!link) return NextResponse.json(PREPARED_MESSAGES.LINK_NOT_FOUND, { status: 404 });
 
   return NextResponse.json({ link });
 }
@@ -49,8 +49,7 @@ export async function POST(request: Request): Promise<NextResponse> {
   const body = parseBody<LinkSchema>(linkSchema, await request.json());
   if (body instanceof NextResponse) return body;
 
-  const { slug, expireAt, maxUses, password, subdomain } = body; // Premiums only
-  const { url, disabled } = body; // Everyone
+  const { url, disabled, slug, expireAt, maxUses, password, subdomain } = body;
 
   if (!url) return NextResponse.json(PREPARED_MESSAGES.PARAMETER_URL_REQUIRED, { status: 400 });
 
@@ -66,6 +65,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       expireAt: ((isPaid || isServer) && expireAt) ? expireAt : undefined,
       maxUses: ((isPaid || isServer) && maxUses) ? maxUses : undefined,
       subdomain: ((isPaid || isServer) && subdomain) ? subdomain : undefined,
+      clicks: 0,
       user: (data.userId) ? { connect: { id: data.userId } } : undefined
     }
   });

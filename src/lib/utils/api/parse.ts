@@ -14,7 +14,7 @@ export const parseBody = <T>(schema: ZodObject<any>, body: any): T | NextRespons
   try {
     return schema.parse(body) as T;
   } catch (e) {
-    return NextResponse.json(PREPARED_MESSAGES.INVALID_BODY, { status: 400 });
+    return NextResponse.json(JSON.stringify(PREPARED_MESSAGES.INVALID_BODY), { status: 400 });
   }
 };
 

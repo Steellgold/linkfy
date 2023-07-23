@@ -9,13 +9,15 @@ datasource db {
 }
 
 model User {
-  id         String      @id @default(cuid())
-  createdAt  DateTime?   @default(now())
-  email      String      @unique
-  isPaid     Boolean     @default(false)
-  apiKey     String      @unique
-  links      Link[]
-  subdomains Subdomain[]
+  id           String      @id @default(cuid())
+  createdAt    DateTime?   @default(now())
+  email        String      @unique
+  isPaid       Boolean     @default(false)
+  apiKey       String      @unique
+  apiKeyLast   DateTime?
+  apiKeyUsages Json?
+  links        Link[]
+  subdomains   Subdomain[]
 }
 
 model Subdomain {
@@ -30,7 +32,7 @@ model Link {
   createdAt DateTime? @default(now())
   url       String
   slug      String    @id @unique
-  clicks    Int?      @default(0)
+  clicks    Int       @default(0)
   disabled  Boolean?  @default(false)
   password  String?
   expireAt  Int?
