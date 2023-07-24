@@ -20,8 +20,7 @@ export const GET = async(request: NextRequest): Promise<NextResponse> => {
     const data = await prisma.user.findUnique({ where: { email: user.email } });
     if (!data && user.email) await prisma.user.create({ data: {
       id: user.id,
-      email: user.email,
-      apiKey: user.id // TODO: Random string instead (lk-[random string 32x chars])
+      email: user.email
     } });
   }
 
