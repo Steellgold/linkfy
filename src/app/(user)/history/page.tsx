@@ -6,12 +6,13 @@ import clsx from "clsx";
 import { LinksTable } from "#/app/_components/link-table";
 import type { ReactElement } from "react";
 import { linksSchema, type LinksResponseSchema } from "#/lib/utils/api/schema.user";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import type { Database } from "#/lib/db/database.types";
+import { cookies } from "next/headers";
 import { prisma } from "#/lib/db/prisma";
 
 async function getData(): Promise<LinksResponseSchema> {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createServerComponentClient<Database>({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) return { links: [], userId: null };

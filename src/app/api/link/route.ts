@@ -1,11 +1,11 @@
+import { PREPARED_MESSAGES, checkSlugExists, parseBody } from "#/lib/utils/api/parse";
 import { authenticateRequest, isPaidUser } from "#/lib/utils/api/keys";
+import type { LinkSchema } from "#/lib/utils/api/schema.user";
+import { linkSchema } from "#/lib/utils/api/schema.user";
+import { generateSlug } from "#/lib/utils/url";
 import { NextResponse } from "next/server";
 import { prisma } from "#/lib/db/prisma";
 import { z } from "zod";
-import type { LinkSchema } from "#/lib/utils/api/schema.user";
-import { linkSchema } from "#/lib/utils/api/schema.user";
-import { PREPARED_MESSAGES, checkSlugExists, parseBody } from "#/lib/utils/api/parse";
-import { generateSlug } from "#/lib/utils/url";
 
 /**
  * Retrieves a link with the specified slug, if it exists and the authenticated user has permission to access it.

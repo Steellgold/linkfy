@@ -1,16 +1,16 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { LinkGenerator } from "./_components/link-generator";
 import type { Database } from "#/lib/db/database.types";
 import { Card } from "#/lib/components/atoms/card";
 import { Text } from "#/lib/components/atoms/text";
 import type { ReactElement } from "react";
+import { cookies } from "next/headers";
 import { PricingCard } from "./_components/pricing";
 import Link from "next/link";
 import { RiMotorbikeFill } from "react-icons/ri";
 
 async function getData(): Promise<{ userId: string | null; isPremium: boolean }> {
-  const supabase = createClientComponentClient<Database>();
-
+  const supabase = createServerComponentClient<Database>({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { userId: null, isPremium: false };
 

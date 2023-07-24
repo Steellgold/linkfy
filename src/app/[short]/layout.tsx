@@ -1,8 +1,8 @@
 import type { Component } from "#/lib/utils/component";
 import { RiMotorbikeFill } from "react-icons/ri";
 import type { PropsWithChildren } from "react";
-import clsx from "clsx";
 import Link from "next/link";
+import clsx from "clsx";
 
 const UserLayout: Component<PropsWithChildren> = ({ children }) => {
   return (
