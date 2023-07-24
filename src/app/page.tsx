@@ -5,7 +5,6 @@ import { Card } from "#/lib/components/atoms/card";
 import { Text } from "#/lib/components/atoms/text";
 import type { ReactElement } from "react";
 import { cookies } from "next/headers";
-import { toast } from "sonner";
 import { PricingCard } from "./_components/pricing";
 import Link from "next/link";
 import { RiMotorbikeFill } from "react-icons/ri";
@@ -21,11 +20,7 @@ async function getData(): Promise<{ userId: string | null; isPremium: boolean }>
     .eq("id", user.id)
     .single();
 
-  if (error) {
-    toast.error("An error has occurred while fetching your data");
-    return { userId: null, isPremium: false };
-  }
-
+  if (error) return { userId: null, isPremium: false };
   return { userId: user.id, isPremium: data?.isPaid };
 }
 
