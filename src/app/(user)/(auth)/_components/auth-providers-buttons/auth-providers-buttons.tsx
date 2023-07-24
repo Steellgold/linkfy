@@ -10,7 +10,10 @@ import { Text } from "#/lib/components/atoms/text";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 
+export const dynamic = "force-dynamic";
+
 export const AuthProvidersButtons: Component<AuthProvidersButtonProps> = ({ textSeparator, withSeparator }) => {
+
   const [clickedGoogle, setClickedGoogle] = useState(false);
   const [clickedGithub, setClickedGithub] = useState(false);
   const [clickedDiscord, setClickedDiscord] = useState(false);

@@ -17,6 +17,8 @@ type FormValues = {
   password: string;
 };
 
+export const dynamic = "force-dynamic";
+
 const SignInPage = (): ReactElement => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

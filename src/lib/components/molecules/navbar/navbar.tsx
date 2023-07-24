@@ -9,8 +9,11 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 async function getData(): Promise<{ userId: string | null; isPremium: boolean }> {
   const supabase = createServerComponentClient<Database>({ cookies });
+
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { userId: null, isPremium: false };
 

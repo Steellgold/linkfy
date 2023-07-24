@@ -16,6 +16,8 @@ import { Toaster, toast } from "sonner";
 import { useState } from "react";
 import clsx from "clsx";
 
+export const dynamic = "force-dynamic";
+
 export const LinkGenerator: Component<LinkGeneratorTypes> = ({ isPremium }) => {
   const supabase = createClientComponentClient<Database>();
 
