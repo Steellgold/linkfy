@@ -1,16 +1,21 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import type { AuthProvidersButtonProps } from "./auth-providers-buttons.type";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "#/lib/components/atoms/button";
 import type { Component } from "#/lib/utils/component";
 import { BsDiscord, BsGithub } from "react-icons/bs";
 import { Text } from "#/lib/components/atoms/text";
 import { FcGoogle } from "react-icons/fc";
-import { cookies } from "next/headers";
+import { useState } from "react";
 
 export const AuthProvidersButtons: Component<AuthProvidersButtonProps> = ({ textSeparator, withSeparator }) => {
-  const supabase = createServerComponentClient({ cookies });
+  const [clickedGoogle, setClickedGoogle] = useState(false);
+  const [clickedGithub, setClickedGithub] = useState(false);
+  const [clickedDiscord, setClickedDiscord] = useState(false);
+
+  const supabase = createClientComponentClient();
 
   return (
     <>
@@ -27,34 +32,49 @@ export const AuthProvidersButtons: Component<AuthProvidersButtonProps> = ({ text
           fulled
           variant="white"
           icon={{ icon: <FcGoogle className="w-6 h-6" /> }}
-          onClick={() => supabase.auth.signInWithOAuth({
-            provider: "google",
-            options: {
-              redirectTo: `${location.origin}/auth/callback`
-            }
-          })} />
+          disabled={clickedDiscord || clickedGoogle || clickedGithub}
+          loading={clickedGoogle}
+          onClick={async() => {
+            setClickedGoogle(true);
+            await supabase.auth.signInWithOAuth({
+              provider: "google",
+              options: {
+                redirectTo: `${location.origin}/auth/callback`
+              }
+            });
+          }} />
 
         <Button
           fulled
           variant="black"
           icon={{ icon: <BsGithub className="w-6 h-6" /> }}
-          onClick={() => supabase.auth.signInWithOAuth({
-            provider: "github",
-            options: {
-              redirectTo: `${location.origin}/auth/callback`
-            }
-          })} />
+          disabled={clickedDiscord || clickedGoogle || clickedGithub}
+          loading={clickedGithub}
+          onClick={async() => {
+            setClickedGithub(true);
+            await supabase.auth.signInWithOAuth({
+              provider: "github",
+              options: {
+                redirectTo: `${location.origin}/auth/callback`
+              }
+            });
+          }} />
 
         <Button
           fulled
           variant="discord"
           icon={{ icon: <BsDiscord className="w-6 h-6" /> }}
-          onClick={() => supabase.auth.signInWithOAuth({
-            provider: "discord",
-            options: {
-              redirectTo: `${location.origin}/auth/callback`
-            }
-          })} />
+          disabled={clickedDiscord || clickedGoogle || clickedGithub}
+          loading={clickedDiscord}
+          onClick={async() => {
+            setClickedDiscord(true);
+            await supabase.auth.signInWithOAuth({
+              provider: "discord",
+              options: {
+                redirectTo: `${location.origin}/auth/callback`
+              }
+            });
+          }} />
       </div>
     </>
   );
