@@ -11,8 +11,6 @@ import type { Database } from "#/lib/db/database.types";
 import { cookies } from "next/headers";
 import { prisma } from "#/lib/db/prisma";
 
-export const dynamic = "force-dynamic";
-
 async function getData(): Promise<LinksResponseSchema> {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: { user } } = await supabase.auth.getUser();

@@ -9,8 +9,6 @@ import { PricingCard } from "./_components/pricing";
 import Link from "next/link";
 import { RiMotorbikeFill } from "react-icons/ri";
 
-export const dynamic = "force-dynamic";
-
 async function getData(): Promise<{ userId: string | null; isPremium: boolean }> {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: { user } } = await supabase.auth.getUser();

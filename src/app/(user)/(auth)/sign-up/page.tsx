@@ -21,8 +21,6 @@ type FormValues = {
   checked: boolean;
 };
 
-export const dynamic = "force-dynamic";
-
 const SignUpPage = (): ReactElement => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [email, setEmail] = useState("");

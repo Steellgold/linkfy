@@ -17,8 +17,6 @@ type FormValues = {
   email: string;
 };
 
-export const dynamic = "force-dynamic";
-
 const ResetPassPage = (): ReactElement => {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [submiting, setSubmiting] = useState<boolean>(false);

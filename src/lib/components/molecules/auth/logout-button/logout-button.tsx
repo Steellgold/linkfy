@@ -6,8 +6,6 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import type { ReactElement } from "react";
 
-export const dynamic = "force-dynamic";
-
 export const LogoutButton = (): ReactElement => {
   const router = useRouter();
 
