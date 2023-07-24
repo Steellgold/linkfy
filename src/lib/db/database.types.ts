@@ -11,7 +11,7 @@ export interface Database {
     Tables: {
       Link: {
         Row: {
-          clicks: number | null;
+          clicks: number;
           createdAt: string | null;
           disabled: boolean | null;
           expireAt: number | null;
@@ -23,7 +23,7 @@ export interface Database {
           userId: string | null;
         };
         Insert: {
-          clicks?: number | null;
+          clicks?: number;
           createdAt?: string | null;
           disabled?: boolean | null;
           expireAt?: number | null;
@@ -35,7 +35,7 @@ export interface Database {
           userId?: string | null;
         };
         Update: {
-          clicks?: number | null;
+          clicks?: number;
           createdAt?: string | null;
           disabled?: boolean | null;
           expireAt?: number | null;
@@ -72,6 +72,8 @@ export interface Database {
       User: {
         Row: {
           apiKey: string;
+          apiKeyLast: string | null;
+          apiKeyUsages: Json | null;
           createdAt: string | null;
           email: string;
           id: string;
@@ -79,6 +81,8 @@ export interface Database {
         };
         Insert: {
           apiKey: string;
+          apiKeyLast?: string | null;
+          apiKeyUsages?: Json | null;
           createdAt?: string | null;
           email: string;
           id: string;
@@ -86,6 +90,8 @@ export interface Database {
         };
         Update: {
           apiKey?: string;
+          apiKeyLast?: string | null;
+          apiKeyUsages?: Json | null;
           createdAt?: string | null;
           email?: string;
           id?: string;
