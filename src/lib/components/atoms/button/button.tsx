@@ -8,19 +8,14 @@ import type { IconType } from "react-icons";
 export const Icon = ({ icon, loading }: { icon: ReactElement<IconType>; loading?: boolean }): ReactElement => {
   return (
     <>
-      {loading ? (
-        <TbLoader2 className="w-5 h-5 animate-spin" />
-      ) : (
-        <>
-          {icon}
-        </>
-      )}
+      {loading ? (<TbLoader2 className="w-5 h-5 animate-spin" />
+      ) : (<> {icon} </>)}
     </>
   );
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
-  children, variant, className, loading, fulled, disabled, icon, ...props }, ref) => {
+  children, variant, className, loading, fulled, disabled, small, icon, ...props }, ref) => {
   const styles = clsx(
     "flex items-center justify-center px-4 py-2 rounded-md transition duration-300 ease-in-out focus:outline-none",
     {
@@ -34,7 +29,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
       "text-white bg-discord hover:bg-discord-100": variant == "discord",
       "bg-transparent": variant == "transparent",
       "w-full": fulled,
-      "opacity-50 cursor-not-allowed": disabled
+      "opacity-50 cursor-not-allowed": disabled,
+      // SMALL
+      "px-2 py-1 text-sm": small
     },
     className
   );

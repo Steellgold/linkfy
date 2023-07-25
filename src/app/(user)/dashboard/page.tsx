@@ -1,8 +1,5 @@
-import { Text } from "#/lib/components/atoms/text";
 import { Card } from "#/lib/components/atoms/card";
 import { Toaster } from "sonner";
-import Link from "next/link";
-import clsx from "clsx";
 import { LinksTable } from "#/app/_components/link-table";
 import type { ReactElement } from "react";
 import { linksSchema, type LinksResponseSchema } from "#/lib/utils/api/schema.user";
@@ -10,11 +7,13 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import type { Database } from "#/lib/db/database.types";
 import { cookies } from "next/headers";
 import { prisma } from "#/lib/db/prisma";
+import { Button } from "#/lib/components/atoms/button";
+import { Text } from "#/lib/components/atoms/text";
+import { LinkButton } from "#/lib/components/atoms/link-button";
 
 async function getData(): Promise<LinksResponseSchema> {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
-
   if (!user) return { links: [], userId: null };
 
   const result = await prisma.link.findMany({
@@ -52,32 +51,42 @@ const HistoryPage = async(): Promise<ReactElement> => {
       <Toaster />
 
       <Card size={data.links && data.links.length > 0 && data.userId ? "xl" : "sm"} className="bg-gray-800">
-        <div className={clsx("p-0", { "mb-2": data.links && data.links.length > 0 })}>
-          <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">History</h1>
-          <>
-            {data.userId && (
-              <>
-                {data.links && data.links.length > 0 ? (
-                  <Text>This is your history page, you can see all your links here, and you can also delete them.</Text>
-                ) : (
-                  <Text>You don&apos;t have any shortened links yet.</Text>
-                )}
-              </>
-            ) || (
-              <Text>
-              You need to login to see your history page, <Link href="/login" className="text-blue-500 hover:underline">click here</Link> to login.
-              </Text>
-            )}
-          </>
-        </div>
-
         {data.links && data.links.length > 0 && (
-          <div className="flex flex-col mt-2">
-            <div className="relative overflow-x-auto">
-              <LinksTable links={data.links} emptyMessage="You don't have any shortened links yet." />
-            </div>
+          <div className="flex flex-col mt-2 relative overflow-x-auto">
+            <LinksTable links={data.links} emptyMessage="You don't have any shortened links yet." />
           </div>
         )}
+      </Card>
+
+
+      <Card
+        size={data.links && data.links.length > 0 && data.userId ? "xl" : "sm"}
+        variant="disabled"
+        className="flex flex-row gap-2">
+
+        <div className="p-0">
+          <h1 className="text-2xl font-bold text-white md:text-3xl">API</h1>
+          <Text>Generate your API key to use our API and create links from your own application.</Text>
+
+          <div className="flex gap-1.5">
+            <Button variant="primary" small className="mt-3">
+              Generate API key
+            </Button>
+
+            <LinkButton href={"/api"} variant="primary" small className="mt-3">
+              Documentation
+            </LinkButton>
+          </div>
+        </div>
+
+        <div className="p-0">
+          <h1 className="text-2xl font-bold text-white md:text-3xl">Danger zone</h1>
+          <Text>Here you can delete your account and all your shortened links, this action is irreversible.</Text>
+
+          <Button variant="danger" small className="mt-3">
+            Delete your account
+          </Button>
+        </div>
       </Card>
     </>
   );

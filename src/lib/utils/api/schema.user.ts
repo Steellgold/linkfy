@@ -26,6 +26,7 @@ export const linksSchema = z.object({
   links: z.array(linkSchema)
 });
 
+
 export type UserResponseSchema = z.infer<typeof userSchemaResponse>;
 export type UserSchema = z.infer<typeof userSchema>;
 

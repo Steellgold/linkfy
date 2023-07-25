@@ -17,7 +17,8 @@ export const Card: Component<CardProps> = ({ children, variant, size, className 
           // VARIANTS
           "border-gray-700 bg-gray-800": variant == "default" || !variant,
           "border-dashed bg-origin-border bg-clip-border border-gold hover:border-gold-100": variant == "premium",
-          "border-dashed bg-origin-border bg-clip-border border-blue-200 hover:border-blue-300": variant == "free"
+          "border-dashed bg-origin-border bg-clip-border border-blue-200 hover:border-blue-300": variant == "free",
+          "bg-transparent border-transparent shadow-none": variant == "disabled"
         },
         "transition-colors duration-200",
         className

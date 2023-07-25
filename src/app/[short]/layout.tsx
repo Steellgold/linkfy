@@ -9,8 +9,8 @@ const UserLayout: Component<PropsWithChildren> = ({ children }) => {
     <div className="mt-2">
       {children}
 
-      <Link href="/history" className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
-        Ride to the history
+      <Link href="/dashboard" className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
+        Back to the history
 
         <RiMotorbikeFill
           size={20}

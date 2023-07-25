@@ -5,6 +5,7 @@ export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   variant?: "primary" | "danger" | "success" | "premium" | "free" | "white" | "black" | "transparent" | "discord";
   fulled?: boolean;
   loading?: boolean;
+  small?: boolean;
   icon?: {
     icon: ReactElement<IconType>;
     position?: "left" | "right";

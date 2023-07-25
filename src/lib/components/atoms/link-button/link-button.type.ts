@@ -6,6 +6,7 @@ export type LinkButtonProps = LinkProps & ComponentPropsWithoutRef<"a"> & {
   variant?: "primary" | "danger" | "success" | "premium" | "free" | "white" | "black";
   fulled?: boolean;
   disabled?: boolean;
+  small?: boolean;
   icon?: {
     icon: ReactElement<IconType>;
     position?: "left" | "right";

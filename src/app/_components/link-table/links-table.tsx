@@ -5,6 +5,7 @@ import type { Component } from "#/lib/utils/component";
 import type { LinksTableProps } from "./links-table.type";
 import { dayJS } from "#/lib/utils/day-js";
 import Link from "next/link";
+import clsx from "clsx";
 
 export const LinksTable: Component<LinksTableProps> = ({ links }) => {
   return (
@@ -32,9 +33,14 @@ export const LinksTable: Component<LinksTableProps> = ({ links }) => {
           </TableHead>
           <TableBody>
             {links.map((item, index) => (
-              <TableRow className="border-b bg-gray-800 border-gray-600" key={index}>
+              <TableRow className={clsx(
+                "bg-gray-800",
+                {
+                  "border-b border-gray-600": index != links.length - 1
+                }
+              )} key={index}>
                 <TableDataCell first>
-                  {item.url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").substring(0, 15)}...
+                  {item.url.slice(0, 30)}{item.url.length > 30 ? "..." : ""}
                 </TableDataCell>
                 <TableDataCell className="px-6 py-4">
                   {item.slug.substring(0, 4)}{item.slug.length > 4 ? "..." : ""}

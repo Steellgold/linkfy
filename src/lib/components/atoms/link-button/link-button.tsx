@@ -2,9 +2,10 @@ import type { LinkButtonProps } from "./link-button.type";
 import { forwardRef } from "react";
 import Link from "next/link";
 import clsx from "clsx";
+import { TbExternalLink } from "react-icons/tb";
 
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({
-  className, children, fulled, variant, disabled, icon, ...props }, ref) => {
+  className, children, fulled, variant, disabled, icon, small, ...props }, ref) => {
   return <Link
     ref={ref}
     className={clsx(
@@ -18,32 +19,20 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({
         "text-white bg-red-600 hover:bg-red-500 focus:bg-red-500": variant == "danger",
         "text-white bg-green-800 hover:bg-green-700 focus:bg-green-700": variant == "success",
         "w-full": fulled,
-        "opacity-50 cursor-not-allowed": disabled
+        "opacity-50 cursor-not-allowed": disabled,
+        // SMALL
+        "px-2 py-1 text-sm": small
       },
       "transition-colors duration-200",
       className
     )}
     {...props}
   >
-    {icon?.icon && !icon?.position && (
-      <> {icon.icon}
-          &nbsp;
-      </>
-    )}
-
-    {icon?.position == "left" && (
-      <>
-        {icon.icon}
-          &nbsp;
-      </>
-    )}
+    {icon?.icon && !icon?.position && (<> {icon.icon} &nbsp; </>)}
+    {icon?.position == "left" && (<>{icon.icon}&nbsp;</>)}
     {children}
-    {icon?.position == "right" && (
-      <>
-          &nbsp;
-        {icon.icon}
-      </>
-    )}
+    {icon?.position == "right" && (<>&nbsp;{icon.icon}</>)}
+    {!icon && (<>&nbsp;<TbExternalLink className="w-5 h-5" /></>)}
   </Link>;
 });
 
