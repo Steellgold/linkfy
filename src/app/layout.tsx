@@ -10,6 +10,8 @@ const outfit = Outfit({ subsets: ["latin"] });
 
 export { metadata } from "#/lib/configs/metadata";
 
+export const revalidate = 0;
+
 const RootLayout: Component<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="en">
