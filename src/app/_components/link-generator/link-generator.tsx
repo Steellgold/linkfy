@@ -16,7 +16,7 @@ import { Toaster, toast } from "sonner";
 import { useState } from "react";
 import clsx from "clsx";
 
-export const LinkGenerator: Component<LinkGeneratorTypes> = ({ isPremium }) => {
+export const LinkGenerator: Component<LinkGeneratorTypes> = ({ isPremium, userId }) => {
   const supabase = createClientComponentClient<Database>();
 
   const [premiumSettingsOpen, setPremiumSettingsOpen] = useState<boolean>(false);
@@ -36,7 +36,8 @@ export const LinkGenerator: Component<LinkGeneratorTypes> = ({ isPremium }) => {
   const handleLink = async() : Promise<boolean> => {
     const { error } = await supabase.from("Link").insert({
       url: link,
-      slug: generateShortLink()
+      slug: generateShortLink(),
+      userId: userId || undefined
     });
 
     if (error) {

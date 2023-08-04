@@ -62,9 +62,8 @@ export async function Navbar(): Promise<ReactElement> {
             <LogoutButton />
           </>
         ) : (
-          <LinkButton variant="primary" href="/sign-in">
-            <BiUserCircle className="mr-2" />
-          Sign in
+          <LinkButton variant="primary" href="/sign-in" icon={{ icon: <BiUserCircle />, position: "left" }}>
+            Sign in
           </LinkButton>
         )}
       </div>

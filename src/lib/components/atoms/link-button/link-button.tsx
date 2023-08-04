@@ -9,7 +9,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({
   return <Link
     ref={ref}
     className={clsx(
-      "flex items-center justify-center px-4 py-2 rounded-md transition duration-300 ease-in-out focus:outline-none",
+      "flex items-center justify-center rounded-md transition duration-300 ease-in-out focus:outline-none",
       {
         "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700": !variant || variant == "primary",
         "text-black bg-gray-100 hover:bg-gray-50 focus:bg-gray-50": variant == "white",
@@ -21,6 +21,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({
         "w-full": fulled,
         "opacity-50 cursor-not-allowed": disabled,
         // SMALL
+        "px-4 py-2": !small,
         "px-2 py-1 text-sm": small
       },
       "transition-colors duration-200",

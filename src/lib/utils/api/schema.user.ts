@@ -23,6 +23,7 @@ export const linkSchema = z.object({
 
 export const linksSchema = z.object({
   userId: z.string().nullable(),
+  user: userSchemaResponse.optional().nullable(),
   links: z.array(linkSchema)
 });
 

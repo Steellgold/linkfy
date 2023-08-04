@@ -10,6 +10,7 @@ import { prisma } from "#/lib/db/prisma";
 import { Button } from "#/lib/components/atoms/button";
 import { Text } from "#/lib/components/atoms/text";
 import { LinkButton } from "#/lib/components/atoms/link-button";
+import clsx from "clsx";
 
 async function getData(): Promise<LinksResponseSchema> {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -59,13 +60,17 @@ const HistoryPage = async(): Promise<ReactElement> => {
       </Card>
 
 
-      <Card
-        size={data.links && data.links.length > 0 && data.userId ? "xl" : "sm"}
-        variant="disabled"
-        className="flex flex-row gap-2">
+      <div className={clsx(
+        "flex flex-col items-center mx-auto",
+        "grid grid-cols-1 md:grid-cols-2 gap-3 mt-3",
+        {
+          "sm:max-w-3xl": data.links && data.links.length > 0 && data.userId,
+          "sm:max-w-md": data.links && data.links.length == 0 && data.userId
+        }
+      )}>
 
-        <div className="p-0">
-          <h1 className="text-2xl font-bold text-white md:text-3xl">API</h1>
+        <Card className="p-0">
+          <h1 className="text-2xl font-bold text-white md:text-2xl">API</h1>
           <Text>Generate your API key to use our API and create links from your own application.</Text>
 
           <div className="flex gap-1.5">
@@ -77,17 +82,34 @@ const HistoryPage = async(): Promise<ReactElement> => {
               Documentation
             </LinkButton>
           </div>
-        </div>
+        </Card>
 
-        <div className="p-0">
-          <h1 className="text-2xl font-bold text-white md:text-3xl">Danger zone</h1>
+        <Card className="p-0">
+          <h1 className="text-2xl font-bold text-white md:text-2xl">Subdomains</h1>
+          <Text>Manage your subdomains and create new ones, you can also set a default subdomain.</Text>
+
+          <Button variant="primary" small className="mt-3">
+            Create subdomain
+          </Button>
+        </Card>
+
+        <Card className="p-0" variant="premium">
+          <h1 className="text-2xl font-bold text-white md:text-2xl">Linkfy <span className="premium">Premium</span></h1>
+
+          <Button variant="primary" small className="mt-3">
+            Upgrade to premium
+          </Button>
+        </Card>
+
+        <Card className="p-0">
+          <h1 className="text-2xl font-bold text-white md:text-2xl">Danger zone</h1>
           <Text>Here you can delete your account and all your shortened links, this action is irreversible.</Text>
 
           <Button variant="danger" small className="mt-3">
             Delete your account
           </Button>
-        </div>
-      </Card>
+        </Card>
+      </div>
     </>
   );
 };

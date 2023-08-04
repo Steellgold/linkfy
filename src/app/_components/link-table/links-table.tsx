@@ -6,6 +6,10 @@ import type { LinksTableProps } from "./links-table.type";
 import { dayJS } from "#/lib/utils/day-js";
 import Link from "next/link";
 import clsx from "clsx";
+import { TbBrandTwitter } from "react-icons/tb";
+
+const TWITTER_URL = "https://twitter.com/intent/tweet?text=";
+const TWITTER_TEXT = "I%20just%20shortened%20a%20link%20with%20@linkfyapp,%20check%20it%20out:%20https://linkfy.fr/{url}";
 
 export const LinksTable: Component<LinksTableProps> = ({ links }) => {
   return (
@@ -45,7 +49,7 @@ export const LinksTable: Component<LinksTableProps> = ({ links }) => {
                 <TableDataCell className="px-6 py-4">
                   {item.slug.substring(0, 4)}{item.slug.length > 4 ? "..." : ""}
                 </TableDataCell>
-                <TableDataCell className="px-6 py-4">
+                <TableDataCell className="px-2 py-2">
                   {dayJS(item.createdAt).format("DD/MM/YYYY HH:mm")}
                 </TableDataCell>
                 <TableDataCell className="px-6 py-4">
@@ -53,7 +57,10 @@ export const LinksTable: Component<LinksTableProps> = ({ links }) => {
                 </TableDataCell>
                 <TableDataCell className="px-6 py-4">
                   <div className="flex gap-2 text-gray-400">
-                    <Link href={item.url}>
+                    <Link href={TWITTER_URL + TWITTER_TEXT.replace("{url}", item.slug)} target="_blank">
+                      <TbBrandTwitter className="h-5 w-5 hover:text-white transition-colors duration-200" />
+                    </Link>
+                    <Link href={`/${item.slug}`} target="_blank">
                       <BiLinkExternal className="h-5 w-5 hover:text-white transition-colors duration-200" />
                     </Link>
                     <Link href={`/${item.slug}/stats`}>
