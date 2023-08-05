@@ -1,57 +1,84 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { LinkGenerator } from "./_components/link-generator";
-import type { Database } from "#/lib/db/database.types";
-import { Card } from "#/lib/components/atoms/card";
-import { Text } from "#/lib/components/atoms/text";
-import type { ReactElement } from "react";
-import { cookies } from "next/headers";
-import { PricingCard } from "./_components/pricing";
-import Link from "next/link";
-import { RiMotorbikeFill } from "react-icons/ri";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+"use client";
 
-async function getData(): Promise<{ userId: string | null; isPremium: boolean }> {
-  const supabase = createServerComponentClient<Database>({ cookies });
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { userId: null, isPremium: false };
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/lib/components/ui/card";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/lib/components/ui/button";
+import { Input } from "@/lib/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/lib/components/ui/form";
+import { Outfit } from "next/font/google";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { Copy, Link, QrCode } from "lucide-react";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
-  const { data, error } = await supabase
-    .from("User")
-    .select("isPaid")
-    .eq("id", user.id)
-    .single();
+const outfit = Outfit({ subsets: ["latin"] });
 
-  if (error) return { userId: null, isPremium: false };
-  return { userId: user.id, isPremium: data?.isPaid };
-}
+const Home = (): React.ReactElement => {
+  const [slug, setSlug] = useState<string | null>(null);
 
-const Home = async(): Promise<ReactElement> => {
-  const data = await getData();
+  const formSchema = z.object({
+    url: z.string().url().nonempty({
+      message: "Your URL is required."
+    }).min(2, {
+      message: "Your URL is too short."
+    })
+  });
+
+  const form = useForm({
+    resolver: zodResolver(formSchema)
+  });
+
+  const onSubmit = (): void => {
+    // TODO: Submit the form and get the slug.
+    setSlug(Math.random().toString(36).substring(7));
+  };
 
   return (
-    <>
-      <Card>
-        <div className="p-0">
-          <h1 className="mb-1 text-xl font-bold text-white md:text-2xl">Shorten your links</h1>
-          <Text>Generate your short link with a single click and share it with your friends, customers, or social media.</Text>
-
-          <LinkGenerator isPremium={data.isPremium} userId={data.userId || undefined} />
-        </div>
+    <div className="flex flex-col items-center justify-center mt-10 md:mt-16 px-3">
+      <Card className="w-full max-w-[30rem]">
+        <CardHeader className="-mb-3">
+          <CardTitle className={outfit.className}>Shorten your links</CardTitle>
+          <CardDescription className={outfit.className}>
+            Generate your short link with a single click and share it with your friends, customers, or social media.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+              <div className={cn({ "flex space-x-2": slug !== null })}>
+                <FormField
+                  control={form.control}
+                  name="url"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Input className="max-w-3xl" placeholder="https://example.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {form.formState.isSubmitted && slug !== null && <Input value={slug} className="w-full" readOnly />}
+              </div>
+              <div className="flex space-x-2">
+                <Button type="submit" className="w-full flex gap-1">
+                  <Link className="h-3.5 w-3.5" />
+                  Shorten
+                </Button>
+                <Button>
+                  <QrCode className="h-3.5 w-3.5" />
+                </Button>
+                <Button>
+                  <Copy className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
       </Card>
-
-      {!data.isPremium && (<PricingCard showFree={false} />)}
-
-      <div className="mt-4">
-        <Link
-          href={data?.userId ? "/dashboard" : "/sign-in"}
-          className="flex text-blue-600 hover:text-blue-500 gap-2 justify-center p-4 items-center group">
-          <RiMotorbikeFill
-            size={20}
-            className="group-hover:-rotate-45 group-hover:translate-x-40 transition-transform duration-1000 ease-in-out"
-          />
-          Ride to the history
-        </Link>
-      </div>
-    </>
+    </div>
   );
 };
 
