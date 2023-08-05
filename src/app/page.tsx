@@ -30,7 +30,7 @@ const Home = (): React.ReactElement => {
     resolver: zodResolver(formSchema)
   });
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     // TODO: Submit the form and get the slug.
     setSlug(Math.random().toString(36).substring(7));
   };
