@@ -1,0 +1,3 @@
+<tbody>
+  <slot></slot>
+</tbody>
