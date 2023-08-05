@@ -1,3 +1,0 @@
-<tbody>
-  <slot></slot>
-</tbody>
