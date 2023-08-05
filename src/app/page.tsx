@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/lib/compo
 import { Outfit } from "next/font/google";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { Copy, Link, QrCode, Unlink } from "lucide-react";
+import { Copy, Link, QrCode } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
