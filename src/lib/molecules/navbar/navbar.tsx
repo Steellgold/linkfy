@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithoutRef, ReactElement } from "react";
-import { Button, buttonVariants } from "@/lib/components/ui/button";
+import { buttonVariants } from "@/lib/components/ui/button";
 import { ChooseTheme } from "@/lib/components/ui/choose-theme";
 import type { Component } from "@/lib/utils/component";
 import { useTheme } from "next-themes";
@@ -26,7 +26,7 @@ export const Navbar: Component<ComponentPropsWithoutRef<"nav">> = ({ ...props })
       <div className="flex h-5 items-center space-x-2 text-sm">
         <Link href={"/"} className={buttonVariants({ variant: "link" })}>Pricing</Link>
         <Link href={"/"} className={buttonVariants({ variant: "link" })}>API</Link>
-        <Button variant="outline">Sign in</Button>
+        <Link href={"/sign-in"} className={buttonVariants({ variant: "outline" })}>Sign in</Link>
         <ChooseTheme />
       </div>
     </nav>

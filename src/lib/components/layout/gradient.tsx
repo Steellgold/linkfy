@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 export const HomeLayoutGradient = (): React.ReactElement => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const { theme } = useTheme();
-  console.log(22222, theme);
 
   return (
     <div className={cn(
