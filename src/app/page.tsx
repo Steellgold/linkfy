@@ -30,9 +30,9 @@ const Home = (): React.ReactElement => {
     resolver: zodResolver(formSchema)
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>): void => {
+  const onSubmit = () => {
+    // TODO: Submit the form and get the slug.
     setSlug(Math.random().toString(36).substring(7));
-    console.log(data);
   };
 
   return (
