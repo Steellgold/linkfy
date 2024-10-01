@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 
-export const Page = () => {
+const Page = () => {
   return (
     <div className="flex justify-center">
       <Card className="w-full max-w-[470px] sm:max-w-[600px]">

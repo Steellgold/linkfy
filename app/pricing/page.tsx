@@ -21,7 +21,7 @@ const FeatureItem: Component<Feature & { notFree: boolean }> = ({ id, display, n
   )
 }
 
-export const Page = (): ReactElement => {
+const Page = (): ReactElement => {
   return (
     <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
       {plans.map((plan, index) => (
