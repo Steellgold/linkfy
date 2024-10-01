@@ -1,0 +1,37 @@
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum Plan {
+  FREE
+  PLUS
+}
+
+model Organization {
+  id String @id @default(cuid())
+
+  name String
+  plan Plan
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members OrganizationMember[]
+  links   Link[]
+}
+
+model OrganizationMember {
+  id   String @id @default(cuid())
+  role String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  Link   Link[]
+}
