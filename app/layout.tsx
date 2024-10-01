@@ -16,7 +16,7 @@ export const RootLayout: Component<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <SessionProvider>
             <ResponsiveNavbarComponent />
 
