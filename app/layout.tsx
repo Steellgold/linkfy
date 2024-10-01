@@ -3,7 +3,9 @@ import "./globals.css";
 import "./fonts/fonts.css";
 import { Component } from "@/components/component";
 import { PropsWithChildren } from "react";
-import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ResponsiveNavbarComponent } from "@/components/responsive-navbar";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Linkfy",
@@ -14,7 +16,15 @@ export const RootLayout: Component<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <SessionProvider>
+            <ResponsiveNavbarComponent />
+
+            <div className="container mx-auto p-4 mt-16">
+              {children}
+            </div>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
