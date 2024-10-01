@@ -1,0 +1,65 @@
+/* globals.css */
+
+/* Marianne Regular */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Marianne Bold */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Marianne ExtraBold */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Marianne Light */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Marianne Italic */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-Regular_Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Marianne Bold Italic */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-Bold_Italic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Marianne ExtraBold Italic */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-ExtraBold_Italic.woff') format('woff');
+  font-weight: 800;
+  font-style: italic;
+}
+
+/* Marianne Light Italic */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/fonts/Marianne-Light_Italic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+}
