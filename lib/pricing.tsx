@@ -1,4 +1,4 @@
-import { BarChart, BarChart2, Clock, Code, Globe, LifeBuoy, Link, Link2, MousePointerClick, ShieldCheck, Users } from "lucide-react";
+import { Globe, LifeBuoy, Link2, MousePointerClick, Users } from "lucide-react";
 import { ReactElement } from "react";
 
 export enum FeatureId {

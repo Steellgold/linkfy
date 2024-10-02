@@ -1,7 +1,7 @@
 import { Component } from "@/components/component";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Feature, FeatureLimits, plans } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 import { Check, Minus, X } from "lucide-react";

@@ -7,7 +7,7 @@ import { ReactElement } from "react";
 
 export const OrganizationText = (): ReactElement => {
   const orgsQuery = useGetOrganizations();
-  const { selectedOrganizationId, setSelectedOrganizationId } = useOrganizationStore();
+  const { selectedOrganizationId } = useOrganizationStore();
 
   if (orgsQuery.status === "pending" || orgsQuery.status === "error") {
     return <Skeleton className="w-32 h-8" />;
