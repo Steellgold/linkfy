@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/db/prisma";
 import { Organization } from "@prisma/client";
 
 export const getOrganizations = async (): Promise<Organization[]> => {

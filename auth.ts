@@ -2,7 +2,7 @@ import NextAuth, { DefaultSession } from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
 import authConfig from "./auth.config"
-import { prisma } from "./lib/prisma"
+import { prisma } from "./lib/db/prisma"
 import { Organization } from "@prisma/client"
 
 declare module "next-auth" {
@@ -58,6 +58,6 @@ export const {
         session.user.organizations = token.organizations as Organization[];
       }
       return session;
-    },
+    }
   }
 })
