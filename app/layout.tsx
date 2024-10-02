@@ -4,8 +4,9 @@ import "./fonts/fonts.css";
 import { Component } from "@/components/component";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ResponsiveNavbarComponent } from "@/components/responsive-navbar";
 import { SessionProvider } from "next-auth/react";
+import { TanStackQuery } from "@/components/providers/query-provider";
+import { ResponsiveNavbarComponent } from "@/components/responsive-navbar";
 
 export const metadata: Metadata = {
   title: "Linkfy",
@@ -18,11 +19,13 @@ export const RootLayout: Component<PropsWithChildren> = ({ children }) => {
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <SessionProvider>
-            <ResponsiveNavbarComponent />
+            <TanStackQuery>
+              <ResponsiveNavbarComponent />
 
-            <div className="container mx-auto p-4 mt-16">
-              {children}
-            </div>
+              <div className="container mx-auto p-4 mt-16">
+                {children}
+              </div>
+            </TanStackQuery>
           </SessionProvider>
         </ThemeProvider>
       </body>
