@@ -6,8 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const Page = () => {
   const { data: organization, isLoading, error } = useOrganization();
 
-  console.log(organization);
-
   if  (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
