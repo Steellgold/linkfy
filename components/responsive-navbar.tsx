@@ -12,11 +12,10 @@ import { useSession } from "next-auth/react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { Component } from "./component"
-import { ResponsiveNavbarProps } from "@/lib/types/navbar"
 import { SignInModal } from "./signin-modal"
-import { useOrganization } from "./hooks/use-organization"
+import { useGetOrganizations } from "@/lib/actions/organization/organization.hook"
 import { useOrganizationStore } from "@/lib/store/organization.store"
+import { Skeleton } from "./ui/skeleton"
 
 type NavItem = {
   href: string
@@ -25,30 +24,49 @@ type NavItem = {
   position?: 'left' | 'center' | 'right'
 }
 
-const navItems: NavItem[] = [
-  // { href: '/features', label: 'Features', position: 'center' },
-  // { href: '/pricing', label: 'Pricing', position: 'center' }
-]
+const navItems: NavItem[] = []
 
-export const ResponsiveNavbarComponent: Component<ResponsiveNavbarProps> = () => {
+export const ResponsiveNavbarComponent = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
   const { status, data } = useSession();
   const { theme } = useTheme();
   const { selectedOrganizationId, setSelectedOrganizationId } = useOrganizationStore();
 
+  const orgsQuery = useGetOrganizations();
+
   const OrganizationSelector = () => (
-    <Select onValueChange={(value) => setSelectedOrganizationId(value)} defaultValue={selectedOrganizationId ?? undefined}>
-      <SelectTrigger className="w-[260px]">
-        <SelectValue placeholder="Select organization" />
-      </SelectTrigger>
-      <SelectContent>
-        {data && data.user.organizations.map(org => (
-          <SelectItem key={org.id} value={org.id}>
-            {org.name}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <>
+      {orgsQuery.status == "pending" || orgsQuery.status == "error" ? (
+        <Skeleton className="w-32 h-8" />
+      ) : (
+        <>
+          {orgsQuery.data.length > 1 ? (
+            <>
+              <Select
+                onValueChange={(value) => setSelectedOrganizationId(value)}
+                defaultValue={selectedOrganizationId ?? undefined}
+              >
+                <SelectTrigger className="w-[260px]">
+                  <SelectValue placeholder="Select organization" />
+                </SelectTrigger>
+                <SelectContent>
+                  {orgsQuery.data.map(org => (
+                    <SelectItem key={org.id} value={org.id}>
+                      {org.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </>
+          ) : (
+            // TODO: Create organization button with dialog
+            <Button size="sm" className="w-[260px]">
+              Create organization
+            </Button>
+          )}
+        </>
+      )}
+    </>
   )
 
   const ProfileMenu = () => (
@@ -57,12 +75,13 @@ export const ResponsiveNavbarComponent: Component<ResponsiveNavbarProps> = () =>
         <DropdownMenuTrigger asChild>
           <Button size={"icon"} variant={"outline"} className="rounded-full">
             <Avatar className="h-8 w-8">
-              {status == "authenticated" && data.user && (
+              {status == "authenticated" && data.user ? (
                 <AvatarImage src={data.user?.image ?? "undefined"} alt="Profile" />
+              ) : (
+                <AvatarFallback>
+                  <User className="h-4 w-4" />
+                </AvatarFallback>
               )}
-              <AvatarFallback>
-                <User className="h-4 w-4" />
-              </AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
