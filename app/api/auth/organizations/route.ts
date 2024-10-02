@@ -11,17 +11,12 @@ export const GET = auth(async(req: NextAuthRequest) => {
     );
   }
 
-
   const url = new URL(req.url);
   const organizationId = url.searchParams.get("id");
-  if (!organizationId) {
-    return NextResponse.json(req.auth?.user.organizations);
-  }
+  if (!organizationId) return NextResponse.json(req.auth?.user.organizations);
 
   const organization = req.auth?.user.organizations.find((org) => org.id === organizationId);
-  if (organization) {
-    return NextResponse.json(organization);
-  }
+  if (organization) return NextResponse.json(organization);
 
   const prismaOrganization = await prisma.organization.findFirst({
     where: {
@@ -40,6 +35,6 @@ export const GET = auth(async(req: NextAuthRequest) => {
       { status: 401 }
     );
   }
-  
+
   return NextResponse.json(prismaOrganization);
 })
