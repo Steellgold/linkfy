@@ -73,13 +73,10 @@ export const plans: Plan[] = [
     subtitle: "Perfect for beginners",
     price: 0,
     features: [
-      { id: FeatureId.NumberOfLinks, display: "{limit} links limit" },
-      { id: FeatureId.TemporaryLinks, display: "{limit} temporary links" },
-      { id: FeatureId.APIAccess, display: "{limit} API requests per day" },
-      { id: FeatureId.SimpleAnalytics, display: "Simple analytics" },
-      { id: FeatureId.PrioritySupport, display: "Priority support" },
-      { id: FeatureId.CustomLink, display: "Generate links as you want" },
-      { id: FeatureId.CustomDomain, display: "Custom domain" },
+      { id: FeatureId.NumberOfLinks, display: "{limit} links limit", available: true },
+      { id: FeatureId.TemporaryLinks, display: "{limit} temporary links", available: true },
+      { id: FeatureId.SimpleAnalytics, display: "Simple analytics", available: true },
+      { id: FeatureId.CustomDomain, display: "Custom domain", available: false },
     ],
   },
   {
@@ -87,13 +84,12 @@ export const plans: Plan[] = [
     subtitle: "For users who want more",
     price: 1.99,
     features: [
-      { id: FeatureId.NumberOfLinks, display: "Unlimited links" },
-      { id: FeatureId.TemporaryLinks, display: "Unlimited temporary links" },
-      { id: FeatureId.APIAccess, display: "Unlimited API requests per day" },
-      { id: FeatureId.BetterAnalytics, display: "Better analytics" },
-      { id: FeatureId.PrioritySupport, display: "Priority support" },
-      { id: FeatureId.CustomLink, display: "Generate links as you want" },
-      { id: FeatureId.LimitCustomDomain, display: "{limit} custom domains" },
+      { id: FeatureId.NumberOfLinks, display: "Unlimited links", available: true },
+      { id: FeatureId.TemporaryLinks, display: "Unlimited temporary links", available: true },
+      { id: FeatureId.BetterAnalytics, display: "Better analytics", available: true },
+      { id: FeatureId.PrioritySupport, display: "Priority support", available: true },
+      { id: FeatureId.CustomLink, display: "Generate links as you want", available: true },
+      { id: FeatureId.LimitCustomDomain, display: "{limit} custom domains", available: false },
     ],
   }
 ];
