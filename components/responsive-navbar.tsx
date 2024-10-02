@@ -1,17 +1,22 @@
 "use client"
 // https://v0.dev/chat/GBlp4OlDnER
 
-import { useState, ReactElement } from "react"
-import Link from "next/link"
-import { Loader2, Menu, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Loader2, LogOut, Menu, Settings, User } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { ThemeSwitcher } from "./ui/theme-switcher"
+import { Button } from "@/components/ui/button"
+import { useState, ReactElement } from "react"
 import { useSession } from "next-auth/react"
-import { SignInModal } from "./signin-modal"
 import { useTheme } from "next-themes"
 import Image from "next/image"
+import Link from "next/link"
+import { Component } from "./component"
+import { ResponsiveNavbarProps } from "@/lib/types/navbar"
+import { SignInModal } from "./signin-modal"
+import { useOrganization } from "./hooks/use-organization"
+import { useOrganizationStore } from "@/lib/store/organization.store"
 
 type NavItem = {
   href: string
@@ -21,43 +26,83 @@ type NavItem = {
 }
 
 const navItems: NavItem[] = [
-  { href: '/features', label: 'Features', position: 'center' },
-  { href: '/pricing', label: 'Pricing', position: 'center' }
+  // { href: '/features', label: 'Features', position: 'center' },
+  // { href: '/pricing', label: 'Pricing', position: 'center' }
 ]
 
-export const ResponsiveNavbarComponent = (): ReactElement => {
+export const ResponsiveNavbarComponent: Component<ResponsiveNavbarProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { status, data } = useSession();
   const { theme } = useTheme();
+  const { selectedOrganizationId, setSelectedOrganizationId } = useOrganizationStore();
 
-  const ProfileItem = () => (
-    <div className="flex items-center gap-1.5">
-      <ThemeSwitcher />
+  const OrganizationSelector = () => (
+    <Select onValueChange={(value) => setSelectedOrganizationId(value)} defaultValue={selectedOrganizationId ?? undefined}>
+      <SelectTrigger className="w-[260px]">
+        <SelectValue placeholder="Select organization" />
+      </SelectTrigger>
+      <SelectContent>
+        {data && data.user.organizations.map(org => (
+          <SelectItem key={org.id} value={org.id}>
+            {org.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
 
-      {status == "authenticated" && data.user ? (
-        <Button className="flex items-center text-sm font-medium mx-2">
-          <Avatar className="h-6 w-6 mr-2">
-            <AvatarImage src={data.user?.image ?? "undefined"} alt="Profile" />
-            <AvatarFallback>
-              <User className="h-4 w-4" />
-            </AvatarFallback>
-          </Avatar>
-          
-          {data.user.name ?? "Profile"}
-        </Button>
-      ) : status == "loading" ? (
-        <Button className="flex items-center text-sm font-medium mx-2" variant="outline" disabled>
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />          
-          Loading
-        </Button>
-      ) : (
-        <SignInModal>
-          <Button variant="outline">
-            Sign in
+  const ProfileMenu = () => (
+    status === "authenticated" ? (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size={"icon"} variant={"outline"} className="rounded-full">
+            <Avatar className="h-8 w-8">
+              {status == "authenticated" && data.user && (
+                <AvatarImage src={data.user?.image ?? "undefined"} alt="Profile" />
+              )}
+              <AvatarFallback>
+                <User className="h-4 w-4" />
+              </AvatarFallback>
+            </Avatar>
           </Button>
-        </SignInModal>
-      )}
-    </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" align="end" forceMount>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              {status == "authenticated" && data.user && (
+                <p className="text-sm font-medium">{data.user?.name}</p>
+              )}
+              
+              {status == "authenticated" && data.user && (
+                <p className="text-xs text-muted-foreground">{data.user?.email}</p>
+              )}
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ) : status === "loading" ? (
+      <Button variant="outline" size="icon" className="rounded-full">
+        <Loader2 className="h-4 w-4 animate-spin" />          
+      </Button>
+    ) : (
+      <SignInModal>
+        <Button variant="outline">Sign in</Button>
+      </SignInModal>
+    )
   )
 
   const renderNavItem = (item: NavItem) => (
@@ -105,22 +150,29 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
             <div className="flex items-center">
               <div className="hidden md:flex">
                 {rightItems.map(renderNavItem)}
-                <ProfileItem />
+                <div className="flex gap-2">
+                  <OrganizationSelector />
+                  <ProfileMenu />
+                </div>
               </div>
 
               {/* Mobile menu button */}
-              <div className="md:hidden ml-2">
+              <div className="md:hidden">
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>
                   <SheetTrigger asChild>
                     <Button variant="ghost" size="icon">
                       <Menu className="h-6 w-6" />
-                      <span className="sr-only">Ouvrir le menu</span>
+                      <span className="sr-only">Open menu</span>
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="right">
                     <div className="flex flex-col space-y-4 mt-4">
                       {navItems.map(renderNavItem)}
-                      <ProfileItem />
+
+                      <div className="flex flex-row justify-between">
+                        <OrganizationSelector />
+                        <ProfileMenu />
+                      </div>
                     </div>
                   </SheetContent>
                 </Sheet>
