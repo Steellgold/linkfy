@@ -5,7 +5,8 @@ model Link {
   //
   name           String?
   note           String?
-  url            String
+  ogUrl          String?
+  toUrl          String?
   expires        DateTime?
   //
   createdBy      OrganizationMember? @relation(fields: [createdById], references: [id], onDelete: SetNull)
