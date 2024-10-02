@@ -6,11 +6,12 @@ import Link from "next/link"
 import { Loader2, Menu, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import Image from "next/image"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { ThemeSwitcher } from "./ui/theme-switcher"
 import { useSession } from "next-auth/react"
 import { SignInModal } from "./signin-modal"
+import { useTheme } from "next-themes"
+import Image from "next/image"
 
 type NavItem = {
   href: string
@@ -27,6 +28,7 @@ const navItems: NavItem[] = [
 export const ResponsiveNavbarComponent = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
   const { status, data } = useSession();
+  const { theme } = useTheme();
 
   const ProfileItem = () => (
     <div className="flex items-center gap-1.5">
@@ -81,7 +83,13 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
             {/* Left section */}
             <div className="flex items-center">
               <Link href="/" className="text-xl font-bold mr-4">
-                <Image src="logo/simple-text-big.svg" alt="Linkfy" width={95} height={50} />
+                {theme == "dark" ? (
+                  <Image src="logo/light/simple-text-big.svg" alt="Logo (light)" width={95} height={50} />
+                ) : theme == "light" ? (
+                  <Image src="logo/dark/simple-text-big.svg" alt="Logo (dark)" width={95} height={50} />
+                ) : (
+                  <Image src="logo/light/simple-text-big.svg" alt="Logo (dark)" width={95} height={50} />
+                )}
               </Link>
               <div className="hidden md:flex">
                 {leftItems.map(renderNavItem)}
