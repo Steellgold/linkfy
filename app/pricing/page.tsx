@@ -35,8 +35,8 @@ const Page = (): ReactElement => {
   return (
     <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
       {plans.map((plan, index) => (
-        <div>
-          <Card key={plan.display} className={`w-full ${index === 1 ? 'border-gold' : ''}`}>
+        <div key={plan.display}>
+          <Card className={`w-full ${index === 1 ? 'border-gold' : ''}`}>
             <CardHeader>
               <CardTitle className="text-2xl">{plan.display}</CardTitle>
                 <CardDescription>{plan.subtitle}</CardDescription>

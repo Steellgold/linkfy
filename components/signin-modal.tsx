@@ -18,7 +18,7 @@ export const SignInModal: Component<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <Dialog open>
+    <Dialog>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
