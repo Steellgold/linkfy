@@ -1,3 +1,5 @@
+"use client";
+
 import { SignInModal } from "@/components/signin-modal";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LogIn } from "lucide-react";
