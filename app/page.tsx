@@ -77,6 +77,7 @@ const Page = () => {
                 className="flex-grow"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
+                onKeyUp={(e) => e.key === "Enter" && handleSubmit(e)}
                 autoFocus
               />
 
