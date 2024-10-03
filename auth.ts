@@ -3,18 +3,18 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 
 import authConfig from "./auth.config"
 import { prisma } from "./lib/db/prisma"
-import { Organization } from "@prisma/client"
+import { Workspace } from "@prisma/client"
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string
-      organizations: Organization[]
+      workspaces: Workspace[]
     } & DefaultSession["user"]
   }
 
   interface User {
-    organizations: Organization[]
+    workspaces: Workspace[]
   }
 }
 
@@ -31,7 +31,7 @@ export const {
   callbacks: {
     async jwt({ token, user }): Promise<typeof token> {
       if (user) {
-        const organizations = await prisma.organization.findMany({
+        const workspaces = await prisma.workspace.findMany({
           where: {
             members: {
               some: {
@@ -47,7 +47,7 @@ export const {
         });
 
         token.id = user.id;
-        token.organizations = organizations;
+        token.workspaces = workspaces;
       }
 
       return token;
@@ -55,7 +55,7 @@ export const {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
-        session.user.organizations = token.organizations as Organization[];
+        session.user.workspaces = token.workspaces as Workspace[];
       }
       return session;
     }

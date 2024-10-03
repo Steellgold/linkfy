@@ -9,10 +9,10 @@ import { useSession } from "next-auth/react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { useGetOrganizations } from "@/lib/actions/organization/organization.hook"
-import { useOrganizationStore } from "@/lib/store/organization.store"
-import { OrganizationSelector } from "./navbar/organization-selector"
 import { ProfileMenu } from "./navbar/profile-menu"
+import { useWorkspaceStore } from "@/lib/store/workspace.store"
+import { useGetWorkspaces } from "@/lib/actions/organization/workspace.hook"
+import { WorkspaceSelector } from "./navbar/workspace-selector"
 
 type NavItem = {
   href: string
@@ -27,9 +27,9 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
   const { data } = useSession();
   const { theme } = useTheme();
-  const { selectedOrganizationId, setSelectedOrganizationId } = useOrganizationStore();
+  const { selectedWorkspaceId, setSelectedWorkspaceId } = useWorkspaceStore();
 
-  const orgsQuery = useGetOrganizations();
+  const workspacesQuery = useGetWorkspaces();
 
   const renderNavItem = (item: NavItem) => (
     <Link
@@ -77,11 +77,11 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
               <div className="hidden md:flex">
                 {rightItems.map(renderNavItem)}
                 <div className="flex gap-2">
-                  <OrganizationSelector
-                    organizations={orgsQuery.data ?? []}
-                    status={orgsQuery.status}
-                    selected={selectedOrganizationId ?? (data?.user.organizations[0].id ?? undefined)}
-                    setSelectedOrganizationId={setSelectedOrganizationId}
+                  <WorkspaceSelector
+                    workspaces={workspacesQuery.data ?? []}
+                    status={workspacesQuery.status}
+                    selected={selectedWorkspaceId ?? (data?.user.workspaces[0].id ?? undefined)}
+                    setWorkspaceSelectedId={setSelectedWorkspaceId}
                   />
                   
                   <ProfileMenu />
@@ -102,11 +102,11 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
                       {navItems.map(renderNavItem)}
 
                       <div className="flex flex-row justify-between">
-                        <OrganizationSelector
-                          organizations={orgsQuery.data ?? []}
-                          status={orgsQuery.status}
-                          selected={selectedOrganizationId ?? (data?.user.organizations[0].id ?? undefined)}
-                          setSelectedOrganizationId={setSelectedOrganizationId}
+                        <WorkspaceSelector
+                          workspaces={workspacesQuery.data ?? []}
+                          status={workspacesQuery.status}
+                          selected={selectedWorkspaceId ?? (data?.user.workspaces[0].id ?? undefined)}
+                          setWorkspaceSelectedId={setSelectedWorkspaceId}
                         />
                         
                         <ProfileMenu />
