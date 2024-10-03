@@ -40,7 +40,7 @@ export const ProfileMenu = (): ReactElement => {
     await signOut({ redirect: false });
     setLoading(false);
     await update();
-    router.push("/outed");
+    router.push("/signed-out");
     router.refresh();
   }
 

@@ -1,4 +1,4 @@
-import { getOrganizationsQuery } from "@/lib/actions/organization/organization.hook";
+import { getWorkspacesQuery } from "@/lib/actions/organization/workspace.hook";
 import { HydrationBoundary } from "@/components/providers/hydration-boundary";
 import { ResponsiveNavbarComponent } from "@/components/responsive-navbar";
 import { TanStackQuery } from "@/components/providers/query-provider";
@@ -26,7 +26,7 @@ export const RootLayout: AsyncComponent<PropsWithChildren> = async({ children })
         <body>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <TanStackQuery>
-              <HydrationBoundary queries={[getOrganizationsQuery()]}>
+              <HydrationBoundary queries={[getWorkspacesQuery()]}>
                 <ResponsiveNavbarComponent />
                 <Toaster />
 

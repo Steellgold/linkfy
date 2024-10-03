@@ -1,10 +1,10 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useOrganization } from "@/components/hooks/use-organization";
+import { useWorkspace } from "@/components/hooks/use-workspace";
 
 const Page = () => {
-  const { data: organization, isLoading, error } = useOrganization();
+  const { data: workspace, isLoading, error } = useWorkspace();
 
   if  (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -13,10 +13,10 @@ const Page = () => {
     <div className="flex justify-center">
       <Card className="w-full max-w-xl">
         <CardHeader>
-          <CardTitle>Organizations.</CardTitle>
+          <CardTitle>Workspace.</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <pre>{JSON.stringify(organization, null, 2)}</pre>
+          <pre>{JSON.stringify(workspace, null, 2)}</pre>
         </CardContent>
       </Card>
     </div>

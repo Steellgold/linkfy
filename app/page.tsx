@@ -2,10 +2,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Copy, ExternalLink, Link2, Loader2 } from "lucide-react";
+import { AlertCircle, Copy, ExternalLink, Link2, Loader2 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
 
@@ -121,8 +121,10 @@ const Page = () => {
                 </AlertDescription>
               </Alert>
             )}
-            <AlertDescription className="text-xs text-muted-foreground">
-              Without an account, your short link will expire in 30 minutes. During this time, you can test the link and see how it works.
+            
+            <AlertDescription className="text-xs text-muted-foreground flex items-center mt-1.5">
+              <AlertCircle className="h-4 w-4 mr-1" />
+              This is a demo generated short URL. It will expire in 30 minutes.
             </AlertDescription>
           </div>
         </CardContent>

@@ -2,13 +2,13 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db/prisma";
-import { Organization } from "@prisma/client";
+import { Workspace } from "@prisma/client";
 
-export const getOrganizations = async (): Promise<Organization[]> => {
+export const getWorkspaces = async (): Promise<Workspace[]> => {
   const session = await auth();
   if (!session) return [];
   
-  return prisma.organization.findMany({
+  return prisma.workspace.findMany({
     where: {
       members: {
         some: {

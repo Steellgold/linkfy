@@ -8,7 +8,7 @@ enum Plan {
   PLUS
 }
 
-model Organization {
+model Workspace {
   id String @id @default(cuid())
 
   name String
@@ -17,19 +17,19 @@ model Organization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members OrganizationMember[]
+  members WorkspaceMember[]
   links   Link[]
 }
 
-model OrganizationMember {
+model WorkspaceMember {
   id   String @id @default(cuid())
   role Role   @default(MEMBER)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String

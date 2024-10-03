@@ -21,7 +21,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  member OrganizationMember[]
+  member WorkspaceMember[]
 }
 
 model Account {
