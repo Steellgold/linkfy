@@ -1,4 +1,3 @@
-// schemas/organization.schema.ts
 import { z } from "zod";
 
 export const Plan = z.enum(["FREE", "PLUS"]);
@@ -10,4 +9,4 @@ export const WorkspaceSchema = z.object({
   plan: Plan,
 });
 
-export type Organization = z.infer<typeof WorkspaceSchema>;
+export type Workspace = z.infer<typeof WorkspaceSchema>;

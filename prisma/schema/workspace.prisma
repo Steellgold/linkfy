@@ -6,32 +6,50 @@ enum Role {
 enum Plan {
   FREE
   PLUS
+  BUSINESS
 }
 
 model Workspace {
   id String @id @default(cuid())
 
-  name String
-  plan Plan
+  name      String
+  plan      Plan
+  trial     Trial?
+  //
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  //
+  members   WorkspaceMember[]
+  links     Link[]
+  tags      Tag[]
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  members WorkspaceMember[]
-  links   Link[]
+model Trial {
+  id          String    @id @default(cuid())
+  //
+  start       DateTime
+  end         DateTime
+  //
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  //
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String    @unique
 }
 
 model WorkspaceMember {
-  id   String @id @default(cuid())
-  role Role   @default(MEMBER)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  id          String    @id @default(cuid())
+  role        Role      @default(MEMBER)
+  //
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  //
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
+  //
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  Link   Link[]
+  links Link[]
+  tags  Tag[]
 }

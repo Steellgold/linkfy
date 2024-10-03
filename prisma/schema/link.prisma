@@ -14,4 +14,35 @@ model Link {
   //
   workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
+  tags        Tag[]
+}
+
+enum Color {
+  RED
+  ORANGE
+  YELLOW
+  GREEN
+  BLUE
+  INDIGO
+  VIOLET
+  BLACK
+  BROWN
+  MAGENTA
+}
+
+model Tag {
+  id          String           @id @default(cuid())
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  //
+  name        String           @unique
+  color       Color            @default(BLACK)
+  //
+  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  //
+  author      WorkspaceMember? @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId    String?
+  //
+  assigned    Link[]
 }
