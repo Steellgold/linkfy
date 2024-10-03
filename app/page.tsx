@@ -1,12 +1,12 @@
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Copy, ExternalLink, Link2, Loader2 } from "lucide-react";
-import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { z } from "zod";
 
 const responseSchema = z.object({
@@ -19,7 +19,6 @@ const Page = () => {
   const [state, setState] = useState({ message: "", success: false, shortUrl: "" });
 
   const [url, setUrl] = useState("");
-  const [shortUrl, setShortUrl] = useState("");
   const [isPending, setPending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,10 +59,6 @@ const Page = () => {
 
     setPending(false);
   }
-
-  useEffect(() => {
-    console.log(url);
-  }, [url]);
 
   return (
     <div className="flex justify-center">

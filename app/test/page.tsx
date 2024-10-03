@@ -1,7 +1,7 @@
 "use client";
 
-import { useOrganization } from "@/components/hooks/use-organization";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useOrganization } from "@/components/hooks/use-organization";
 
 const Page = () => {
   const { data: organization, isLoading, error } = useOrganization();

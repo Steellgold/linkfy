@@ -28,11 +28,13 @@ export const SignInModal: Component<PropsWithChildren> = ({ children }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">
-            Sign to your account
-          </DialogTitle>
-          <DialogDescription className="text-gray-500 mt-2">
-            Receive a magic link or sign in with Google or GitHub to access your account.
+          <div className="flex flex-col -space-y-1">
+            <DialogTitle className="text-2xl font-bold">
+              Let&apos;s sign you in
+            </DialogTitle>
+          </div>
+          <DialogDescription className="text-muted-foreground mt-2">
+            Choose a provider to sign in with your account (or create a new one).
           </DialogDescription>
         </DialogHeader>
         
