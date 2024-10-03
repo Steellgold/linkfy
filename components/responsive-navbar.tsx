@@ -5,13 +5,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, ReactElement } from "react"
-import { useSession } from "next-auth/react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
 import { ProfileMenu } from "./navbar/profile-menu"
-import { useWorkspaceStore } from "@/lib/store/workspace.store"
-import { useGetWorkspaces } from "@/lib/actions/organization/workspace.hook"
 import { WorkspaceSelector } from "./navbar/workspace-selector"
 
 type NavItem = {
@@ -25,19 +22,10 @@ const navItems: NavItem[] = []
 
 export const ResponsiveNavbarComponent = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data } = useSession();
   const { theme } = useTheme();
-  const { selectedWorkspaceId, setSelectedWorkspaceId } = useWorkspaceStore();
-
-  const workspacesQuery = useGetWorkspaces();
 
   const renderNavItem = (item: NavItem) => (
-    <Link
-      key={item.href}
-      href={item.href}
-      className="text-sm font-medium text-muted-foreground hover:text-primary mx-2"
-      onClick={() => setIsOpen(false)}
-    >
+    <Link key={item.href} href={item.href} className="text-sm font-medium text-muted-foreground hover:text-primary mx-2" onClick={() => setIsOpen(false)}>
       {item.children || item.label}
     </Link>
   )
@@ -77,13 +65,7 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
               <div className="hidden md:flex">
                 {rightItems.map(renderNavItem)}
                 <div className="flex gap-2">
-                  <WorkspaceSelector
-                    workspaces={workspacesQuery.data ?? []}
-                    status={workspacesQuery.status}
-                    selected={selectedWorkspaceId ?? (data?.user.workspaces[0].id ?? undefined)}
-                    setWorkspaceSelectedId={setSelectedWorkspaceId}
-                  />
-                  
+                  <WorkspaceSelector />
                   <ProfileMenu />
                 </div>
               </div>
@@ -102,13 +84,7 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
                       {navItems.map(renderNavItem)}
 
                       <div className="flex flex-row justify-between">
-                        <WorkspaceSelector
-                          workspaces={workspacesQuery.data ?? []}
-                          status={workspacesQuery.status}
-                          selected={selectedWorkspaceId ?? (data?.user.workspaces[0].id ?? undefined)}
-                          setWorkspaceSelectedId={setSelectedWorkspaceId}
-                        />
-                        
+                        <WorkspaceSelector />
                         <ProfileMenu />
                       </div>
                     </div>

@@ -6,7 +6,7 @@ import { Feature, FeatureLimits, plans } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 import { Check, Minus, X } from "lucide-react";
 import { ReactElement } from "react";
-import { OrganizationText } from "./organization.text";
+import { WorkspaceText } from "./workspace.text";
 
 const FeatureItem: Component<Feature & { notFree: boolean }> = ({ id, display, notFree, available }) => {
   return (
@@ -68,7 +68,7 @@ const Page = (): ReactElement => {
 
       <div className="container mx-auto p-4 mt-7">
         <p className="text-center text-sm text-muted-foreground mb-3">
-          You will be charged for the <OrganizationText /> organization, be sure to select the correct organization before upgrading.
+          You will be charged for the <WorkspaceText /> workspace, be sure to select the correct organization before upgrading.
         </p>
 
         <p className="text-center text-sm text-muted-foreground">
