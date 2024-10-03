@@ -1,8 +1,11 @@
-import { Organization } from "@prisma/client"
-import { Component } from "../component";
-import { Skeleton } from "../ui/skeleton";
-import { Button } from "../ui/button";
+"use client";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Organization } from "@prisma/client"
+import { Skeleton } from "../ui/skeleton";
+import { Component } from "../component";
+import { Button } from "../ui/button";
+import { useSession } from "next-auth/react";
 
 type OrganizationSelectorProps = {
   organizations: Organization[];
@@ -13,6 +16,8 @@ type OrganizationSelectorProps = {
 }
 
 export const OrganizationSelector: Component<OrganizationSelectorProps> = ({ organizations, status, selected, setSelectedOrganizationId }) => {
+  const { status: userStatus } = useSession();
+  
   if (status === "pending" || status === "error") {
     return <Skeleton className="w-32 h-8" />
   }
@@ -37,7 +42,7 @@ export const OrganizationSelector: Component<OrganizationSelectorProps> = ({ org
             </SelectContent>
           </Select>
         </>
-      ) : (
+      ) : userStatus == "unauthenticated" ? <></> : (
         <Button size="sm" className="w-[260px]">
           Create organization
         </Button>

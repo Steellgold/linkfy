@@ -25,7 +25,7 @@ const navItems: NavItem[] = []
 
 export const ResponsiveNavbarComponent = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
-  const { status, data } = useSession();
+  const { data } = useSession();
   const { theme } = useTheme();
   const { selectedOrganizationId, setSelectedOrganizationId } = useOrganizationStore();
 
@@ -42,9 +42,9 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
     </Link>
   )
 
-  const leftItems = navItems.filter(item => item.position === 'left')
-  const centerItems = navItems.filter(item => item.position === 'center')
-  const rightItems = navItems.filter(item => item.position === 'right')
+  const leftItems = navItems.filter(item => item.position === 'left');
+  const centerItems = navItems.filter(item => item.position === 'center');
+  const rightItems = navItems.filter(item => item.position === 'right');
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -80,11 +80,11 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
                   <OrganizationSelector
                     organizations={orgsQuery.data ?? []}
                     status={orgsQuery.status}
-                    selected={selectedOrganizationId ?? undefined}
+                    selected={selectedOrganizationId ?? (data?.user.organizations[0].id ?? undefined)}
                     setSelectedOrganizationId={setSelectedOrganizationId}
                   />
                   
-                  <ProfileMenu status={status} user={data?.user} />
+                  <ProfileMenu />
                 </div>
               </div>
 
@@ -105,11 +105,11 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
                         <OrganizationSelector
                           organizations={orgsQuery.data ?? []}
                           status={orgsQuery.status}
-                          selected={selectedOrganizationId ?? undefined}
+                          selected={selectedOrganizationId ?? (data?.user.organizations[0].id ?? undefined)}
                           setSelectedOrganizationId={setSelectedOrganizationId}
                         />
                         
-                        <ProfileMenu status={status} user={data?.user} />
+                        <ProfileMenu />
                       </div>
                     </div>
                   </SheetContent>
