@@ -7,7 +7,8 @@ export type GetLinksType = Prisma.LinkGetPayload<{
         user: {
           select: {
             name: true,
-            image: true
+            image: true,
+            email: true
           }
         }
       }

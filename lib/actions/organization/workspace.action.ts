@@ -62,7 +62,8 @@ export const getWorkspacesLinks = async (workspaceId: string): Promise<GetLinksT
           user: {
             select: {
               name: true,
-              image: true
+              image: true,
+              email: true
             }
           }
         }
