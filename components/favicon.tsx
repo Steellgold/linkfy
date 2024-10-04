@@ -13,5 +13,6 @@ export const Favicon: Component<FaviconDisplayProps> = ({ url }) => {
   if (loading) return <Globe size={32} className="text-[#020817] dark:text-white" />;
   if (error || !faviconUrl) return <Globe size={32} className="text-[#020817] dark:text-white" />;
 
+  {/* eslint-disable-next-line @next/next/no-img-element */}
   return <img src={faviconUrl} alt="Favicon" className="rounded-full" width={32} height={32} />;
 };

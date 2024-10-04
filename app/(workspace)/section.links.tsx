@@ -34,7 +34,7 @@ export const WorkspaceLinks: Component<{ workspaceId: string }> = ({ workspaceId
   )
 
   return (
-    <div className="flex flex-col gap-1.5 mt-2 mb-1.5 p-2 rounded-lg sm:bg-primary/5 sm:dark:bg-primary/5">
+    <div className="flex flex-col gap-1.5 mb-1.5 p-2 rounded-xl sm:bg-primary/5 sm:dark:bg-primary/5">
       {data.map((link) => (
         <LinkCard key={link.id} {...link} userOptions={{
           showTags: true,

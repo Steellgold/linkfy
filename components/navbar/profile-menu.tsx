@@ -37,10 +37,10 @@ export const ProfileMenu = (): ReactElement => {
   const handleSignOut = async (event: React.FormEvent) => {
     setLoading(true);
     event.preventDefault();
-    await signOut({ redirect: false });
-    setLoading(false);
+    
+    await signOut({ redirect: true, redirectTo: "/logged-out" });
     await update();
-    router.push("/signed-out");
+    setLoading(false);
     router.refresh();
   }
 

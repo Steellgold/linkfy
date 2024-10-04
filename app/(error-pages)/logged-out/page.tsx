@@ -12,7 +12,7 @@ const Page = async(): Promise<ReactElement> => {
   if (session) redirect("/");
 
   return <ErrorLayoutCard
-    title="Successfuly signed out 🫡"
+    title="Successfuly logged out 🫡"
     description="It&apos;s sad to see you go, but you can always come back whenever you want !"
     actions={[
       <Link key={0} className={buttonVariants({ variant: "outline" })} href="/">Go home page</Link>,

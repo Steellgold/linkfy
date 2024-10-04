@@ -9,7 +9,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
 import { useSession } from "next-auth/react";
-import { WorkspacePage } from "./(auth-pages)/(workspace)/page.workspace";
+import { WorkspaceLinksPage } from "./(workspace)/page.workspace";
 
 const responseSchema = z.object({
   success: z.boolean(),
@@ -24,7 +24,7 @@ const Page = () => {
   const [url, setUrl] = useState("");
   const [isPending, setPending] = useState(false);
 
-  if (session?.user) return <WorkspacePage />;
+  if (session?.user) return <WorkspaceLinksPage />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     setPending(true);

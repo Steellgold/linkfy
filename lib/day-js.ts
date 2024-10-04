@@ -7,6 +7,7 @@ import dayOfYear from "dayjs/plugin/dayOfYear";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import isBetween from "dayjs/plugin/isBetween";
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require("dayjs/locale/en");
 
 dayjs.extend(duration);
