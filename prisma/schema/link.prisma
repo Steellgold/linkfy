@@ -3,7 +3,6 @@ model Link {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   //
-  name        String?
   note        String?
   ogUrl       String?
   toUrl       String?
