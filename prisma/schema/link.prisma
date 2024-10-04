@@ -1,19 +1,19 @@
 model Link {
-  id          String           @id @default(cuid())
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  id            String           @id @default(cuid())
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   //
-  note        String?
-  ogUrl       String?
-  toUrl       String?
-  expires     DateTime?
+  note          String?
+  shortened_url String
+  original_url  String
+  expires       DateTime?
   //
-  createdBy   WorkspaceMember? @relation(fields: [createdById], references: [id], onDelete: SetNull)
-  createdById String?
+  createdBy     WorkspaceMember? @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById   String?
   //
-  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  workspaceId String
-  tags        Tag[]
+  workspace     Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId   String
+  tags          Tag[]
 }
 
 enum Color {
