@@ -1,22 +1,26 @@
 import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
-import { createWorkspace, getWorkspaces } from "./workspace.action";
+import { createWorkspace, getWorkspaces, getWorkspacesLinks } from "./workspace.action";
+import { CreateWorkspaceMutation } from "./workspace.types";
 
-export function getWorkspacesQuery() {
+export const getWorkspacesQuery = () => {
   return { queryKey: ["getWorkspaces"], queryFn: () => getWorkspaces() } satisfies UseQueryOptions;
+}
+
+export const getWorkspacesLinksQuery = (workspaceId: string) => {
+  return { queryKey: ["getWorkspacesLinks"], queryFn: () => getWorkspacesLinks(workspaceId) } satisfies UseQueryOptions;
 }
 
 export const useGetWorkspaces = () => {
   return useQuery(getWorkspacesQuery());
 }
 
-// 
-
-type CreateWorkspaceMutation = {
-  name: string;
-  startTrial: boolean;
+export const useGetWorkspacesLinks = (workspaceId: string) => {
+  return useQuery(getWorkspacesLinksQuery(workspaceId));
 }
 
-export function useCreateWorkspace() {
+// 
+
+export const useCreateWorkspace = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

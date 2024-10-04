@@ -1,13 +1,18 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useWorkspace } from "@/components/hooks/use-workspace";
+import { useWorkspaceStore } from "@/lib/store/workspace.store";
+import { useGetWorkspaces } from "@/lib/actions/organization/workspace.hook";
+import { Workspace } from "@prisma/client";
 
 const Page = () => {
-  const { data: workspace, isLoading, error } = useWorkspace();
+  const selectedWorkspaceId = useWorkspaceStore((state) => state.selectedWorkspaceId);
+  const { data, status } = useGetWorkspaces();
 
-  if  (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if  (status == "pending") return <div>Loading...</div>;
+  if (status == "error") return <div>An error occurred</div>;
+
+  const workspace = data.find((workspace: Workspace) => workspace.id === selectedWorkspaceId);
 
   return (
     <div className="flex justify-center">

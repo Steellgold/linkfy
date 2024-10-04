@@ -10,6 +10,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ProfileMenu } from "./navbar/profile-menu"
 import { WorkspaceSelector } from "./navbar/workspace-selector"
+import { ThemeSwitcher } from "./ui/theme-switcher"
 
 type NavItem = {
   href: string
@@ -66,6 +67,7 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
                 {rightItems.map(renderNavItem)}
                 <div className="flex gap-2">
                   <WorkspaceSelector />
+                  <ThemeSwitcher />
                   <ProfileMenu />
                 </div>
               </div>
@@ -85,6 +87,7 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
 
                       <div className="flex flex-row justify-between">
                         <WorkspaceSelector />
+                        <ThemeSwitcher />
                         <ProfileMenu />
                       </div>
                     </div>
