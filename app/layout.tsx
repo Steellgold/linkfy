@@ -6,11 +6,24 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AsyncComponent } from "@/components/component";
 import { SessionProvider } from "next-auth/react";
 import { PropsWithChildren } from "react";
+import localFont from "next/font/local";
 import type { Metadata } from "next";
-import "./fonts/fonts.css";
-import "./globals.css";
-import { auth } from "@/auth";
 import { Toaster } from "sonner";
+import { auth } from "@/auth";
+// import "./fonts/fonts.css";
+import "./globals.css";
+
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
 
 export const metadata: Metadata = {
   title: "Linkfy",
@@ -23,7 +36,7 @@ export const RootLayout: AsyncComponent<PropsWithChildren> = async({ children })
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <TanStackQuery>
               <HydrationBoundary queries={[getWorkspacesQuery()]}>
