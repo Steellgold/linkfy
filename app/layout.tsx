@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 import { auth } from "@/auth";
 // import "./fonts/fonts.css";
 import "./globals.css";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,20 +37,22 @@ export const RootLayout: AsyncComponent<PropsWithChildren> = async({ children })
   return (
     <SessionProvider session={session}>
       <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-            <TanStackQuery>
-              <HydrationBoundary queries={[getWorkspacesQuery()]}>
-                <ResponsiveNavbarComponent />
-                <Toaster />
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <ModalProvider>
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+              <TanStackQuery>
+                <HydrationBoundary queries={[getWorkspacesQuery()]}>
+                  <ResponsiveNavbarComponent />
+                  <Toaster />
 
-                <div className="container mx-auto p-4 mt-16">
-                  {children}
-                </div>
+                  <div className="container mx-auto p-4 mt-16">
+                    {children}
+                  </div>
 
-              </HydrationBoundary>
-            </TanStackQuery>
-          </ThemeProvider>
+                </HydrationBoundary>
+              </TanStackQuery>
+            </ThemeProvider>
+          </ModalProvider>
         </body>
       </html>
     </SessionProvider>

@@ -20,41 +20,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import Link from "next/link";
-
-const ACTIONS = (shortUrl: string): Record<string, {
-  action?: () => void,
-  icon?: ReactElement,
-  isDanger?: boolean,
-  isSeparator?: boolean,
-}> => ({
-  "Edit": {
-    action: () => console.log("Edit"),
-    icon: <PencilLine />,
-  },
-  "Generate QR Code": {
-    action: () => console.log("Generate QR Code"),
-    icon: <QrCode />,
-  },
-  "Copy": {
-    action: () => {
-      navigator.clipboard.writeText(shortUrl);
-      toast.success("Copied to clipboard");
-    },
-    icon: <Copy />,
-  },
-  "SEPARATOR": {
-    isSeparator: true,
-  },
-  "Archive": {
-    action: () => console.log("Archive"),
-    icon: <Archive />,
-  },
-  "Delete": {
-    action: () => console.log("Delete"),
-    icon: <Trash />,
-    isDanger: true,
-  },
-});
+import { useModalStatus } from "../hooks/use-modal";
+import { ModalIds } from "../modals/modal-ids";
 
 type LinkCardProps = {
   userOptions: {
@@ -67,6 +34,8 @@ type LinkCardProps = {
 } & GetLinksType;
 
 export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, }) => {
+  const { openModal } = useModalStatus();
+
   return (
     <Card className="p-1 transition-colors duration-200 ease-in-out hover:dark:bg-[#030b1f] hover:bg-[#f9f9f9] hover:dark:border-primary/50 hover:border-primary/10 hover:shadow-md">
       <CardContent className="p-3 flex flex-row justify-between items-center">
@@ -100,22 +69,46 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
           </DropdownMenuTrigger>
 
           <DropdownMenuContent side="bottom">
-            {Object.entries(
-              ACTIONS(shortened_url ?? "undefined")
-            ).map(([key, { action, icon, isDanger, isSeparator }], index) => (
-              <>
-                {isSeparator ? (
-                  <DropdownMenuSeparator key={index} />
-                ) : (
-                  <DropdownMenuItem key={key} onClick={action} className={cn({ "text-red-500": isDanger })}>
-                    <span className="flex items-center gap-2">
-                      {icon && cloneElement(icon, { className: "h-4 w-4" })}
-                      {key}
-                    </span>
-                  </DropdownMenuItem>
-                )}
-              </>
-            ))}
+            <DropdownMenuItem>
+              <span className="flex items-center gap-2">
+                <PencilLine className="h-4 w-4" />
+                Edit
+              </span>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <span className="flex items-center gap-2">
+                <QrCode className="h-4 w-4" />
+                Generate QR Code
+              </span>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <span className="flex items-center gap-2">
+                <Copy className="h-4 w-4" />
+                Copy
+              </span>
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem>
+              <span className="flex items-center gap-2">
+                <Archive className="h-4 w-4" />
+                Archive
+              </span>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onClick={() => {
+                openModal(ModalIds.LINK_DELETE_CONFIRM);
+              }}
+            >
+              <span className="flex items-center gap-2 text-destructive">
+                <Trash className="h-4 w-4" />
+                Delete
+              </span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>        
       </CardContent>

@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetWorkspacesLinks } from "@/lib/actions/organization/workspace.hook";
 import { useEffect } from "react";
 import { ErrorLayoutCard } from "@/components/layout-card";
+import { ModalLinkDeleteConfirm } from "@/components/modals/link-delete-confirm.modal-";
 
 export const WorkspaceLinks: Component<{ workspaceId: string }> = ({ workspaceId }) => {
   const { data, status, refetch } = useGetWorkspacesLinks(workspaceId);
@@ -34,16 +35,20 @@ export const WorkspaceLinks: Component<{ workspaceId: string }> = ({ workspaceId
   )
 
   return (
-    <div className="flex flex-col gap-1.5 mb-1.5 p-2 rounded-xl sm:bg-primary/5 sm:dark:bg-primary/5">
-      {data.map((link) => (
-        <LinkCard key={link.id} {...link} userOptions={{
-          showTags: true,
-          showExpires: true,
-          showCreatedAt: true,
-          showCreatedBy: true,
-          showNote: true
-        }} />
-      ))}
-    </div>
+    <>
+      <ModalLinkDeleteConfirm />
+
+      <div className="flex flex-col gap-1.5 mb-1.5 p-2 rounded-xl sm:bg-primary/5 sm:dark:bg-primary/5">
+        {data.map((link) => (
+          <LinkCard key={link.id} {...link} userOptions={{
+            showTags: true,
+            showExpires: true,
+            showCreatedAt: true,
+            showCreatedBy: true,
+            showNote: true
+          }} />
+        ))}
+      </div>
+    </>
   )
 }
