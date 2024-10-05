@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, ReactNode, PropsWithChildren } from "react";
+import React, { createContext, useState, PropsWithChildren } from "react";
 import { Component } from "@/components/component";
 
 type ModalState = {
@@ -8,6 +8,9 @@ type ModalState = {
 }
 
 type ModalContextType = {
+  data: [];
+  setModalData: (data: []) => void
+
   openModal: (id: string) => void
   closeModal: (id: string) => void
   toggleModal: (id: string) => void
@@ -18,6 +21,7 @@ export const ModalContext = createContext<ModalContextType | null>(null)
 
 export const ModalProvider: Component<PropsWithChildren> = ({ children }) => {
   const [modalState, setModalState] = useState<ModalState>({})
+  const [data, setData] = useState<[]>([])
 
   const openModal = (id: string) => {
     setModalState(prev => ({ ...prev, [id]: true }))
@@ -35,8 +39,12 @@ export const ModalProvider: Component<PropsWithChildren> = ({ children }) => {
     return !!modalState[id]
   }
 
+  const setModalData = (data: []) => {
+    setData(data)
+  }
+
   return (
-    <ModalContext.Provider value={{ openModal, closeModal, toggleModal, isModalOpen }}>
+    <ModalContext.Provider value={{ openModal, closeModal, toggleModal, isModalOpen, data, setModalData }}>
       {children}
     </ModalContext.Provider>
   )

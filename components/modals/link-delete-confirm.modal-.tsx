@@ -33,7 +33,13 @@ export const ModalLinkDeleteConfirm = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className={buttonVariants({ variant: "destructive" })}>
+          <AlertDialogAction
+            className={buttonVariants({ variant: "destructive" })}
+            onClick={() => {
+              // Delete link
+              console.log("caca")
+            }}
+          >
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

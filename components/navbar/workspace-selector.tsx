@@ -31,7 +31,7 @@ export const WorkspaceSelector = (): ReactElement => {
     <>
       {data.length > 0 ? (
         <>
-          <Select open onValueChange={(value: string) => {
+          <Select onValueChange={(value: string) => {
             if (value == "new-workspace") {
               window.location.href = "/new-workspace";
               return;

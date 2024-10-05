@@ -2,13 +2,13 @@ import { Component } from "@/components/component";
 import { LinkCard } from "@/components/link-card/link-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetWorkspacesLinks } from "@/lib/actions/workspace/workspace.hook";
 import { useEffect } from "react";
 import { ErrorLayoutCard } from "@/components/layout-card";
 import { ModalLinkDeleteConfirm } from "@/components/modals/link-delete-confirm.modal-";
+import { useGetLinks } from "@/lib/actions/link/link.hook";
 
 export const WorkspaceLinks: Component<{ workspaceId: string }> = ({ workspaceId }) => {
-  const { data, status, refetch } = useGetWorkspacesLinks(workspaceId);
+  const { data, status, refetch } = useGetLinks(workspaceId);
 
   useEffect(() => {
     refetch();

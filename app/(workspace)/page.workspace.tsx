@@ -1,6 +1,8 @@
+"use client";
+
 import { useGetWorkspaces } from "@/lib/actions/workspace/workspace.hook";
 import { redirect } from "next/navigation";
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import { WorkspaceLinks } from "./section.links";
 import { useWorkspaceStore } from "@/lib/store/workspace.store";
 import { Button } from "@/components/ui/button";
@@ -8,13 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Filter, LayoutDashboard, Plus } from "lucide-react";
 import { WorkspaceLayout } from "./workspace.layout";
 
-export const WorkspaceLinksPage = (): ReactElement => {
+export const PageWorkspace = (): ReactElement => {
   const { data, status } = useGetWorkspaces();
   const { selectedWorkspaceId } = useWorkspaceStore();
-
-  useEffect(() => {
-    console.log("Selected workspace id", selectedWorkspaceId);
-  }, [selectedWorkspaceId]);
 
   if (status === "pending") return <div>Loading...</div>;
   if (!data || data.length === 0) {
@@ -48,7 +46,9 @@ export const WorkspaceLinksPage = (): ReactElement => {
       header="Links"
     >
       <div className="sm:px-2">
-        <WorkspaceLinks workspaceId={selectedWorkspaceId || data[0].id} />
+        {/* <HydrationBoundary queries={[ getLinksQuery(selectedWorkspaceId || data[0].id) ]}> */}
+          <WorkspaceLinks workspaceId={selectedWorkspaceId || data[0].id} />
+        {/* </HydrationBoundary> */}
       </div>
     </WorkspaceLayout>
   );
