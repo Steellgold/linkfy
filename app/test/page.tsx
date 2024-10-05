@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWorkspaceStore } from "@/lib/store/workspace.store";
-import { useGetWorkspaces } from "@/lib/actions/organization/workspace.hook";
+import { useGetWorkspaces } from "@/lib/actions/workspace/workspace.hook";
 import { Workspace } from "@prisma/client";
 
 const Page = () => {

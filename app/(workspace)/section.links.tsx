@@ -2,7 +2,7 @@ import { Component } from "@/components/component";
 import { LinkCard } from "@/components/link-card/link-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetWorkspacesLinks } from "@/lib/actions/organization/workspace.hook";
+import { useGetWorkspacesLinks } from "@/lib/actions/workspace/workspace.hook";
 import { useEffect } from "react";
 import { ErrorLayoutCard } from "@/components/layout-card";
 import { ModalLinkDeleteConfirm } from "@/components/modals/link-delete-confirm.modal-";

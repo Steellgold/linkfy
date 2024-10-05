@@ -1,4 +1,4 @@
-import { useGetWorkspaces } from "@/lib/actions/organization/workspace.hook";
+import { useGetWorkspaces } from "@/lib/actions/workspace/workspace.hook";
 import { redirect } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 import { WorkspaceLinks } from "./section.links";

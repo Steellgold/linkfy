@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ReactElement } from "react";
-import { useCreateWorkspace } from "@/lib/actions/organization/workspace.hook";
+import { useCreateWorkspace } from "@/lib/actions/workspace/workspace.hook";
 
 const FormSchema = z.object({
   name: z.string().min(3).max(20),

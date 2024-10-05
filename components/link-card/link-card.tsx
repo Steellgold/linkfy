@@ -1,6 +1,6 @@
 "use client";
 
-import { GetLinksType } from "@/lib/actions/organization/workspace.types";
+import { GetLinksType } from "@/lib/actions/workspace/workspace.types";
 import { Archive, Copy, CornerDownRight, EllipsisVertical, Hourglass, MousePointerClick, PencilLine, QrCode, Trash } from "lucide-react";
 import { LinkTag } from "./link-tag";
 import { cloneElement, ReactElement } from "react";

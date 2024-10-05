@@ -1,4 +1,4 @@
-import { getWorkspacesQuery } from "@/lib/actions/organization/workspace.hook";
+import { getWorkspacesQuery } from "@/lib/actions/workspace/workspace.hook";
 import { HydrationBoundary } from "@/components/providers/hydration-boundary";
 import { ResponsiveNavbarComponent } from "@/components/responsive-navbar";
 import { TanStackQuery } from "@/components/providers/query-provider";

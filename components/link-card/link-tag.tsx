@@ -1,5 +1,5 @@
 import { Color } from "@prisma/client";
-import { LinkTag as LinkTagType } from "@/lib/actions/organization/workspace.types";
+import { LinkTag as LinkTagType } from "@/lib/actions/workspace/workspace.types";
 import { cn } from "@/lib/utils";
 import { Tag } from "lucide-react";
 import { Component } from "../component";

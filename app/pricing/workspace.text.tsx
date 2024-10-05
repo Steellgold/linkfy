@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetWorkspaces } from "@/lib/actions/organization/workspace.hook";
+import { useGetWorkspaces } from "@/lib/actions/workspace/workspace.hook";
 import { useWorkspaceStore } from "@/lib/store/workspace.store";
 import { ReactElement } from "react";
 

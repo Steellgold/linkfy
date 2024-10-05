@@ -1,7 +1,7 @@
 "use client";
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "../ui/select";
-import { useGetWorkspaces } from "@/lib/actions/organization/workspace.hook";
+import { useGetWorkspaces } from "@/lib/actions/workspace/workspace.hook";
 import { useWorkspaceStore } from "@/lib/store/workspace.store";
 import { buttonVariants } from "../ui/button";
 import { usePathname } from "next/navigation";
