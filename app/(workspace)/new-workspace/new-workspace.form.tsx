@@ -8,8 +8,9 @@ import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { useCreateWorkspace } from "@/lib/actions/workspace/workspace.hook";
+import { Loading } from "@/components/loading";
 
 const FormSchema = z.object({
   name: z.string().min(3).max(20),
@@ -17,6 +18,8 @@ const FormSchema = z.object({
 })
 
 export const NewWorkspaceCreationForm = (): ReactElement => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -28,6 +31,8 @@ export const NewWorkspaceCreationForm = (): ReactElement => {
   const createWorkspace = useCreateWorkspace();
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    setIsLoading(true);
+
     const promise = createWorkspace.mutateAsync({
       name: data.name,
       startTrial: data.plusTrial ?? false,
@@ -39,7 +44,7 @@ export const NewWorkspaceCreationForm = (): ReactElement => {
       error: "Failed to create workspace",
     });
 
-    promise.then(() => window.location.href = "/");
+    promise.then(() => window.location.href = "/").catch(() => setIsLoading(false));
   }
 
   return (
@@ -60,7 +65,7 @@ export const NewWorkspaceCreationForm = (): ReactElement => {
               </div>
 
               <FormControl>
-                <Input {...field} placeholder="Workspace name" />
+                <Input {...field} placeholder="Workspace name" disabled={isLoading} />
               </FormControl>
             </FormItem>
           )}
@@ -75,6 +80,7 @@ export const NewWorkspaceCreationForm = (): ReactElement => {
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  disabled={isLoading}
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
@@ -87,8 +93,10 @@ export const NewWorkspaceCreationForm = (): ReactElement => {
           )}
         />
         
-        <Button type="submit" className="w-full">
-          Open workspace
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          <Loading isLoading={isLoading}>
+            Open workspace
+          </Loading>
         </Button>
       </form>
     </Form>
