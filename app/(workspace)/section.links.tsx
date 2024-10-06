@@ -34,12 +34,15 @@ type WorkspaceLinksProps = {
   filterBy: FilterOptions;
   display: DisplayOptions;
   workspaceId: string;
+
+  resetFilters: () => void;
 }
 
 export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
   workspaceId,
   filterBy,
-  display
+  display,
+  resetFilters
 }) => {
   const { data, status, refetch } = useGetLinks(workspaceId);
 
@@ -56,13 +59,30 @@ export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
   )
 
   if (status === "error") return <div>Error</div>;
+  
+  const filteredData = data.filter((link) => {
+    if (filterBy.tags.length > 0) {
+      return link.tags.some((tag) => filterBy.tags.includes(tag.id));
+    }
 
-  if (!data || data.length === 0) return (
+    if (filterBy.user.length > 0) {
+      return filterBy.user.includes(link.createdBy?.user.id || "");
+    }
+
+    if (filterBy.search) {
+      return link.original_url.includes(filterBy.search) || link.shortened_url.includes(filterBy.search);
+    }
+
+    return true;
+  });
+
+  if (!data || data.length === 0 || filteredData.length === 0) return (
     <ErrorLayoutCard
       title="Workspace is empty 😳"
       description="It seems that you don't have any links in this workspace. Create a new link to get started."
       actions={[
-        <Button key={1} variant="outline">Create a new link</Button>
+        <Button key={1} variant="outline">Create a new link</Button>,
+        <Button key={2} variant="outline" onClick={resetFilters}>Reset filters</Button>
       ]}
     />
   )
@@ -72,22 +92,7 @@ export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
       <ModalLinkDeleteConfirm />
 
       <div className="flex flex-col gap-1.5 mb-1.5 p-2 rounded-xl sm:bg-primary/5 sm:dark:bg-primary/5">
-        {data.filter((link) => {
-          if (filterBy.tags.length > 0) {
-            return link.tags.some((tag) => filterBy.tags.includes(tag.id));
-          }
-
-          if (filterBy.user.length > 0) {
-            return filterBy.user.includes(link.createdBy?.user.id || "");
-          }
-
-          if (filterBy.search) {
-            return link.original_url.includes(filterBy.search) || link.shortened_url.includes(filterBy.search);
-          }
-
-          return true;
-        }
-        ).map((link) => (  
+        {filteredData.map((link) => (
           <LinkCard key={link.id} {...link} displayOptions={display} />
         ))}
       </div>

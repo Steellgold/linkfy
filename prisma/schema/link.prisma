@@ -1,19 +1,41 @@
+enum TargetingType {
+  ALL
+  SPECIFIC
+}
+
 model Link {
-  id            String           @id @default(cuid())
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
+  id             String           @id @default(cuid())
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   //
-  note          String?
-  shortened_url String
-  original_url  String
-  expires       DateTime?
+  note           String?
+  shortened_url  String
+  original_url   String
+  expires        DateTime?
   //
-  createdBy     WorkspaceMember? @relation(fields: [createdById], references: [id], onDelete: SetNull)
-  createdById   String?
+  archived       Boolean          @default(false)
   //
-  workspace     Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  workspaceId   String
-  tags          Tag[]
+  targetingType  TargetingType    @default(ALL)
+  targetAndroid  String?
+  targetIOS      String?
+  targetLocation Json?
+  //
+  utm_source     String?
+  utm_medium     String?
+  utm_campaign   String?
+  utm_term       String?
+  utm_content    String?
+  utm_referral   String?
+  //
+  isProtected    Boolean          @default(false)
+  password       String?
+  //
+  createdBy      WorkspaceMember? @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById    String?
+  //
+  workspace      Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId    String
+  tags           Tag[]
 }
 
 enum Color {

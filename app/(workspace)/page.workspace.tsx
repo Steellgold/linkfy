@@ -3,13 +3,13 @@
 import { useGetWorkspaces } from "@/lib/actions/workspace/workspace.hook";
 import { redirect } from "next/navigation";
 import { ReactElement, useState } from "react";
-import { FilterOptions, SortOptions, WorkspaceLinks } from "./section.links";
+import { SortOptions, WorkspaceLinks } from "./section.links";
 import { useWorkspaceStore } from "@/lib/store/workspace.store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter, LayoutDashboard, Plus } from "lucide-react";
 import { WorkspaceLayout } from "./workspace.layout";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const PageWorkspace = (): ReactElement => {
@@ -184,6 +184,20 @@ export const PageWorkspace = (): ReactElement => {
             favicons: showFavicons,
             tags: showTags,
             clicks: showClicks
+          }}
+          resetFilters={() => {
+            setSelectedTags([]);
+            setSelectedUsers([]);
+            setSearchFilter("");
+            setSortBy("createdAt");
+            setSortOrder("desc");
+            setShowNotes(true);
+            setShowExpires(true);
+            setShowCreatedBy(true);
+            setShowCreatedAt(true);
+            setShowFavicons(true);
+            setShowTags(true);
+            setShowClicks(true);
           }}
         />
       </div>

@@ -14,7 +14,7 @@ export const ErrorLayoutCard: Component<ErrorLayoutCardProps> = ({ title, descri
         <h1 className="text-4xl font-bold">{title}</h1>
         <p className="text-lg text-muted-foreground">{description}</p>
 
-        <div className="flex flex-col sm:flex-row gap-2 justify-center items-center mt-4">
+        <div className="flex flex-row gap-2 justify-center items-center mt-4">
           {actions}
         </div>
       </div>
