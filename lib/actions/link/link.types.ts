@@ -8,7 +8,8 @@ export type GetLinkType = Prisma.LinkGetPayload<{
           select: {
             name: true,
             image: true,
-            email: true
+            email: true,
+            id: true
           }
         }
       }
@@ -16,7 +17,8 @@ export type GetLinkType = Prisma.LinkGetPayload<{
     tags: {
       select: {
         name: true,
-        color: true
+        color: true,
+        id: true
       }
     }
   }
@@ -30,7 +32,8 @@ export type GetLinksType = Prisma.LinkGetPayload<{
           select: {
             name: true,
             image: true,
-            email: true
+            email: true,
+            id: true
           }
         }
       }
@@ -38,7 +41,8 @@ export type GetLinksType = Prisma.LinkGetPayload<{
     tags: {
       select: {
         name: true,
-        color: true
+        color: true,
+        id: true
       }
     }
   }

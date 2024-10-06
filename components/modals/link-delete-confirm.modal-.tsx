@@ -13,11 +13,19 @@ import {
 } from "@/components/ui/alert-dialog"
 import { ModalIds } from "./modal-ids";
 import { buttonVariants } from "../ui/button";
+import { useDeleteLink } from "@/lib/actions/link/link.hook";
+import { toast } from "sonner";
 
+type ModalData = {
+  linkId: string
+}
 
 export const ModalLinkDeleteConfirm = () => {
-  const { isModalOpen, closeModal } = useModalStatus();
-  
+  const { isModalOpen, closeModal, data } = useModalStatus();
+  const linkData = data as ModalData;
+
+  const deleteLink = useDeleteLink();
+
   return (
     <AlertDialog
       open={isModalOpen(ModalIds.LINK_DELETE_CONFIRM)}
@@ -36,8 +44,11 @@ export const ModalLinkDeleteConfirm = () => {
           <AlertDialogAction
             className={buttonVariants({ variant: "destructive" })}
             onClick={() => {
-              // Delete link
-              console.log("caca")
+              toast.promise(deleteLink.mutateAsync(linkData.linkId), {
+                loading: "Deleting link...",
+                success: "Link deleted successfully",
+                error: "Failed to delete link",
+              });
             }}
           >
             Continue

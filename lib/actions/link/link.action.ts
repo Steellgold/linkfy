@@ -19,7 +19,8 @@ export const getLink = async (id: string): Promise<GetLinkType> => {
             select: {
               name: true,
               image: true,
-              email: true
+              email: true,
+              id: true
             }
           }
         }
@@ -27,7 +28,8 @@ export const getLink = async (id: string): Promise<GetLinkType> => {
       tags: {
         select: {
           name: true,
-          color: true
+          color: true,
+          id: true
         }
       }
     }
@@ -49,7 +51,8 @@ export const getLinks = async (workspaceId: string): Promise<GetLinksType> => {
             select: {
               name: true,
               image: true,
-              email: true
+              email: true,
+              id: true
             }
           }
         }
@@ -57,7 +60,8 @@ export const getLinks = async (workspaceId: string): Promise<GetLinksType> => {
       tags: {
         select: {
           name: true,
-          color: true
+          color: true,
+          id: true
         }
       }
     }

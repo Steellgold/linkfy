@@ -8,8 +8,8 @@ type ModalState = {
 }
 
 type ModalContextType = {
-  data: [];
-  setModalData: (data: []) => void
+  data: unknown;
+  setModalData: (data: unknown) => void
 
   openModal: (id: string) => void
   closeModal: (id: string) => void
@@ -21,7 +21,7 @@ export const ModalContext = createContext<ModalContextType | null>(null)
 
 export const ModalProvider: Component<PropsWithChildren> = ({ children }) => {
   const [modalState, setModalState] = useState<ModalState>({})
-  const [data, setData] = useState<[]>([])
+  const [data, setData] = useState<unknown>([])
 
   const openModal = (id: string) => {
     setModalState(prev => ({ ...prev, [id]: true }))
@@ -29,17 +29,21 @@ export const ModalProvider: Component<PropsWithChildren> = ({ children }) => {
 
   const closeModal = (id: string) => {
     setModalState(prev => ({ ...prev, [id]: false }))
+    setData(null)
   }
 
   const toggleModal = (id: string) => {
     setModalState(prev => ({ ...prev, [id]: !prev[id] }))
+    if (!modalState[id]) {
+      setData(null)
+    }
   }
 
   const isModalOpen = (id: string) => {
     return !!modalState[id]
   }
 
-  const setModalData = (data: []) => {
+  const setModalData = (data: unknown) => {
     setData(data)
   }
 

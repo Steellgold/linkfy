@@ -11,10 +11,9 @@ import { Filter, LayoutDashboard, Plus } from "lucide-react";
 import { WorkspaceLayout } from "./workspace.layout";
 
 export const PageWorkspace = (): ReactElement => {
-  const { data, status } = useGetWorkspaces();
+  const { data } = useGetWorkspaces();
   const { selectedWorkspaceId } = useWorkspaceStore();
 
-  if (status === "pending") return <div>Loading...</div>;
   if (!data || data.length === 0) {
     redirect("/new-workspace");
   }
@@ -46,9 +45,26 @@ export const PageWorkspace = (): ReactElement => {
       header="Links"
     >
       <div className="sm:px-2">
-        {/* <HydrationBoundary queries={[ getLinksQuery(selectedWorkspaceId || data[0].id) ]}> */}
-          <WorkspaceLinks workspaceId={selectedWorkspaceId || data[0].id} />
-        {/* </HydrationBoundary> */}
+        <WorkspaceLinks
+          workspaceId={selectedWorkspaceId || data[0].id}
+          filterBy={{
+            tags: [],
+            search: "",
+            user: [],
+            sort: {
+              by: "createdAt",
+              order: "desc",
+            },
+          }}
+          display={{
+            notes: true,
+            expires: true,
+            createdBy: true,
+            createdAt: true,
+            tags: true,
+            clicks: true,
+          }}
+        />
       </div>
     </WorkspaceLayout>
   );

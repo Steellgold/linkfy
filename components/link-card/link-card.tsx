@@ -1,10 +1,7 @@
 "use client";
 
-import { GetLinksType } from "@/lib/actions/workspace/workspace.types";
-import { Archive, Copy, CornerDownRight, EllipsisVertical, Hourglass, MousePointerClick, PencilLine, QrCode, Trash } from "lucide-react";
+import { Archive, Copy, CornerDownRight, EllipsisVertical, Hourglass, MousePointerClick, PencilLine, QrCode, RemoveFormatting, ScissorsLineDashed, Trash } from "lucide-react";
 import { LinkTag } from "./link-tag";
-import { cloneElement, ReactElement } from "react";
-import { toast } from "sonner";
 import { dayJS } from "@/lib/day-js";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
@@ -15,26 +12,27 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import Link from "next/link";
 import { useModalStatus } from "../hooks/use-modal";
 import { ModalIds } from "../modals/modal-ids";
+import { GetLinkType } from "@/lib/actions/link/link.types";
+import { toast } from "sonner";
+import { DisplayOptions } from "@/app/(workspace)/section.links";
 
 type LinkCardProps = {
-  userOptions: {
-    showTags?: boolean;
-    showExpires?: boolean;
-    showCreatedAt?: boolean;
-    showCreatedBy?: boolean;
-    showNote?: boolean;
-  } 
-} & GetLinksType;
+  displayOptions: DisplayOptions;
+} & GetLinkType;
 
-export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, }) => {
-  const { openModal } = useModalStatus();
+export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, id }) => {
+  const { openModal, setModalData } = useModalStatus();
 
   return (
     <Card className="p-1 transition-colors duration-200 ease-in-out hover:dark:bg-[#030b1f] hover:bg-[#f9f9f9] hover:dark:border-primary/50 hover:border-primary/10 hover:shadow-md">
@@ -45,11 +43,16 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
           </div>
 
           <div className="flex flex-col gap-2 min-w-0 flex-1 overflow-hidden">
-            <CardTitle className="font-semibold flex items-center gap-1">
-
-              <Link href={shortened_url || ""} className="truncate">
+            <CardTitle className="font-semibold flex items-center gap-2">
+              <span className="truncate">
                 {shortened_url}
-              </Link>
+              </span>
+
+              {displayOptions.createdAt && createdAt && (
+                <div className="bg-primary/10 text-primary/50 rounded-md px-2 py-0.5 text-xs font-semibold hidden sm:flex">
+                  {dayJS(createdAt).format("MMM DD, YYYY [at] HH:mm")}
+                </div>
+              )}
             </CardTitle>
 
             <CardDescription className="flex items-center gap-1 text-muted-foreground text-sm w-full -mt-2 overflow-hidden">
@@ -68,7 +71,7 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent side="bottom">
+          <DropdownMenuContent side="left">
             <DropdownMenuItem>
               <span className="flex items-center gap-2">
                 <PencilLine className="h-4 w-4" />
@@ -83,12 +86,35 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
               </span>
             </DropdownMenuItem>
 
-            <DropdownMenuItem>
-              <span className="flex items-center gap-2">
-                <Copy className="h-4 w-4" />
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <Copy className="mr-2 h-4 w-4" />
                 Copy
-              </span>
-            </DropdownMenuItem>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      navigator.clipboard.writeText(shortened_url || "");
+                      toast.success("Shortened URL copied to clipboard");
+                    }}
+                  >
+                    <ScissorsLineDashed className="mr-2 h-4 w-4" />
+                    <span>Shortened URL</span>
+                  </DropdownMenuItem>
+                  
+                  <DropdownMenuItem
+                    onClick={() => {
+                      navigator.clipboard.writeText(original_url || "");
+                      toast.success("Original URL copied to clipboard");
+                    }}
+                  >
+                    <RemoveFormatting className="mr-2 h-4 w-4" />
+                    <span>Original URL</span>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+          </DropdownMenuSub>
 
             <DropdownMenuSeparator />
 
@@ -101,6 +127,7 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
 
             <DropdownMenuItem
               onClick={() => {
+                setModalData({ linkId: id });
                 openModal(ModalIds.LINK_DELETE_CONFIRM);
               }}
             >
@@ -115,16 +142,16 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
 
       <CardFooter className={cn("hidden", {
         "block -mt-5 p-3": (
-          (expires && userOptions.showExpires) ||
-          (tags.length > 0 && userOptions.showTags) ||
-          (createdAt && userOptions.showCreatedAt) ||
-          (createdBy && userOptions.showCreatedBy) ||
-          (note && userOptions.showNote)
+          (expires && displayOptions.expires) ||
+          (tags.length > 0 && displayOptions.tags) ||
+          (createdAt && displayOptions.createdAt) ||
+          (createdBy && displayOptions.createdBy) ||
+          (note && displayOptions.notes)
         )
       })}>
         <div className="flex flex-col">
           <div className="flex flex-row flex-wrap gap-1 mt-2 items-center">
-            {userOptions.showCreatedBy && (
+            {displayOptions.createdBy && createdBy && (
               <TooltipProvider delayDuration={100}>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -143,7 +170,7 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
               </TooltipProvider>
             )}
 
-            {tags && userOptions.showTags && tags.length > 0 && tags.map((tag, index) => (
+            {tags && displayOptions.tags && tags.length > 0 && tags.map((tag, index) => (
               <LinkTag key={index} {...tag} />
             ))}
 
@@ -153,10 +180,16 @@ export const LinkCard: Component<LinkCardProps> = ({ userOptions, createdAt, cre
             </span>
           </div>
 
-          {expires && userOptions.showExpires && (
+          {expires && displayOptions.expires && (
             <div className="flex flex-row items-center gap-1 mt-2 text-muted-foreground text-sm">
               <Hourglass className="h-4 w-4 mr-1" />
               This link expires on {dayJS(expires).format("MMM DD, YYYY [at] HH:mm")}
+            </div>
+          )}
+
+          {displayOptions.createdAt && createdAt && (
+            <div className="bg-primary/10 text-primary/50 rounded-md px-2 py-0.5 text-xs font-semibold block sm:hidden mt-2">
+              {dayJS(createdAt).format("MMM DD, YYYY [at] HH:mm")}
             </div>
           )}
         </div>
