@@ -38,9 +38,11 @@ export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt,
     <Card className="p-1 transition-colors duration-200 ease-in-out hover:dark:bg-[#030b1f] hover:bg-[#f9f9f9] hover:dark:border-primary/50 hover:border-primary/10 hover:shadow-md">
       <CardContent className="p-3 flex flex-row justify-between items-center">
         <div className="flex flex-row gap-3 min-w-0 items-center">
-          <div className="hidden sm:flex bg-border w-8 h-8 p-[5.5px] rounded-full items-center justify-center">
-            <Favicon url={original_url || null} />
-          </div>
+          {displayOptions.favicons && (
+            <div className="hidden sm:flex bg-border w-8 h-8 p-[5.5px] rounded-full items-center justify-center">
+              <Favicon url={original_url || null} />
+            </div>
+          )}
 
           <div className="flex flex-col gap-2 min-w-0 flex-1 overflow-hidden">
             <CardTitle className="font-semibold flex items-center gap-2">

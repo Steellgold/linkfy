@@ -12,6 +12,7 @@ export type DisplayOptions = {
   expires: boolean;
   createdBy: boolean;
   createdAt: boolean;
+  favicons: boolean;
   tags: boolean;
   clicks: boolean;
 }

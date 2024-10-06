@@ -2,9 +2,9 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db/prisma";
-import { Workspace } from "@prisma/client";
+import { GetWorkspaceType } from "./workspace.types";
 
-export const getWorkspaces = async (): Promise<Workspace[]> => {
+export const getWorkspaces = async (): Promise<GetWorkspaceType[]> => {
   const session = await auth();
   if (!session) return [];
   
@@ -15,6 +15,20 @@ export const getWorkspaces = async (): Promise<Workspace[]> => {
           userId: session.user.id
         }
       }
+    },
+    include: {
+      members: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              image: true,
+              id: true
+            }
+          }
+        }
+      },
+      tags: true
     }
   });
 }
