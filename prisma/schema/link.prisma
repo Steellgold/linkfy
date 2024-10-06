@@ -1,8 +1,3 @@
-enum TargetingType {
-  ALL
-  SPECIFIC
-}
-
 model Link {
   id             String           @id @default(cuid())
   createdAt      DateTime         @default(now())
@@ -15,7 +10,6 @@ model Link {
   //
   archived       Boolean          @default(false)
   //
-  targetingType  TargetingType    @default(ALL)
   targetAndroid  String?
   targetIOS      String?
   targetLocation Json?

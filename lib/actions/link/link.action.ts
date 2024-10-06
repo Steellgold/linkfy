@@ -78,3 +78,15 @@ export const deleteLink = async (id: string): Promise<void> => {
     }
   });
 }
+
+export const archiveLink = async (id: string): Promise<void> => {
+  const session = await auth();
+  if (!session) throw new Error("Unauthorized");
+  await prisma.link.update({ where: { id }, data: { archived: true } });
+}
+
+export const unarchiveLink = async (id: string): Promise<void> => {
+  const session = await auth();
+  if (!session) throw new Error("Unauthorized");
+  await prisma.link.update({ where: { id }, data: { archived: false } });
+}

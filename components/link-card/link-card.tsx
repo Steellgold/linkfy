@@ -1,8 +1,8 @@
 "use client";
 
-import { Archive, Copy, CornerDownRight, EllipsisVertical, Hourglass, MousePointerClick, PencilLine, QrCode, RemoveFormatting, ScissorsLineDashed, Trash } from "lucide-react";
+import { Archive, Calendar, Copy, CornerDownRight, EllipsisVertical, Hourglass, MousePointerClick, PencilLine, QrCode, RemoveFormatting, ScissorsLineDashed, Trash } from "lucide-react";
 import { LinkTag } from "./link-tag";
-import { dayJS } from "@/lib/day-js";
+import { dayJS, simplifyDate } from "@/lib/day-js";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { Component } from "../component";
@@ -31,7 +31,7 @@ type LinkCardProps = {
   displayOptions: DisplayOptions;
 } & GetLinkType;
 
-export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, id }) => {
+export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, archived, id }) => {
   const { openModal, setModalData } = useModalStatus();
 
   return (
@@ -46,15 +46,9 @@ export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt,
 
           <div className="flex flex-col gap-2 min-w-0 flex-1 overflow-hidden">
             <CardTitle className="font-semibold flex items-center gap-2">
-              <span className="truncate">
+              <span className="truncate flex items-center gap-2">
                 {shortened_url}
               </span>
-
-              {displayOptions.createdAt && createdAt && (
-                <div className="bg-primary/10 text-primary/50 rounded-md px-2 py-0.5 text-xs font-semibold hidden sm:flex">
-                  {dayJS(createdAt).format("MMM DD, YYYY [at] HH:mm")}
-                </div>
-              )}
             </CardTitle>
 
             <CardDescription className="flex items-center gap-1 text-muted-foreground text-sm w-full -mt-2 overflow-hidden">
@@ -116,16 +110,33 @@ export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt,
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
-          </DropdownMenuSub>
-
+            </DropdownMenuSub>
+            
             <DropdownMenuSeparator />
-
-            <DropdownMenuItem>
-              <span className="flex items-center gap-2">
-                <Archive className="h-4 w-4" />
-                Archive
-              </span>
-            </DropdownMenuItem>
+            
+            {archived ? (
+              <DropdownMenuItem onClick={() => {
+                setModalData({ linkId: id });
+                openModal(ModalIds.LINK_UNARCHIVE_CONFIRM);
+              }}>
+                <span className="flex items-center gap-2">
+                  <Archive className="h-4 w-4" />
+                  Unarchive
+                </span>
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                onClick={() => {
+                  setModalData({ linkId: id });
+                  openModal(ModalIds.LINK_ARCHIVE_CONFIRM);
+                }}
+              >
+                <span className="flex items-center gap-2">
+                  <Archive className="h-4 w-4" />
+                  Archive
+                </span>
+              </DropdownMenuItem>
+            )}
 
             <DropdownMenuItem
               onClick={() => {
@@ -171,29 +182,47 @@ export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt,
                 </Tooltip>
               </TooltipProvider>
             )}
+            
+            {displayOptions.archived && archived && (
+              <span className="px-2 py-1 rounded-md text-xs font-semibold bg-destructive/60 text-white border-destructive/40 border-2 flex items-center gap-0.5">
+                <Archive className="h-3 w-3" />
+              </span>
+            )}
+
+            {displayOptions.clicks && (
+              <span className="px-2 py-1 rounded-md text-xs font-semibold border-2 flex items-center gap-0.5">
+                <MousePointerClick className="h-4 w-4" />
+                {Math.floor(Math.random() * 1000)} <span className="hidden sm:block">clicks</span>
+              </span>
+            )}
+
+            {displayOptions.createdAt && createdAt && (
+              <span className="px-2 py-1 rounded-md text-xs font-semibold border-2 flex items-center gap-0.5">
+                <Calendar className="h-3 w-3 mr-1" />
+                {simplifyDate(createdAt)}
+              </span>
+            )}
+
+            {expires && displayOptions.expires && (
+              <span className="px-2 py-1 rounded-md text-xs font-semibold border-2 flex items-center gap-0.5">
+                <Hourglass className="h-4 w-4 mr-1" />
+                Expires in {dayJS(expires).format("MMM DD, YYYY")}
+              </span>
+            )}
 
             {tags && displayOptions.tags && tags.length > 0 && tags.map((tag, index) => (
               <LinkTag key={index} {...tag} />
             ))}
-
-            <span className="px-2 py-1 rounded-md text-xs font-semibold border-2 flex items-center gap-0.5">
-              <MousePointerClick className="h-4 w-4" />
-              {Math.floor(Math.random() * 1000)} <span className="hidden sm:block">clicks</span>
-            </span>
           </div>
 
-          {expires && displayOptions.expires && (
-            <div className="flex flex-row items-center gap-1 mt-2 text-muted-foreground text-sm">
-              <Hourglass className="h-4 w-4 mr-1" />
-              This link expires on {dayJS(expires).format("MMM DD, YYYY [at] HH:mm")}
+          {/* {expires && displayOptions.expires && (
+            <div className="flex">
+              <div className="flex flex-row items-center gap-1 mt-2 text-muted-foreground text-sm">
+                <Hourglass className="h-4 w-4 mr-1" />
+                <span>Expires in {dayJS(expires).format("MMM DD, YYYY")}</span>
+              </div>
             </div>
-          )}
-
-          {displayOptions.createdAt && createdAt && (
-            <div className="bg-primary/10 text-primary/50 rounded-md px-2 py-0.5 text-xs font-semibold block sm:hidden mt-2">
-              {dayJS(createdAt).format("MMM DD, YYYY [at] HH:mm")}
-            </div>
-          )}
+          )} */}
         </div>
       </CardFooter>
     </Card>

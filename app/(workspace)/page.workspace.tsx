@@ -22,6 +22,7 @@ export const PageWorkspace = (): ReactElement => {
   const [sortOrder, setSortOrder] = useState<SortOptions["order"]>("desc");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [archived, setArchived] = useState<boolean>(false);
   // Display options
   const [showNotes, setShowNotes] = useState(true);
   const [showExpires, setShowExpires] = useState(true);
@@ -133,23 +134,33 @@ export const PageWorkspace = (): ReactElement => {
                 <DropdownMenuCheckboxItem checked={showNotes} onCheckedChange={setShowNotes}>
                   Notes
                 </DropdownMenuCheckboxItem>
+
                 <DropdownMenuCheckboxItem checked={showExpires} onCheckedChange={setShowExpires}>
                   Expiration date
                 </DropdownMenuCheckboxItem>
+
                 <DropdownMenuCheckboxItem checked={showCreatedBy} onCheckedChange={setShowCreatedBy}>
                   Created by
                 </DropdownMenuCheckboxItem>
+
                 <DropdownMenuCheckboxItem checked={showCreatedAt} onCheckedChange={setShowCreatedAt}>
                   Creation date
                 </DropdownMenuCheckboxItem>
+
                 <DropdownMenuCheckboxItem checked={showFavicons} onCheckedChange={setShowFavicons}>
                   Favicons
                 </DropdownMenuCheckboxItem>
+
                 <DropdownMenuCheckboxItem checked={showTags} onCheckedChange={setShowTags}>
                   Tags
                 </DropdownMenuCheckboxItem>
+
                 <DropdownMenuCheckboxItem checked={showClicks} onCheckedChange={setShowClicks}>
                   Clicks count
+                </DropdownMenuCheckboxItem>
+
+                <DropdownMenuCheckboxItem checked={archived} onCheckedChange={setArchived}>
+                  Archived
                 </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -183,7 +194,8 @@ export const PageWorkspace = (): ReactElement => {
             createdAt: showCreatedAt,
             favicons: showFavicons,
             tags: showTags,
-            clicks: showClicks
+            clicks: showClicks,
+            archived,
           }}
           resetFilters={() => {
             setSelectedTags([]);
@@ -198,6 +210,7 @@ export const PageWorkspace = (): ReactElement => {
             setShowFavicons(true);
             setShowTags(true);
             setShowClicks(true);
+            setArchived(true);
           }}
         />
       </div>

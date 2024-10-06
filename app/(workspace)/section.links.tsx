@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect } from "react";
 import { ErrorLayoutCard } from "@/components/layout-card";
-import { ModalLinkDeleteConfirm } from "@/components/modals/link-delete-confirm.modal-";
+import { ModalLinkDeleteConfirm } from "@/components/modals/link-delete-confirm.modal";
 import { useGetLinks } from "@/lib/actions/link/link.hook";
+import { ModalLinkArchiveConfirm } from "@/components/modals/link-archive-confirm.modal";
+import { ModalLinkUnarchiveConfirm } from "@/components/modals/link-unarchive-confirm.modal";
 
 export type DisplayOptions = {
   notes: boolean;
@@ -15,6 +17,7 @@ export type DisplayOptions = {
   favicons: boolean;
   tags: boolean;
   clicks: boolean;
+  archived: boolean;
 }
 
 export type SortOptions = {
@@ -73,6 +76,8 @@ export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
       return link.original_url.includes(filterBy.search) || link.shortened_url.includes(filterBy.search);
     }
 
+    if (display.archived === false && link.archived) return false;
+
     return true;
   });
 
@@ -90,6 +95,8 @@ export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
   return (
     <>
       <ModalLinkDeleteConfirm />
+      <ModalLinkArchiveConfirm />
+      <ModalLinkUnarchiveConfirm />
 
       <div className="flex flex-col gap-1.5 mb-1.5 p-2 rounded-xl sm:bg-primary/5 sm:dark:bg-primary/5">
         {filteredData.map((link) => (
