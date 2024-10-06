@@ -28,16 +28,18 @@ export const NewWorkspaceCreationForm = (): ReactElement => {
   const createWorkspace = useCreateWorkspace();
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    toast(
-      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-      </pre>
-    )
-
-    createWorkspace.mutate({
+    const promise = createWorkspace.mutateAsync({
       name: data.name,
       startTrial: data.plusTrial ?? false,
     });
+
+    toast.promise(promise,  {
+      loading: "Creating workspace...",
+      success: "Workspace created successfully",
+      error: "Failed to create workspace",
+    });
+
+    promise.then(() => window.location.href = "/");
   }
 
   return (
