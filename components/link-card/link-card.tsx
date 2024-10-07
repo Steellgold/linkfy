@@ -35,7 +35,7 @@ export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, 
   const { openModal, setModalData } = useModalStatus();
 
   return (
-    <Card className="p-1 transition-colors duration-200 ease-in-out hover:dark:bg-[#030b1f] hover:bg-[#f9f9f9] hover:dark:border-primary/50 hover:border-primary/10 hover:shadow-md">
+    <Card className="p-1 transition-colors duration-200 ease-in-out bg-primary/10 hover:bg-primary/5 border-primary/20 hover:border-primary/15 hover:shadow-md">
       <CardContent className="p-3 flex flex-row justify-between items-center">
         <div className="flex flex-row gap-3 min-w-0 items-center">
           {displayOptions.favicons && (
