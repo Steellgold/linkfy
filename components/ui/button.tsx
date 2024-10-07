@@ -20,6 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         gold: "bg-gold text-gold-foreground shadow-sm hover:bg-gold/90",
         link: "text-primary underline-offset-4 hover:underline",
+        switchFuckingLightMode: "bg-white text-primary-foreground hover:bg-yellow-400",
       },
       size: {
         default: "h-9 px-4 py-2",
