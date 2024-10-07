@@ -1,6 +1,6 @@
 "use client";
 
-import { Archive, Calendar, Copy, CornerDownRight, EllipsisVertical, Hourglass, MousePointerClick, PencilLine, QrCode, RemoveFormatting, ScissorsLineDashed, Trash } from "lucide-react";
+import { Archive, Calendar, Copy, CornerDownRight, EllipsisVertical, FileLock, Hourglass, MousePointerClick, PencilLine, QrCode, RemoveFormatting, ScissorsLineDashed, Trash } from "lucide-react";
 import { LinkTag } from "./link-tag";
 import { dayJS, simplifyDate } from "@/lib/day-js";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,7 @@ type LinkCardProps = {
   displayOptions: DisplayOptions;
 } & GetLinkType;
 
-export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, archived, id }) => {
+export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, archived, password, id }) => {
   const { openModal, setModalData } = useModalStatus();
 
   return (
@@ -113,18 +113,24 @@ export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, 
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>
-            
+
+            <DropdownMenuItem className="flex items-center gap-2" onClick={() => {
+              setModalData({ linkId: id, currentPassword: password });
+              openModal(ModalIds.LINK_ADD_PASSWORD);
+            }}>
+              <FileLock className="h-4 w-4" />
+              Password
+            </DropdownMenuItem>
+
             <DropdownMenuSeparator />
             
             {archived ? (
               <DropdownMenuItem onClick={() => {
                 setModalData({ linkId: id });
                 openModal(ModalIds.LINK_UNARCHIVE_CONFIRM);
-              }}>
-                <span className="flex items-center gap-2">
-                  <Archive className="h-4 w-4" />
-                  Unarchive
-                </span>
+              }} className="flex items-center gap-2">
+                <Archive className="h-4 w-4" />
+                Unarchive
               </DropdownMenuItem>
             ) : (
               <DropdownMenuItem
@@ -132,11 +138,10 @@ export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, 
                   setModalData({ linkId: id });
                   openModal(ModalIds.LINK_ARCHIVE_CONFIRM);
                 }}
+                className="flex items-center gap-2"
               >
-                <span className="flex items-center gap-2">
-                  <Archive className="h-4 w-4" />
-                  Archive
-                </span>
+                <Archive className="h-4 w-4" />
+                Archive
               </DropdownMenuItem>
             )}
 
@@ -145,11 +150,10 @@ export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, 
                 setModalData({ linkId: id });
                 openModal(ModalIds.LINK_DELETE_CONFIRM);
               }}
+              className="flex items-center gap-2 text-destructive"
             >
-              <span className="flex items-center gap-2 text-destructive">
-                <Trash className="h-4 w-4" />
-                Delete
-              </span>
+              <Trash className="h-4 w-4" />
+              Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>        

@@ -3,15 +3,14 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db/prisma";
 import { GetLinksType, GetLinkType } from "./link.types";
+import { decryptData, encryptData } from "@/lib/password";
 
 export const getLink = async (id: string): Promise<GetLinkType> => {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
 
-  return prisma.link.findUniqueOrThrow({
-    where: {
-      id
-    },
+  const link = await prisma.link.findUniqueOrThrow({
+    where: { id },
     include: {
       createdBy: {
         select: {
@@ -34,13 +33,18 @@ export const getLink = async (id: string): Promise<GetLinkType> => {
       }
     }
   });
-}
+
+  return {
+    ...link,
+    password: link.password ? decryptData(link.password) : null
+  };
+};
 
 export const getLinks = async (workspaceId: string): Promise<GetLinksType> => {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
 
-  return prisma.link.findMany({
+  const links = await prisma.link.findMany({
     where: {
       workspaceId
     },
@@ -66,6 +70,13 @@ export const getLinks = async (workspaceId: string): Promise<GetLinksType> => {
       }
     }
   });
+
+  return links.map((link) => {
+    return {
+      ...link,
+      password: link.password ? decryptData(link.password) : null
+    };
+  });
 }
 
 export const deleteLink = async (id: string): Promise<void> => {
@@ -79,6 +90,8 @@ export const deleteLink = async (id: string): Promise<void> => {
   });
 }
 
+// Archive and unarchive link
+
 export const archiveLink = async (id: string): Promise<void> => {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
@@ -89,4 +102,17 @@ export const unarchiveLink = async (id: string): Promise<void> => {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
   await prisma.link.update({ where: { id }, data: { archived: false } });
+}
+
+// Password
+export const setPassword = async (linkId: string, password: string | null): Promise<void> => {
+  const session = await auth();
+  if (!session) throw new Error("Unauthorized");
+
+  await prisma.link.update({
+    where: { id: linkId },
+    data: {
+      password: password ? encryptData(password) : null
+    }
+  });
 }

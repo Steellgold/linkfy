@@ -21,7 +21,6 @@ model Link {
   utm_content    String?
   utm_referral   String?
   //
-  isProtected    Boolean          @default(false)
   password       String?
   //
   createdBy      WorkspaceMember? @relation(fields: [createdById], references: [id], onDelete: SetNull)

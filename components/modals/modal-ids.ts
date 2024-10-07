@@ -3,5 +3,7 @@ export enum ModalIds {
   LINK_ARCHIVE_CONFIRM = "link-archive-confirm",
   LINK_UNARCHIVE_CONFIRM = "link-unarchive-confirm",
 
+  LINK_ADD_PASSWORD = "link-add-password",
+
   LIGHT_MODE_CONFIRM = "light-mode-confirm"
 }

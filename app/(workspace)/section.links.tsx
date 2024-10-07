@@ -8,6 +8,7 @@ import { ModalLinkDeleteConfirm } from "@/components/modals/link-delete-confirm.
 import { useGetLinks } from "@/lib/actions/link/link.hook";
 import { ModalLinkArchiveConfirm } from "@/components/modals/link-archive-confirm.modal";
 import { ModalLinkUnarchiveConfirm } from "@/components/modals/link-unarchive-confirm.modal";
+import { DialogLinkAddPassword } from "@/components/modals/link-add-password.dialog";
 
 export type DisplayOptions = {
   notes: boolean;
@@ -97,6 +98,7 @@ export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
       <ModalLinkDeleteConfirm />
       <ModalLinkArchiveConfirm />
       <ModalLinkUnarchiveConfirm />
+      <DialogLinkAddPassword />
 
       <div className="flex flex-col gap-1.5 mb-1.5">
         {filteredData.map((link) => (

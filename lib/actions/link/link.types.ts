@@ -52,3 +52,8 @@ export type LinkTag = {
   name: string;
   color: Color;
 }
+
+export type PasswordUpdateMutation = {
+  linkId: string;
+  password: string | null;
+}

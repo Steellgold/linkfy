@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
-import { archiveLink, deleteLink, getLinks, unarchiveLink } from "./link.action";
+import { archiveLink, deleteLink, getLinks, setPassword, unarchiveLink } from "./link.action";
+import { PasswordUpdateMutation } from "./link.types";
 
 export const getLinksQuery = (workspaceId: string) => {
   return { queryKey: ["getLinks"], queryFn: () => getLinks(workspaceId) } satisfies UseQueryOptions;
@@ -40,6 +41,8 @@ export const useDeleteLink = () => {
   });
 }
 
+// Archive and unarchive link
+
 export const useArchiveLink = () => {
   const queryClient = useQueryClient();
 
@@ -54,6 +57,16 @@ export const useUnarchiveLink = () => {
 
   return useMutation({
     mutationFn: (linkId: string) => unarchiveLink(linkId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getLinks"] })
+  });
+}
+
+// Password
+export const usePasswordUpdateLink = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: PasswordUpdateMutation) => setPassword(data.linkId, data.password),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getLinks"] })
   });
 }
