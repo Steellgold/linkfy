@@ -1,19 +1,21 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { AlignVerticalDistributeCenter, ChartColumn, Rows3, Settings } from "lucide-react";
+import { ChartColumn, Rows3, Settings, Tags } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactElement } from "react";
 
 const navItems = [
-  { name: 'Links', href: '', icon: <Rows3 className="h-4 w-4" /> },
-  { name: 'Settings', href: '/settings', icon: <Settings className="h-4 w-4" /> }
+  { name: "Links", href: '/', icon: <Rows3 className="h-4 w-4" /> },
+  { name: "Analytics", href: 'analytics', icon: <ChartColumn className="h-4 w-4" /> },
+  { name: "Tags", href: 'tags', icon: <Tags className="h-4 w-4" /> },
+  { name: "Settings", href: 'settings', icon: <Settings className="h-4 w-4" /> }
 ]
 
 export const WorkspaceLinks = (): ReactElement => {
   const path = usePathname();
-  const page = path.split("/")[0];
+  const page = path.split("/")[1] == "" ? "/" : path.split("/")[1];
 
   return (
     <div>

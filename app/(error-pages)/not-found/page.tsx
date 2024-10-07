@@ -1,14 +1,9 @@
-import { auth } from "@/auth";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ReactElement } from "react";
 import { ErrorLayoutCard } from "@/components/layout-card";
 
 const Page = async(): Promise<ReactElement> => {
-  const session = await auth();
-  if (session) redirect("/");
-
   return <ErrorLayoutCard
     title="This link is broken"
     description="The link you followed may be broken or inexistent."

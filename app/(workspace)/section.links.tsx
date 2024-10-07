@@ -98,7 +98,7 @@ export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
       <ModalLinkArchiveConfirm />
       <ModalLinkUnarchiveConfirm />
 
-      <div className="flex flex-col gap-1.5 mb-1.5 p-2 rounded-xl sm:bg-primary/5 sm:dark:bg-primary/5">
+      <div className="flex flex-col gap-1.5 mb-1.5">
         {filteredData.map((link) => (
           <LinkCard key={link.id} {...link} displayOptions={display} />
         ))}

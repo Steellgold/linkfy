@@ -14,6 +14,8 @@ export const WorkspaceLayout: Component<LayoutProps> = ({ header, subheader, chi
     <div className="flex flex-col h-full">
       <WorkspaceLinks />
 
+      <div className="my-2" />
+
       <div className="flex items-center justify-between p-2 border-gray-200 dark:border-gray-800">
         <div>
           <h1 className="text-2xl font-semibold">{header}</h1>
