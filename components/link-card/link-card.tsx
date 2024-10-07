@@ -31,7 +31,7 @@ type LinkCardProps = {
   displayOptions: DisplayOptions;
 } & GetLinkType;
 
-export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, archived, id }) => {
+export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, createdBy, expires, note, original_url, shortened_url, tags, archived, id }) => {
   const { openModal, setModalData } = useModalStatus();
 
   return (
@@ -51,12 +51,14 @@ export const LinkCard: Component<LinkCardProps> = ({  displayOptions, createdAt,
               </span>
             </CardTitle>
 
-            <CardDescription className="flex items-center gap-1 text-muted-foreground text-sm w-full -mt-2 overflow-hidden">
-              <CornerDownRight className="h-4 w-4 mr-0.5 flex-shrink-0" />
-              <Link href={original_url || ""} className="truncate">
-                {original_url}
-              </Link>
-            </CardDescription>
+            <div className="flex flex-col gap-1 w-full">
+              <CardDescription className="flex items-center gap-1 text-muted-foreground text-sm w-full -mt-2 overflow-hidden">
+                <CornerDownRight className="h-4 w-4 mr-0.5 flex-shrink-0" />
+                <Link href={original_url || ""} className="truncate">
+                  {original_url}
+                </Link>
+              </CardDescription>
+            </div>
           </div>
         </div>
 

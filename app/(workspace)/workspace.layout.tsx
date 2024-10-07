@@ -1,5 +1,6 @@
 import { Component } from "@/components/component";
 import { PropsWithChildren, ReactElement } from "react";
+import { WorkspaceLinks } from "./workspace.links";
 
 type LayoutProps = {
   header?: string;
@@ -11,6 +12,8 @@ type LayoutProps = {
 export const WorkspaceLayout: Component<LayoutProps> = ({ header, subheader, children, actions, mobileAction }) => {
   return (
     <div className="flex flex-col h-full">
+      <WorkspaceLinks />
+
       <div className="flex items-center justify-between p-2 border-gray-200 dark:border-gray-800">
         <div>
           <h1 className="text-2xl font-semibold">{header}</h1>
