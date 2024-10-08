@@ -44,11 +44,11 @@ export const ResponsiveNavbarComponent = (): ReactElement => {
             <div className="flex items-center">
               <Link href="/" className="text-xl font-bold mr-4">
                 {theme == "dark" ? (
-                  <Image src="logo/light/simple-text-big.svg" alt="Logo (light)" width={95} height={50} />
+                  <Image src="logo/light/linkfy-icon-text.svg" alt="Logo (light)" width={95} height={50} />
                 ) : theme == "light" ? (
-                  <Image src="logo/dark/simple-text-big.svg" alt="Logo (dark)" width={95} height={50} />
+                  <Image src="logo/dark/linkfy-icon-text.svg" alt="Logo (dark)" width={95} height={50} />
                 ) : (
-                  <Image src="logo/light/simple-text-big.svg" alt="Logo (dark)" width={95} height={50} />
+                  <Image src="logo/light/linkfy-icon-text.svg" alt="Logo (dark)" width={95} height={50} />
                 )}
               </Link>
               <div className="hidden md:flex">
