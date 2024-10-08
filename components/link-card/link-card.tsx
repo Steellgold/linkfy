@@ -77,11 +77,12 @@ export const LinkCard: Component<LinkCardProps> = ({ displayOptions, createdAt, 
               </span>
             </DropdownMenuItem>
 
-            <DropdownMenuItem>
-              <span className="flex items-center gap-2">
-                <QrCode className="h-4 w-4" />
-                Generate QR Code
-              </span>
+            <DropdownMenuItem  className="flex items-center gap-2" onClick={() => {
+              setModalData({ url: shortened_url });
+              openModal(ModalIds.LINK_QR_CODE);
+            }}>
+              <QrCode className="h-4 w-4" />
+              Generate QR Code
             </DropdownMenuItem>
 
             <DropdownMenuSub>

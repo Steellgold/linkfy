@@ -9,6 +9,7 @@ import { useGetLinks } from "@/lib/actions/link/link.hook";
 import { ModalLinkArchiveConfirm } from "@/components/modals/link-archive-confirm.modal";
 import { ModalLinkUnarchiveConfirm } from "@/components/modals/link-unarchive-confirm.modal";
 import { DialogLinkAddPassword } from "@/components/modals/link-add-password.dialog";
+import { DialogQRCode } from "@/components/modals/link-qrcode.dialog";
 
 export type DisplayOptions = {
   notes: boolean;
@@ -99,6 +100,7 @@ export const WorkspaceLinks: Component<WorkspaceLinksProps> = ({
       <ModalLinkArchiveConfirm />
       <ModalLinkUnarchiveConfirm />
       <DialogLinkAddPassword />
+      <DialogQRCode />
 
       <div className="flex flex-col gap-1.5 mb-1.5">
         {filteredData.map((link) => (
