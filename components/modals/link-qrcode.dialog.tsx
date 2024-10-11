@@ -4,14 +4,15 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useModalStatus } from "../hooks/use-modal";
 import { QRCode } from 'react-qrcode-logo';
 import { ModalIds } from "./modal-ids";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { ClipboardCopy, ImageDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type ModalData = {
-  url: string;
+  url?: string;
 }
 
 type ThemeColor = {
@@ -20,69 +21,26 @@ type ThemeColor = {
 }
 
 const themes: ThemeColor[] = [
-  { name: "Night", colors: ["#000000", "#070d24", "#0e123a"] },
+  { name: "Default", colors: ["#FFFFFF", "#000000", "#000000"] },
+  { name: "Default (Inverted)", colors: ["#000000", "#FFFFFF", "#FFFFFF"] },
   { name: "Blood", colors: ["#2c0404", "#dd2727", "#b33030"] },
-  { name: "Sunset", colors: ["#f7b733", "#fc4a1a", "#d81159"] },
-  { name: "Sky", colors: ["#0f2027", "#203a43", "#2c5364"] },
   { name: "Water", colors: ["#06042c", "#283ade", "#3041b3"] },
-  { name: "Forest", colors: ["#0b6623", "#388e3c", "#4caf50"] },
   { name: "Lion", colors: ["#3e2b2b", "#b5651d", "#d9a566"] },
-  { name: "Fire", colors: ["#ff0000", "#ff7f00", "#ffbf00"] },
-  { name: "Metal", colors: ["#3a3a3a", "#7a7a7a", "#b5b5b5"] },
   { name: "Space", colors: ["#000000", "#1c1c1c", "#383838"] },
   { name: "Galaxy", colors: ["#1c1b33", "#5c33ff", "#7e57c2"] },
-  { name: "Aurora", colors: ["#00ffcc", "#9933ff", "#cc00ff"] },
-  { name: "Sandstorm", colors: ["#c2b280", "#e0c97d", "#b2996e"] },
-  { name: "Moonlight", colors: ["#333333", "#cccccc", "#b0c4de"] },
-  { name: "Shadow", colors: ["#1c1c1c", "#3b3b3b", "#5e5e5e"] },
-  { name: "Ocean Breeze", colors: ["#004f6e", "#00a0b0", "#00d9d2"] },
-  { name: "Sunrise", colors: ["#ffdd00", "#ff7300", "#ff4e00"] },
   { name: "Emerald", colors: ["#054d44", "#1abc9c", "#16a085"] },
-  { name: "Berry", colors: ["#4b0f1f", "#9b1d39", "#d94e7b"] },
-  { name: "Rust", colors: ["#4e1a1a", "#8b3e2f", "#d07f55"] },
-  { name: "Lavender", colors: ["#b19cd9", "#9370db", "#7b68ee"] },
-  { name: "Mint", colors: ["#98ff98", "#3eb489", "#2e8b57"] },
-  { name: "Canyon", colors: ["#8c3f1f", "#d2691e", "#f4a460"] },
-  { name: "Cobalt", colors: ["#002366", "#0047ab", "#4682b4"] },
-  { name: "Peach", colors: ["#ffe5b4", "#ffad60", "#ff7f50"] },
-  { name: "Frost", colors: ["#e0f7fa", "#81d4fa", "#4fc3f7"] },
-  { name: "Mystic", colors: ["#2b1b17", "#6e3b3b", "#b57281"] },
-  { name: "Autumn", colors: ["#4b2e0f", "#8b4513", "#c46210"] },
-  { name: "Dusk", colors: ["#3e1d45", "#6b0f74", "#aa2b94"] },
-  { name: "Cedar", colors: ["#4a2f27", "#a0522d", "#c08060"] },
-  { name: "Tropic", colors: ["#006d5b", "#00a693", "#66b2a7"] },
-  { name: "Brick", colors: ["#7c0a02", "#9b4d46", "#ad6e5b"] },
-  { name: "Pine", colors: ["#204c34", "#38755b", "#6a9975"] },
-  { name: "Blossom", colors: ["#e75480", "#f88379", "#f4a3a8"] },
-  { name: "Slate", colors: ["#3b444b", "#5a6978", "#778899"] },
-  { name: "Clay", colors: ["#836953", "#a57c65", "#b98d7f"] },
-  { name: "Twilight", colors: ["#4a536b", "#6a5acd", "#9370db"] },
-  { name: "Citrus", colors: ["#ff8c00", "#ffa500", "#ffc04d"] },
-  { name: "Storm", colors: ["#5b5b5b", "#737373", "#9e9e9e"] },
-  { name: "Teal", colors: ["#008080", "#20b2aa", "#40e0d0"] },
-  { name: "Saffron", colors: ["#b5651d", "#ffb300", "#d87b1e"] },
-  { name: "Berry Crush", colors: ["#7b1fa2", "#ab47bc", "#ce93d8"] },
   { name: "Meadow", colors: ["#3a5f0b", "#6b8e23", "#9acd32"] },
-  { name: "Bronze", colors: ["#8c4b0f", "#b87333", "#cd853f"] },
-  { name: "Cypress", colors: ["#2f4f4f", "#4b636e", "#708090"] },
-  { name: "Periwinkle", colors: ["#ccccff", "#b39ddb", "#9575cd"] },
-  { name: "Forest Berry", colors: ["#4b3f72", "#654e92", "#8b6fae"] },
-  { name: "Velvet", colors: ["#5c0923", "#7b1034", "#9e1d4d"] },
+  { name: "Mystic", colors: ["#2b1b17", "#6e3b3b", "#b57281"] },
+  { name: "Ocean Breeze", colors: ["#004f6e", "#00a0b0", "#00d9d2"] },
+  { name: "Rust", colors: ["#4e1a1a", "#8b3e2f", "#d07f55"] },
+  { name: "Tropic", colors: ["#006d5b", "#00a693", "#66b2a7"] },
   { name: "Obsidian", colors: ["#1c1c1c", "#2b2b2b", "#4a4a4a"] }
 ];
+
 
 export const DialogQRCode = () => {
   const { isModalOpen, closeModal, data } = useModalStatus();
   const linkData = data as ModalData;
-  const qrRef = useRef(null);
-
-  const [bgColor, setBgColor] = useState("#FFFFFF");
-  const [fgColor, setFgColor] = useState("#000000");
-
-  const [eyeColor, setEyeColor] = useState("#000000");
-  const [eyeRadius, setEyeRadius] = useState(0);
-
-  const [qrStyle, setQrStyle] = useState<"squares" | "dots" | "fluid">("squares");
 
   const [selectedTheme, setTheme] = useState<ThemeColor>(themes[0]);
 
@@ -128,6 +86,7 @@ export const DialogQRCode = () => {
       onOpenChange={(open) => {
         if (!open) {
           closeModal(ModalIds.LINK_QR_CODE);
+          setTheme(themes[0]);
         }
       }}
     >
@@ -139,16 +98,14 @@ export const DialogQRCode = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex justify-center bg-primary/5 p-4">
+        <div className="flex justify-center bg-primary/5 p-4 w-full">
           <div className="flex flex-col rounded-md">
             <QRCode
-              value={linkData?.url || "https://linkfy.fr"}
+              value={linkData?.url || ""}
               size={128}
-              bgColor={bgColor}
-              fgColor={fgColor}
-              eyeColor={eyeColor}
-              eyeRadius={eyeRadius}
-              qrStyle={qrStyle}
+              bgColor={selectedTheme.colors[0]}
+              fgColor={selectedTheme.colors[1]}
+              eyeColor={selectedTheme.colors[2]}
               id="qr-code-component"
             />
 
@@ -167,18 +124,12 @@ export const DialogQRCode = () => {
                 "ring-2 ring-primary": selectedTheme.name === theme.name
               })}
               title={theme.name}
-              onClick={() => {
-                setBgColor(theme.colors[0]);
-                setFgColor(theme.colors[1]);
-                setEyeColor(theme.colors[2]);
-
-                setTheme(theme);
-              }}
+              onClick={() => setTheme(theme)}
             >
               {theme.colors.map((color: string, index: number) => {
                 const rotation = (index / theme.colors.length) * 360;
                 const skew = (1 / theme.colors.length) * 360;
-                return (
+                 return (
                   <div
                     key={index}
                     className="absolute inset-0"
@@ -194,6 +145,14 @@ export const DialogQRCode = () => {
             </Button>
           ))}
         </div>
+
+        <p className="text-xs text-center text-muted-foreground mt-2">
+          See other themes at{" "}
+          <Link
+            className="text-primary hover:underline"
+            href="https://qr-color.vercel.app/">QR Color</Link>
+          &nbsp;from the same author.
+        </p>
 
         <DialogFooter className="mt-3">
           <Button variant="outline" onClick={() => downloadImage()}>
